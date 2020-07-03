@@ -1,0 +1,76 @@
+#include <stdlib.h>
+#include <inttypes.h>
+#include <avr/interrupt.h>
+#include <avr/io.h>
+
+#include <Arduino.h>
+#include <Streaming.h>
+
+volatile bool start = false;
+volatile bool msgb = false;
+volatile unsigned char msg = 0;
+
+ISR(USART1_RX_vect)
+{
+  start = UCSR1B & (1 << RXB81);
+  msg = UDR1;
+  msgb = true;
+}
+
+void setup()
+{
+  // serial 1 -- 9600baud 9bit, odd, 2stop
+
+  // 9th in UCSRnB TXB8bit befor UDRn low byte
+  // 9th read first
+  UCSR1A = 0;
+  UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
+  UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
+  UBRR1H = 0;
+  UBRR1L = 103;
+
+  sei();
+
+  Serial.begin(921600);
+  Serial << "START" << endl;
+}
+// 8bit nutzdaten, 9tes bit für start stop --> got it usefull
+void loop()
+{
+  if (msgb)
+  {
+    Serial << _HEX(msg) << " " << start << endl;
+    msgb = false;
+  }
+}
+
+/*
+int main()
+{
+
+  // serial 1 -- 9600baud 9bit, odd, 2stop
+
+  // 9th in UCSRnB TXB8bit befor UDRn low byte
+  // 9th read first
+  UCSR1A = 0;
+  UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
+  UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
+  UBRR1H = 0;
+  UBRR1L = 103;
+
+  UART_RINGPUFFER_init_send(2);
+
+  sei();
+
+  while (1)
+  {
+    if (newSendByte)
+    {
+
+      UART_RINGPUFFER_send(sendByte, newSendByte);
+
+      newSendByte = 0;
+    }
+  }
+}
+*/

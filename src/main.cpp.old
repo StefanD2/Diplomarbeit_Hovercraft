@@ -1,0 +1,116 @@
+#include <stdlib.h>
+#include <inttypes.h>
+#include <avr/interrupt.h>
+#include <avr/io.h>
+
+#include <Arduino.h>
+#include <Streaming.h>
+
+volatile char buf[32];
+volatile char interrupt = false;
+volatile int current = 0;
+volatile int currentBit = 0;
+volatile int bytes[16];
+volatile int currentbyte = 0;
+volatile unsigned char sendByte[3];
+volatile char newSendByte = 0;
+
+volatile unsigned long bufcurr = 0;
+volatile unsigned long bytecurr = 0;
+
+ISR(USART1_RX_vect)
+{
+  char temp = UCSR1B & RXB81;
+  for (int i = 0; i < 8; i++, current++)
+  {
+    if (current >= 32)
+      current = 0;
+    buf[current] = UDR1 & (1 << i);
+  }
+  if (current >= 32)
+    current = 0;
+  buf[current] = temp;
+  current++;
+  if (current >= 32)
+    current = 0;
+  bufcurr += 9;
+
+  temp = 0;
+  // calc bytes
+  int count = 0;
+  while (bytecurr + 8 < bufcurr)
+  {
+    for (int i = currentBit, j = 0; i < currentBit + 8; i++, j++)
+    {
+      temp |= (buf[i & 0x1F]);
+    }
+    currentBit += 8;
+    currentBit &= 0x1F;
+    sendByte[count] = temp;
+    bytecurr += 8;
+    count++;
+  }
+  newSendByte = count;
+
+  interrupt = true;
+}
+
+void setup(){
+  // serial 1 -- 9600baud 9bit, odd, 2stop
+
+  // 9th in UCSRnB TXB8bit befor UDRn low byte
+  // 9th read first
+  UCSR1A = 0;
+  UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
+  UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
+  UBRR1H = 0;
+  UBRR1L = 103;
+
+  sei();
+
+  Serial.begin(921600);
+}
+
+void loop(){
+if (newSendByte)
+    {
+
+      for(int i = 0; i < newSendByte; i++){
+        Serial << _HEX(sendByte[i]);
+      }
+
+      newSendByte = 0;
+    }
+}
+
+
+/*
+int main()
+{
+
+  // serial 1 -- 9600baud 9bit, odd, 2stop
+
+  // 9th in UCSRnB TXB8bit befor UDRn low byte
+  // 9th read first
+  UCSR1A = 0;
+  UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
+  UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
+  UBRR1H = 0;
+  UBRR1L = 103;
+
+  UART_RINGPUFFER_init_send(2);
+
+  sei();
+
+  while (1)
+  {
+    if (newSendByte)
+    {
+
+      UART_RINGPUFFER_send(sendByte, newSendByte);
+
+      newSendByte = 0;
+    }
+  }
+}
+*/
