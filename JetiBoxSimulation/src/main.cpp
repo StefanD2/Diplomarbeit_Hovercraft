@@ -137,34 +137,3 @@ void loop()
     Serial << "UCSR1C " << UCSR1C << endl;
   }*/
 }
-
-/*
-int main()
-{
-
-  // serial 1 -- 9600baud 9bit, odd, 2stop
-
-  // 9th in UCSRnB TXB8bit befor UDRn low byte
-  // 9th read first
-  UCSR1A = 0;
-  UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
-  UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
-  UBRR1H = 0;
-  UBRR1L = 103;
-
-  UART_RINGPUFFER_init_send(2);
-
-  sei();
-
-  while (1)
-  {
-    if (newSendByte)
-    {
-
-      UART_RINGPUFFER_send(sendByte, newSendByte);
-
-      newSendByte = 0;
-    }
-  }
-}
-*/
