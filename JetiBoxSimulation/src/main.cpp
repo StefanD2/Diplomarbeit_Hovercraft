@@ -16,7 +16,6 @@ volatile bool buttonD = false;
 volatile bool buttonU = false;
 
 volatile bool recieving = false;
-volatile bool send = false;
 
 volatile unsigned long rectime = 0;
 
@@ -32,21 +31,9 @@ ISR(USART1_UDRE_vect)
 {
   if (!recieving)
   {
-    if (send)
-    {
-      // 8. bit is zero
-      UCSR1B &= ~(1 << TXB81);
-      UDR1 = ((!buttonL) & 1) << 7 | ((!buttonD) & 1) << 6 | ((!buttonU) & 1) << 5 | ((!buttonR) & 1) << 4;
-      send = false;
-    }
-    /*else
-    {
-      UCSR1B &= ~(1 << UDRIE1); // disable send interrupt
-      UCSR1B &= ~(1 << TXEN1);
-      UCSR1B |= (1 << RXEN1); // enable recieve
-      DDRD &= ~(1 << PD3);    // set input
-      PORTD |= (1 << PD3);    // set pullup
-    }*/
+    // 8. bit is zero
+    UCSR1B &= ~(1 << TXB81);
+    UDR1 = ((!buttonL) & 1) << 7 | ((!buttonD) & 1) << 6 | ((!buttonU) & 1) << 5 | ((!buttonR) & 1) << 4;
   }
 }
 
@@ -125,15 +112,8 @@ void loop()
     }
     else
     {
-      send = true;
       UCSR1B |= 1 << UDRIE1; // enable send interrrupt
     }
     lastTime = millis();
   }
-  /*if (millis() % 1000 == 0)
-  {
-    Serial << "UCSR1A " << UCSR1A << endl;
-    Serial << "UCSR1B " << UCSR1B << endl;
-    Serial << "UCSR1C " << UCSR1C << endl;
-  }*/
 }
