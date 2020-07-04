@@ -25,6 +25,8 @@ void actualSend();
 void actualSendDone();
 void send();
 
+void onMsg();
+
 ISR(USART1_RX_vect)
 {
   start = UCSR1B & (1 << RXB81);
@@ -71,6 +73,13 @@ bool adding = false;
 
 unsigned long lastTime = 0;
 
+unsigned long startTime = 0;
+unsigned long directionTime = 0;
+unsigned long endTime = 0;
+
+bool changedDir = false;
+bool sollDir = true; // 0 ... left, 1 .. right
+
 void loop()
 {
   if (msgb)
@@ -81,7 +90,15 @@ void loop()
     {
       if (adding)
       {
-        Serial << string << endl;
+        // on new msg
+        /*        if (string.indexOf("ROTATION") == -1)
+        {
+          sendb = true;
+        }*/
+        //Serial << string << endl;
+        //Serial.flush();
+        _delay_ms(5);
+        onMsg();
         recieving = false;
       }
       string = "";
@@ -97,14 +114,17 @@ void loop()
   if (sendb && !recieving)
   {
     send();
-    Serial << "send" << endl;
+    //Serial << "send" << endl;
+    _delay_ms(5);
     sendb = false;
   }
-  if (millis() - lastTime > 1000)
+
+  /*if (millis() - lastTime > 1000)
   {
     sendb = true;
     lastTime = millis();
-  }
+  }*/
+
   if (sendDone)
   {
     actualSendDone();
@@ -119,6 +139,11 @@ void loop()
     Serial << "UCSR1C " << UCSR1C << " 0b" << _BIN(UCSR1C) << endl;
     Serial << "pin " << ((PIND & (1 << PD3)) ? 1 : 0) << endl;
   }*/
+  if(!startTime){
+    changedDir = false;
+    sollDir = 0;
+    startTime = millis();
+  }
 }
 
 void send()
@@ -150,11 +175,52 @@ void actualSendDone()
   UCSR1B &= ~(1 << UDRIE1); // disable send interrupt
   UCSR1B &= ~(1 << TXCIE1); // disable transmit interrupt
   UCSR1B &= ~(1 << TXEN1);  // disable transmit
-  UCSR1A |= (1<<TXC1);
+  UCSR1A |= (1 << TXC1);
   DDRD &= ~(1 << PD3); // set input
   PORTD |= (1 << PD3); // set pullup
-  while(!(PIND&(1<<PD3)));
+  while (!(PIND & (1 << PD3)))
+    ;
   _delay_ms(1);
   UCSR1B |= (1 << RXEN1);  // enable recieve
   UCSR1B |= (1 << RXCIE1); // disable recieve interrupt
+}
+
+
+
+void onMsg()
+{
+  if (string.indexOf(changedDir ? "MASTER" : "Rotation") == -1)
+  {
+    buttonD = !changedDir;
+    buttonL = false;
+    buttonR = false;
+    buttonU = changedDir;
+    sendb = true;
+  }
+  else
+  {
+    if (string.indexOf("Rotation") != -1)
+    {
+      if (string.indexOf(sollDir ? "RIGHT" : "LEFT") == -1)
+      {
+        buttonD = false;
+        buttonU = false;
+        buttonL = !sollDir;
+        buttonR = sollDir;
+        sendb = true;
+      }
+      else
+      {
+        changedDir = true;
+        directionTime = millis();
+        Serial << "change direction to " << (sollDir ? "RIGHT" : "LEFT") << " " << (directionTime-startTime) << endl;
+        Serial.flush();
+      }
+    }
+    else{
+      endTime = millis();
+      Serial << "main menu " << (endTime - startTime) << endl;
+      Serial.flush();
+    }
+  }
 }
