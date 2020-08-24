@@ -8,23 +8,23 @@
 #include <Jeti.hpp>
 #include <Jeti_UNO.hpp>
 
-#include <PJONSoftwareBitBang.h>
+// #include <PJONSoftwareBitBang.h>
 
 #define NUMBER_OF_MSG 1 // 2 doesn't work
 
-PJONSoftwareBitBang bus(45);
+// PJONSoftwareBitBang bus(45);
 
 Jeti_UNO jeti1 = Jeti_UNO();
 
 void onMsg(String string);
 
-void receiver_function(uint8_t *payload, uint16_t length, const PJON_Packet_Info &packet_info){};
+// void receiver_function(uint8_t *payload, uint16_t length, const PJON_Packet_Info &packet_info){};
 
 void setup()
 {
-  bus.strategy.set_pin(10);
-  bus.set_receiver(receiver_function);
-  bus.begin();
+  // bus.strategy.set_pin(10);
+  // bus.set_receiver(receiver_function);
+  // bus.begin();
 
   jeti1.init();
 
@@ -35,26 +35,21 @@ void setup()
 
 }
 
-unsigned long ledTime = 0;
+bool led = 0;
 
 void loop()
 {
-  bus.update();
+  // bus.update();
   jeti1.loop();
   if (jeti1.isNewMsg())
   {
     onMsg(jeti1.getMsg());
   }
-  if (millis() - ledTime > 250)
-  {
-    digitalWrite(LED_BUILTIN, 0);
-    ledTime = millis();
-  }
 }
 
-void onMsg(String string)
+void onMsg(String string)-
 {
-  digitalWrite(LED_BUILTIN, 1);
-  ledTime = millis();
-  bus.send(44, string.c_str(), string.length());
+  led = !led;
+  digitalWrite(LED_BUILTIN, led);
+  // bus.send(44, string.c_str(), string.length());
 }
