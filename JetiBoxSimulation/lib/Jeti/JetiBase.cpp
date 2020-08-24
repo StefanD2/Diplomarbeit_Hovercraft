@@ -1,6 +1,6 @@
-#include "Jeti.hpp"
+#include "JetiBase.hpp"
 
-Jeti::Jeti()
+JetiBase::JetiBase()
 {
     msg = 0;
     start = 0;
@@ -18,7 +18,7 @@ Jeti::Jeti()
     adding = 0;
 }
 
-void Jeti::loop()
+void JetiBase::loop()
 {
     if (msgb)
     {
@@ -54,12 +54,12 @@ void Jeti::loop()
     }
 }
 
-void Jeti::send(bool l, bool r, bool u, bool d)
+void JetiBase::send(bool l, bool r, bool u, bool d)
 {
     send(l, r, u, d, 1);
 }
 
-void Jeti::send(bool l, bool r, bool u, bool d, int count)
+void JetiBase::send(bool l, bool r, bool u, bool d, int count)
 {
     buttonL = l;
     buttonR = r;
@@ -68,12 +68,12 @@ void Jeti::send(bool l, bool r, bool u, bool d, int count)
     sendb = ((count > 0) ? (count) : 1);
 }
 
-bool Jeti::isNewMsg()
+bool JetiBase::isNewMsg()
 {
     return newMsg;
 }
 
-String Jeti::getMsg()
+String JetiBase::getMsg()
 {
     newMsg = 0;
     return newMsgString;

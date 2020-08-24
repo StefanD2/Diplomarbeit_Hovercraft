@@ -5,8 +5,9 @@
 
 #include <Arduino.h>
 
+#include <JetiModes.hpp>
+#define JETI_MODE ARDUINO_UNO
 #include <Jeti.hpp>
-#include <Jeti_UNO.hpp>
 
 // #include <PJONSoftwareBitBang.h>
 
@@ -14,7 +15,7 @@
 
 // PJONSoftwareBitBang bus(45);
 
-Jeti_UNO jeti1 = Jeti_UNO();
+Jeti jeti1 = Jeti();
 
 void onMsg(String string);
 
@@ -47,7 +48,7 @@ void loop()
   }
 }
 
-void onMsg(String string)-
+void onMsg(String string)
 {
   led = !led;
   digitalWrite(LED_BUILTIN, led);
