@@ -23,6 +23,7 @@ void setup()
   sei(); // enable interrupt
 
   Serial.begin(921600);
+  Serial2.begin(115200);
   Serial << "START" << endl;
 }
 
@@ -48,7 +49,11 @@ bool sollDir = true; // 0 ... left, 1 .. right
 
 void onMsg(String string)
 {
-  if (string.indexOf(changedDir ? "MASTER" : "Rotation") == -1)
+  Serial2 << string << endl;
+  Serial2.flush();
+    Serial << string << endl;
+  Serial.flush();
+  /*if (string.indexOf(changedDir ? "MASTER" : "Rotation") == -1)
   {
     jeti1.send(false, false, changedDir, !changedDir, NUMBER_OF_MSG);
   }
@@ -74,5 +79,5 @@ void onMsg(String string)
       Serial << "main menu " << (endTime - startTime) << endl;
       Serial.flush();
     }
-  }
+  }*/
 }
