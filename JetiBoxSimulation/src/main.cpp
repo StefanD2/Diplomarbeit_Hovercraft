@@ -4,80 +4,57 @@
 #include <avr/io.h>
 
 #include <Arduino.h>
-#include <Streaming.h>
 
-#include "Jeti.hpp"
-#include "Jeti_ATmega_Serial1.hpp"
+#include <Jeti.hpp>
+#include <Jeti_UNO.hpp>
+
+#include <PJONSoftwareBitBang.h>
 
 #define NUMBER_OF_MSG 1 // 2 doesn't work
 
-Jeti_ATmega_Serial1 jeti1 = Jeti_ATmega_Serial1();
+PJONSoftwareBitBang bus(45);
+
+Jeti_UNO jeti1 = Jeti_UNO();
 
 void onMsg(String string);
 
+void receiver_function(uint8_t *payload, uint16_t length, const PJON_Packet_Info &packet_info){};
+
 void setup()
 {
+  bus.strategy.set_pin(10);
+  bus.set_receiver(receiver_function);
+  bus.begin();
 
   jeti1.init();
 
   sei(); // enable interrupt
 
-  Serial.begin(921600);
-  Serial2.begin(115200);
-  Serial << "START" << endl;
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, 0);
+
 }
+
+unsigned long ledTime = 0;
 
 void loop()
 {
+  bus.update();
   jeti1.loop();
   if (jeti1.isNewMsg())
   {
-    String s = jeti1.getMsg();
-    onMsg(s);
-    //Serial << s << endl;
+    onMsg(jeti1.getMsg());
+  }
+  if (millis() - ledTime > 250)
+  {
+    digitalWrite(LED_BUILTIN, 0);
+    ledTime = millis();
   }
 }
 
-unsigned long lastTime = 0;
-
-unsigned long startTime = 0;
-unsigned long directionTime = 0;
-unsigned long endTime = 0;
-
-bool changedDir = false;
-bool sollDir = true; // 0 ... left, 1 .. right
-
 void onMsg(String string)
 {
-  Serial2 << string << endl;
-  Serial2.flush();
-    Serial << string << endl;
-  Serial.flush();
-  /*if (string.indexOf(changedDir ? "MASTER" : "Rotation") == -1)
-  {
-    jeti1.send(false, false, changedDir, !changedDir, NUMBER_OF_MSG);
-  }
-  else
-  {
-    if (string.indexOf("Rotation") != -1)
-    {
-      if (string.indexOf(sollDir ? "RIGHT" : "LEFT") == -1)
-      {
-        jeti1.send(!sollDir, sollDir, false, false, NUMBER_OF_MSG);
-      }
-      else
-      {
-        changedDir = true;
-        directionTime = millis();
-        Serial << "change direction to " << (sollDir ? "RIGHT" : "LEFT") << " " << (directionTime - startTime) << endl;
-        Serial.flush();
-      }
-    }
-    else
-    {
-      endTime = millis();
-      Serial << "main menu " << (endTime - startTime) << endl;
-      Serial.flush();
-    }
-  }*/
+  digitalWrite(LED_BUILTIN, 1);
+  ledTime = millis();
+  bus.send(44, string.c_str(), string.length());
 }
