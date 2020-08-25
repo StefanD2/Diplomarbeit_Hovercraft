@@ -36,7 +36,7 @@ public:
     void interrupt_RX()
     {
         start = UCSR0B & (1 << RXB80);
-        msg = UDR0;
+        msg = UDR0; // buffern
         msgb = true;
         recieving = true;
     }
