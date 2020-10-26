@@ -35,12 +35,3 @@ void loop()
     Serial << tel.percent << "% " << tel.rpm << "rpm " << tel.voltage << "V " << tel.temperature << "°C" << endl;
   }
 }
-
-void onMsg(String string)
-{
-  //led = !led;
-  //digitalWrite(LED_BUILTIN, led);
-  //Serial.println(string);
-  string.replace(',', '.');
-  Serial << "%:" << string.substring(2, 5).toInt() << " rpm:" << string.substring(6, 14).toInt() << " V:" << string.substring(17, 22).toDouble() << " °C:" << string.substring(29, 31).toInt() << endl;
-}
