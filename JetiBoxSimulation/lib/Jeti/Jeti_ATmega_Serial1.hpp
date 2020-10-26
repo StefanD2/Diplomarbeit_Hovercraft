@@ -16,13 +16,13 @@ class Jeti_ATmega_Serial1 : public JetiBase
 public:
     Jeti_ATmega_Serial1() : JetiBase()
     {
-        jeti_atmega_serial1_pointer = this;
+        jeti_pointer = this;
     }
 
     // inits Serial Communication (still need to call sei() in main setup)
     void init()
     {
-        // serial 1 -- 9600baud 9bit, odd, 2stop
+        // Serial 1 -- 9600baud, 9bit, odd parity, 2 stop bits
         UCSR1A = 0;
         UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
         UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
@@ -35,26 +35,27 @@ public:
     // interrrupt funcitons
     void interrupt_RX()
     {
-        start = UCSR1B & (1 << RXB81);
-        msg = UDR1;
-        msgb = true;
         recieving = true;
+        recieve_buffer[recieve_buffer_write].bit9 = UCSR1B & (1 << RXB81); // 9th bit, must be read first
+        recieve_buffer[recieve_buffer_write].databyte = UDR1;
+        recieve_buffer_write++;
+        recieve_buffer_write &= (RECIEVE_BUFFER_SIZE - 1);
     }
 
     void interrupt_TX()
     {
-        sendb--;
-        sendDone = (sendb > 0) ? 0 : 1;
+        send_count--;
+        sendDone = (send_count > 0) ? 0 : 1;
     }
 
     void interrupt_UDRE()
     {
-        actualSend();
+        send();
     }
 
 private:
     // send function
-    void csend()
+    void send_init()
     {
         UCSR1B &= ~(1 << RXEN1);  // disable recieve
         UCSR1B &= ~(1 << RXCIE1); // disable recieve interrupt
@@ -64,8 +65,8 @@ private:
         //_delay_ms(1);
         if (UCSR1A & (1 << UDRE1))
         {
-            actualSend();
-            if (sendb > 1)
+            send();
+            if (send_count > 1)
                 goto enableInterrupt;
         }
         else
@@ -75,14 +76,14 @@ private:
         }
     }
     // actual send function
-    void actualSend()
+    void send()
     {
         UCSR1B &= ~(1 << TXB81);
         UDR1 = ((!buttonL) & 1) << 7 | ((!buttonD) & 1) << 6 | ((!buttonU) & 1) << 5 | ((!buttonR) & 1) << 4;
     }
 
-    // reconfigure recieve mode
-    void actualsendDone()
+    // reenable recieve mode
+    void send_done()
     {
         UCSR1B &= ~(1 << UDRIE1); // disable send interrupt
         UCSR1B &= ~(1 << TXCIE1); // disable transmit interrupt
@@ -99,7 +100,7 @@ private:
     }
 };
 
-typedef Jeti_ATmega_Serial1 Jeti;
+// interrupt vectors
 
 ISR(USART1_RX_vect)
 {

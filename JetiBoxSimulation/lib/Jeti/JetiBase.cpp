@@ -2,54 +2,50 @@
 
 JetiBase::JetiBase()
 {
-    msg = 0;
-    start = 0;
-    msgb = 0;
-    recieving = 0;
-    sendDone = 0;
-    buttonL = 0;
-    buttonR = 0;
-    buttonD = 0;
-    buttonU = 0;
-    sendb = 0;
-    content = "";
+    // intialize variables
+    recieve_buffer_write = 0;
+    recieve_buffer_read = 0;
+
+    recieving = false;
+    sendDone = false;
+
+    buttonL = false;
+    buttonR = false;
+    buttonD = false;
+    buttonU = false;
+    send_count = 0;
+
+    recieving_msg = "";
     newMsgString = "";
-    newMsg = 0;
-    adding = 0;
 }
 
 void JetiBase::loop()
 {
-    if (msgb)
+    // recieving
+    for (; recieve_buffer_read != recieve_buffer_write; recieve_buffer_read = (recieve_buffer_read + 1) & (RECIEVE_BUFFER_SIZE - 1))
     {
-        if (!start)
-        {
-            if (adding)
-            {
-                _delay_ms(3); // remove delay
-                newMsg = 1;
-                newMsgString = content;
-                recieving = false;
-            }
-            content = "";
-            adding = false;
+        if (!recieve_buffer[recieve_buffer_read].bit9 && recieving_msg != "")
+        { // end of msg
+            newMsgString = recieving_msg;
+            recieving_msg = "";
+            recieving = false;
         }
         else
         {
-            content += (char)msg;
-            adding = true;
+            recieving_msg += (char)recieve_buffer[recieve_buffer_read].databyte;
+            recieving = true;
         }
-        msgb = false;
     }
-    if (sendb && !recieving)
+
+    // sending
+    if (send_count && !recieving)
     {
-        csend();
-        _delay_ms(4); // remove delay
-        //sendb = false;
+        send_init();
+        _delay_ms(4); // delay for stability reasons
     }
     if (sendDone)
     {
-        actualsendDone();
+        send_done();
         sendDone = false;
     }
 }
@@ -65,16 +61,22 @@ void JetiBase::send(bool l, bool r, bool u, bool d, int count)
     buttonR = r;
     buttonU = u;
     buttonD = d;
-    sendb = ((count > 0) ? (count) : 1);
+    send_count = ((count > 0) ? (count) : 1); // send_count must be 1 ore higher
 }
 
 bool JetiBase::isNewMsg()
 {
-    return newMsg;
+    return (newMsgString != "");
 }
 
 String JetiBase::getMsg()
 {
-    newMsg = 0;
-    return newMsgString;
+    String ret = newMsgString;
+    newMsgString = "";
+    return ret;
+}
+
+jetiTelemetry_t JetiBase::getTelemetry(String msg)
+{
+    return {.percent = (int)msg.substring(2, 5).toInt(), .rpm = msg.substring(6, 14).toInt(), .voltage = msg.substring(17, 22).toDouble(), .temperature = (int)msg.substring(29, 31).toInt()};
 }
