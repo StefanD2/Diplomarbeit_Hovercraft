@@ -78,5 +78,5 @@ String JetiBase::getMsg()
 
 jetiTelemetry_t JetiBase::getTelemetry(String msg)
 {
-    return {.percent = (int)msg.substring(2, 5).toInt(), .rpm = msg.substring(6, 14).toInt(), .voltage = msg.substring(17, 22).toDouble(), .temperature = (int)msg.substring(29, 31).toInt()};
+    return {.mode = (char)msg.charAt(1), .percent = (int)msg.substring(2, 5).toInt(), .rpm = msg.substring(6, 14).toInt(), .voltage = msg.substring(17, 22).toDouble(), .temperature = (int)msg.substring(29, 31).toInt()};
 }

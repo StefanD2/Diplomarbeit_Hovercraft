@@ -8,6 +8,7 @@
 // struct for data/telemtrie from jetibox
 typedef struct
 {
+    char mode;
     int percent;
     long rpm;
     double voltage;

@@ -32,6 +32,6 @@ void loop()
   if (jeti->isNewMsg())
   {
     jetiTelemetry_t tel = JetiBase::getTelemetry(jeti->getMsg());
-    Serial << tel.percent << "% " << tel.rpm << "rpm " << tel.voltage << "V " << tel.temperature << "°C" << endl;
+    Serial << "mode " << tel.mode << " " << tel.percent << "% " << tel.rpm << "rpm " << tel.voltage << "V " << tel.temperature << "°C" << endl;
   }
 }
