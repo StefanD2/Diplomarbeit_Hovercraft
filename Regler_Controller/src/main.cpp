@@ -2,14 +2,21 @@
 #include <SPI.h>
 #include <mcp2515.h>
 
-#define REGLER_CAN_ID 0xF7
+#define REGLER_CAN_ID 0xF2
 
+#include <JetiModes.hpp>
+#define JETI_MODE ARDUINO_UNO
+#include <Jeti.hpp>
+
+
+JetiBase *jeti = new Jeti_UNO(); // access object via pointer (this allows switching between JETI_MODES with minimal code cahnges)
 struct can_frame canMsg;
+struct can_frame canMsg_send;
 MCP2515 mcp2515(7);
 
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   DDRB=DDRB|0B10;
   TCCR1A=0b10<<COM1A0|0b10<<WGM10;
   TCCR1B=0b11<<WGM12|0b11<<CS10;
@@ -24,6 +31,11 @@ void setup() {
   mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
   mcp2515.setNormalMode();
 
+      canMsg_send.can_id=0xF5;
+    canMsg_send.can_dlc=8;
+    canMsg_send.data[0]=9;
+    mcp2515.sendMessage(&canMsg_send);
+
   OCR1AH=0b01;
   OCR1AL=0;
 }
@@ -35,5 +47,14 @@ void loop() {
         OCR1AH=0b01;
         OCR1AL=value;
     }
+  }
+  jeti->loop();
+    if (jeti->isNewMsg())
+  {
+    jetiTelemetry_t tel = JetiBase::getTelemetry(jeti->getMsg());
+    canMsg_send.can_id=0xF5;
+    canMsg_send.can_dlc=8;
+    canMsg_send.data[0]=tel.temperature;
+    mcp2515.sendMessage(&canMsg_send);
   }
 }
