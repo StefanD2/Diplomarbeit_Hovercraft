@@ -2,13 +2,23 @@
 #include <SPI.h>
 #include <mcp2515.h>
 
-
-#define CAN_ID_CONTROL_LOWER_MOTOR 0xC0
+//----------- Do not change these values! ----------------------
+#define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
 #define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
+#define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
+//--------------------------------------------------------------
 
+
+#define CONTROLLER_ID 0 //either 0 for bottom or 1 for back controller
 
 #define INFO_SEND_INTERVAL 1000000 //in micro-seconds
 #define MAX_TIME_WITHOUT_UPDATE 2000000 //in micro-seconds
+
+
+
+#if not (CONTROLLER_ID==0 or CONTROLLER_ID==1)
+#error wrong controller ID defined!
+#endif
 
 #include <JetiModes.hpp>
 #define JETI_MODE ARDUINO_UNO
@@ -48,8 +58,12 @@ void setup() {
   mcp2515.reset();
   mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
   mcp2515.setNormalMode();
-
+  #if CONTROLLER_ID == 0
   canMsg_send.can_id=CAN_ID_INFOS_LOWER_CONTROLLER;
+  #endif
+  #if CONTROLLER_ID == 1
+  canMsg_send.can_id=CAN_ID_INFOS_BACK_CONTROLLER;
+  #endif
   canMsg_send.can_dlc=6;
 
   //initialize controller-decoder
@@ -58,9 +72,15 @@ void setup() {
 
 void loop() {
   if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) { //check for new control data
-    if ((canMsg.can_id==CAN_ID_CONTROL_LOWER_MOTOR)&&(canMsg.can_dlc==1)){
+    if ((canMsg.can_id==CAN_ID_CONTROL_MOTORS_SERVOS)&&(canMsg.can_dlc==3)){
         last_data_received=micros();
-        char value = canMsg.data[0];
+          #if CONTROLLER_ID == 0
+            char value = canMsg.data[0];
+          #endif
+          #if CONTROLLER_ID == 1
+            char value = canMsg.data[1];
+          #endif
+        
         OCR1AH=0b01;
         OCR1AL=value;
     }
