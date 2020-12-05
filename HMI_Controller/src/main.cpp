@@ -17,8 +17,12 @@ void setup() {
 
 void loop() {
   if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
-    if ((canMsg.can_id==HMI_CAN_ID)&&(canMsg.can_dlc==8)){
-        Serial.println("0xF5: "+String(canMsg.data[0]));
+    if ((canMsg.can_id==HMI_CAN_ID)&&(canMsg.can_dlc==3)){
+        Serial.print("Spannung:");
+        int spannung = canMsg.data[0]<<8|canMsg.data[1];
+        Serial.println(spannung);
+        Serial.println(canMsg.data[1]);
+
     }
   }
 }
