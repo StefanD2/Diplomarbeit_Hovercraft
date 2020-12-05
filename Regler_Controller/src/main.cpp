@@ -60,14 +60,16 @@ void loop() {
   if ((micros()-last_update)>=1000000&&jeti->isNewMsg()){
     jetiTelemetry_t tel = JetiBase::getTelemetry(jeti->getMsg());
     canMsg_send.can_id=0xF5;
-    canMsg_send.can_dlc=3;
-    double voltage_100=25.43*100.0;
+    canMsg_send.can_dlc=6;
+    double voltage_100=tel.voltage*100.0;
     int voltage=(int)voltage_100;
     canMsg_send.data[0]=voltage>>8;
     canMsg_send.data[1]=voltage&0xFF;
-    canMsg_send.data[2]=tel.temperature;
+    canMsg_send.data[2]=tel.temperature&0xFF;
+    canMsg_send.data[3]=tel.percent&0xFF;
+    canMsg_send.data[4]=tel.rpm>>8;
+    canMsg_send.data[5]=tel.rpm&0xFF;
     mcp2515.sendMessage(&canMsg_send);
     last_update=micros();
-    delay(10);
   }
 }
