@@ -6,52 +6,32 @@
 #include <Arduino.h>
 
 #include <JetiModes.hpp>
-#define JETI_MODE ARDUINO_UNO
+#define JETI_MODE ARDUINO_MEGA_1
 #include <Jeti.hpp>
 
-#include <PJONSoftwareBitBang.h>
+#include <Streaming.h>
 
-#define NUMBER_OF_MSG 1 // 2 doesn't work
-
-PJONSoftwareBitBang bus(45);
-
-Jeti jeti1 = Jeti();
-
-void onMsg(String string);
-
-void receiver_function(uint8_t *payload, uint16_t length, const PJON_Packet_Info &packet_info){};
+JetiBase *jeti = new Jeti_ATmega_Serial1(); // access object via pointer (this allows switching between JETI_MODES with minimal code cahnges)
 
 void setup()
 {
-  bus.strategy.set_pin(10);
-  bus.set_receiver(receiver_function);
-  bus.begin();
+  Serial.begin(115200);
+  Serial.println("start");
 
-  jeti1.init();
+  jeti->init();
 
   sei(); // enable interrupt
 
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, 0);
+  Serial.println("setup done");
 
-  bus.send(44, "hi", 2);
 }
-
-bool led = 0;
 
 void loop()
 {
-  bus.update();
-  jeti1.loop();
-  if (jeti1.isNewMsg())
+  jeti->loop();
+  if (jeti->isNewMsg())
   {
-    onMsg(jeti1.getMsg());
+    jetiTelemetry_t tel = JetiBase::getTelemetry(jeti->getMsg());
+    Serial << "mode " << tel.mode << " " << tel.percent << "% " << tel.rpm << "rpm " << tel.voltage << "V " << tel.temperature << "°C" << endl;
   }
-}
-
-void onMsg(String string)
-{
-  led = !led;
-  digitalWrite(LED_BUILTIN, led);
-  bus.send(44, string.c_str(), string.length());
 }
