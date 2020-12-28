@@ -43,5 +43,11 @@ void loop() {
       Serial.println("------------------------------------");
 
     }
+  /*
+  if ((canMsg.can_id==0xC0)&&(canMsg.can_dlc==3)){
+    Serial.print("Gas Motor unten:");
+    Serial.println(canMsg.data[0]);
+  }
+  */
   }
 }

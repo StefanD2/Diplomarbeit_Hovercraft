@@ -18,9 +18,10 @@ void setup(){
 }
 
 void loop(){
-  mcp2515.sendMessage(&canMsg);
   canMsg.data[0]=analogRead(A1)>>2;
   canMsg.data[1]=analogRead(A2)>>2;
   canMsg.data[2]=analogRead(A3)>>2;
-  delay(200);
+  delay(5);
+  mcp2515.sendMessage(&canMsg);
+  delay(100);
 }
