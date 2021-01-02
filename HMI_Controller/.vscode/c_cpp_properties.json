@@ -1,0 +1,61 @@
+{
+    "configurations": [
+        {
+            "name": "!!! WARNING !!! AUTO-GENERATED FILE, PLEASE DO NOT MODIFY IT AND USE https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "c:/Users/philipp/git/Diplomarbeit/HMI_Controller/include",
+                "c:/Users/philipp/git/Diplomarbeit/HMI_Controller/src",
+                "c:/Users/philipp/git/Diplomarbeit/libs/mcp2515",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/cores/arduino",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/variants/eightanaloginputs",
+                "C:/Users/philipp/.platformio/lib/Adafruit seesaw Library_ID1890",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                "C:/Users/philipp/.platformio/packages/tool-unity",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "c:/Users/philipp/git/Diplomarbeit/HMI_Controller/include",
+                    "c:/Users/philipp/git/Diplomarbeit/HMI_Controller/src",
+                    "c:/Users/philipp/git/Diplomarbeit/libs/mcp2515",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/cores/arduino",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/variants/eightanaloginputs",
+                    "C:/Users/philipp/.platformio/lib/Adafruit seesaw Library_ID1890",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src",
+                    "C:/Users/philipp/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src",
+                    "C:/Users/philipp/.platformio/packages/tool-unity",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=50003",
+                "ARDUINO_AVR_NANO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10805",
+                "__AVR_ATmega328P__",
+                ""
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/philipp/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega328p",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
