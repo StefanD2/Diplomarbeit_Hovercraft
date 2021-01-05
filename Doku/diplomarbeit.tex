@@ -78,6 +78,8 @@
 %% HTL-Package (für HTL-Grün)
 \usepackage{htlstp}
 
+\usepackage{import}
+
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
 \title{Luftkissenboot}
@@ -85,7 +87,7 @@
 \date{\today}
 \place{St. P\"olten}
 \schuljahr{2020/21}
-\professor{Prof. Frank}
+\professor{Dipl.-Ing. Helge Frank}
 \dipacolor{htlgruen}
 %%====================================================%%
 
@@ -100,12 +102,14 @@
 
 \begin{document}
 
+\listoftodos
+
 \frontmatter
 
 %%================ Titelseite ==========================%%
 \maketitle
 % Verantwortliche/Verfasser
-\responsible{Stefan Deimel}
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%======================================================%%
 
 
@@ -127,10 +131,18 @@
 \input{Textparts/danksagungen.tex}
 %%======================================================%%
 
+%% Kurzfassungen
+\todo[]{add Kurzfassungen}
+%\includepdf[pages={1-2}, scale=1,]{KurzfassungDADE.pdf}
+%\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
+
 %%================ Abstract /Zusammenfass. =============%%
-\input{Textparts/abstract.tex}
 \input{Textparts/zusammenfassung.tex}
+\todo[]{add zusammenfassung}
+\input{Textparts/abstract.tex}
+\todo[]{add abstract}
 %\selectlanguage{english} % necessary for English speaking users
+
 % delete this line if your native language is German 
 %%======================================================%%
 
@@ -141,8 +153,24 @@
 
 %Ab hier Hauptteil
 \mainmatter
+\def\chapterpagestyle{headings} 
+\chapter{Einführung}
+Aus einem Schlauchboot soll mit Hilfe von zwei Elektromotoren ein voll funktiontüchtiges Luftkissenboot gebaut werden. Dieses soll in der Lage sein, eine erwachsene Person einige Minuten lang zu befördern.
+\todo[]{Einführung bissal ausformulieren}
+
+\chapter{Erster Prototyp}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/ErsterPrototyp/}{ErsterPrototyp.tex}
+
+\chapter{Konstruktion}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Konstruktion/}{Konstruktion.tex}
+
+
+
 
 \appendix
+\def\chapterpagestyle{empty} 
 
 %%================ Abkuerzungsverzeichnis ==============%%
 \input{Textparts/abkuerzungen.tex}

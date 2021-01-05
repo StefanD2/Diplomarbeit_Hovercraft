@@ -10,5 +10,6 @@
 *.synctex(busy)
 *.workspace
 *.pdsbak
+*.tdo
 # exlude working pdf to avoid merging conflicts:
 diplomarbeit.pdf
