@@ -78,6 +78,11 @@
 %% HTL-Package (für HTL-Grün)
 \usepackage{htlstp}
 
+\usepackage{import}
+
+\usepackage{array}
+\usepackage{ragged2e}
+
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
 \title{Luftkissenboot}
@@ -85,7 +90,7 @@
 \date{\today}
 \place{St. P\"olten}
 \schuljahr{2020/21}
-\professor{Prof. Frank}
+\professor{Dipl.-Ing. Helge Frank}
 \dipacolor{htlgruen}
 %%====================================================%%
 
@@ -100,12 +105,14 @@
 
 \begin{document}
 
+\listoftodos
+
 \frontmatter
 
 %%================ Titelseite ==========================%%
 \maketitle
 % Verantwortliche/Verfasser
-\responsible{Stefan Deimel}
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%======================================================%%
 
 
@@ -127,10 +134,18 @@
 \input{Textparts/danksagungen.tex}
 %%======================================================%%
 
+%% Kurzfassungen
+\todo[]{add Kurzfassungen}
+%\includepdf[pages={1-2}, scale=1,]{KurzfassungDADE.pdf}
+%\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
+
 %%================ Abstract /Zusammenfass. =============%%
-\input{Textparts/abstract.tex}
 \input{Textparts/zusammenfassung.tex}
+\todo[]{add zusammenfassung}
+\input{Textparts/abstract.tex}
+\todo[]{add abstract}
 %\selectlanguage{english} % necessary for English speaking users
+
 % delete this line if your native language is German 
 %%======================================================%%
 
@@ -141,8 +156,39 @@
 
 %Ab hier Hauptteil
 \mainmatter
+\def\chapterpagestyle{headings} 
+\chapter{Einführung}
+\responsible{Julia Stöger}
+Aus einem Schlauchboot wurde mit Hilfe von zwei Elektromotoren ein voll funktiontüchtiges Luftkissenboot gebaut. \\
+Dieses ist in der Lage, eine erwachsene Person mehrere Minuten, über dem Boden schwebend, zu befördern. \\
+
+
+\todo[]{Einführung bissal ausformulieren}
+\section{Funktionsprinzip eines Hovercrafts}
+\responsible{Julia Stöger}
+Die Grundlage für das Schweben des Luftkissenbootes ist der auf den Boden gerichtete Luftstrom. Die Luft wird vertikal stark nach unten geleitet, wo ein Luftpolster entsteht. 
+Durch ein Loch im Boden des Hovercrafts kann die Luft entweichen und somit einen Druck erzeugen, um das Luftkissenboot zum Schweben zu bringen. \\
+Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt sich das Hovercraft lenken. 
+
+\todo[]{Funktionsweise Hovercraft}
+
+\section{Meilensteine}
+
+
+
+\chapter{Erster Prototyp}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/ErsterPrototyp/}{ErsterPrototyp.tex}
+
+\chapter{Konstruktion}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Konstruktion/}{Konstruktion.tex}
+
+
+
 
 \appendix
+\def\chapterpagestyle{empty} 
 
 %%================ Abkuerzungsverzeichnis ==============%%
 \input{Textparts/abkuerzungen.tex}
@@ -163,6 +209,6 @@
 \newpage
 \input{Textparts/literatur.tex}
  
-	 
+ 
 %%======================================================%%
 \end{document}
