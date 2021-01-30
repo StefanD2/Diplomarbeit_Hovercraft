@@ -129,8 +129,8 @@
         <tabsEnabled Value="0"/>
         <manualTabs Value="1"/>
         <tabSize Value="0.1"/>
-        <tabCount Value="-1"/>
-        <tabSpacing Value="0.1"/>
+        <tabCount Value="1"/>
+        <tabSpacing Value="1.1"/>
         <skipInnerTabs Value="0"/>
         <tabsUseSpacing Value="1"/>
         <tabCutPower Value="0"/>
@@ -151,7 +151,7 @@
     <Shape Type="Rect" CutIndex="3" W="210" H="148" Cr="0">
         <XForm>1 0 0 1 105 74</XForm>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -94.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -162,7 +162,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -94.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -173,7 +173,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -94.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -184,7 +184,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -94.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -195,7 +195,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -84.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -206,7 +206,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -84.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -217,7 +217,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -84.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -228,7 +228,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -84.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -239,7 +239,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -74.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -250,7 +250,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -74.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -261,7 +261,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -74.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -272,7 +272,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -74.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -283,7 +283,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -64.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -294,7 +294,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -64.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -305,7 +305,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -64.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -316,7 +316,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -64.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -327,7 +327,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -54.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -338,7 +338,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -54.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -349,7 +349,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -54.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -360,7 +360,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -54.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -371,7 +371,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -44.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -382,7 +382,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -44.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -393,7 +393,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -44.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -404,7 +404,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -44.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -415,7 +415,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -67.1667 -34.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -426,7 +426,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -57.1667 -34.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -437,7 +437,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -47.1667 -34.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
@@ -448,7 +448,7 @@
             </Shape>
         </Children>
     </Shape>
-    <Shape Type="Group">
+    <Shape Type="Group" CutIndex="0">
         <XForm>1 0 0 1 -37.1667 -34.8333</XForm>
         <Children>
             <Shape Type="Ellipse" CutIndex="1" Rx="3" Ry="3">
