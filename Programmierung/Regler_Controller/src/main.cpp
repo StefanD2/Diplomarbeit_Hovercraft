@@ -9,7 +9,7 @@
 //--------------------------------------------------------------
 
 
-#define CONTROLLER_ID 0 //either 0 for bottom or 1 for back controller
+#define CONTROLLER_ID 1 //either 0 for bottom or 1 for back controller
 
 #define INFO_SEND_INTERVAL 1000000 //in micro-seconds
 #define MAX_TIME_WITHOUT_UPDATE 2000000 //in micro-seconds
