@@ -21,7 +21,13 @@ void loop() {
   if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
     if ((canMsg.can_id==CAN_ID_INFOS_LOWER_CONTROLLER)&&(canMsg.can_dlc==6)){
       int spannung = canMsg.data[0]<<8| canMsg.data[1];
+      int drehzahl = canMsg.data[4]<<8| canMsg.data[5];
+      int percent = canMsg.data[3];
       Serial.print(spannung/100.0);
+      Serial.print("-");
+      Serial.print(percent);
+      Serial.print("-");
+      Serial.println(drehzahl);
     }
   }
 }

@@ -20,7 +20,7 @@ void t0PopCallback(void *ptr);
 void b0PopCallback(void *ptr);
 void b1PopCallback(void *ptr);
 
-NexText t0 = NexText(0, 1, "t0");
+NexText t0 = NexText(0, 8, "drz_u");
 NexButton b0 = NexButton(0, 2, "b0");
 NexButton b1 = NexButton(0, 3, "b1");
 
@@ -91,4 +91,3 @@ void loop(void)
 {
     nexLoop(nex_listen_list);
 }
-
