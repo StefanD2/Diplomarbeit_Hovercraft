@@ -59,9 +59,10 @@ void setup() {
   mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
   mcp2515.setNormalMode();
 
+  #ifdef ADC_ENABLED
   adcleft.begin();
   adcright.begin();
-
+  #endif
   canadcleft.can_dlc=8;
   canadcleft.can_id=CAN_ID_BATTERY_TEMPS_LEFT;
   canadcright.can_dlc=8;
@@ -79,6 +80,7 @@ void loop() {
         pwm.setPWM(8,0,355+anw);
      }
    }
+   #ifdef ADC_ENABLED
    if (millis()-lastsentadc>2000){
     int16_t battemps_left[4];
     int16_t battemps_right[4];
@@ -97,5 +99,6 @@ void loop() {
     lastsentadc=millis();
     
    }
+  #endif
 }
 

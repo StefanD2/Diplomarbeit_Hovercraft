@@ -4,6 +4,7 @@
 
 #define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
 #define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
+#define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
 
 MCP2515 mcp2515(7);
 
@@ -19,6 +20,7 @@ void setup() {
 
 void loop() {
   if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
+
     if ((canMsg.can_id==CAN_ID_INFOS_LOWER_CONTROLLER||canMsg.can_id==CAN_ID_INFOS_BACK_CONTROLLER)&&(canMsg.can_dlc==6)){
       if (canMsg.can_id==CAN_ID_INFOS_LOWER_CONTROLLER)
         Serial.println("Regler unten:");
@@ -49,7 +51,7 @@ void loop() {
     Serial.print(", Gas hinten: ");
     Serial.print(canMsg.data[1]);
     Serial.print(", Lenkung: ");
-    Serial.print(canMsg.data[2]);
+    Serial.println(canMsg.data[2]);
   }
   }
 }
