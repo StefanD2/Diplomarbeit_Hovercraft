@@ -1,8 +1,13 @@
 Zusammen mit der für den jeweiligen Einsatzzweck benötigten Peripherie bilden sowohl ein Arduino Nano als auch ein CAN-Bus Modul den Grundstein für die zur Steuerung des Bootes benötigte Elektronik.  
+\begin{minipage}{8cm}
+    \includegraphics[width=\textwidth]{Fotos/Arduino_Nano.png}
+\end{minipage}
+\begin{minipage}{8cm}
+\includegraphics[width=\textwidth]{Fotos/CAN_BUS_Shield.png}
+\end{minipage}
 \section{Übertragungsmedium CAN-Bus}
 Um eine zuverlässige Übertragung der Regelparameter für unsere Motoren sowie Servos garantieren zu können, wurde für deren Übertragung ein aus der Automobilbranche bekanntes Übertragungsmedium verwendet, der CAN-Bus. 
 Neben seiner Robustheit trotz relativ hoher Übertragungsgeschwindigkeit, war es vorallem sein dezentraler Aufbau, der ihn für unseren Anwendungszweck optimal gemacht hat.
-
 \todo[]{Verfeinerung des Textes, Bilder!}
 \newpage
 \section{Die zur Steuerung entworfenen Controller}
@@ -18,6 +23,11 @@ Konkret handelt es sich um den \textbf{16-Channel 12-bit PWM/Servo Driver Driver
 
 Die zweite Aufgabe dieses Controllers ist es, die Temperaturen aller acht im Boot verbauten Akkus zu überwachen, und diese zur Darstellung an den Controller des Lenkers zu übermitteln.
 Dies geschieht mithilfe zweier (je einer pro Seite verbauten) ebenfalls über I2C verbundenen \textbf{ADS1115} Analog-Digital-Wandler, welche wiederum von Adafruit stammen.  
+
+\begin{figure}[h]
+    \includegraphics[width=0.3\textwidth]{Fotos/ADS1115.png}
+    \caption{ADS1115 Platinen}    
+\end{figure}
 \newpage
 \section{Bildschirm}
 Bei dem verwendeten Bildschirm handelt es sich um einen 5 Zoll großen Touchscreen aus dem Hause Nextion.
