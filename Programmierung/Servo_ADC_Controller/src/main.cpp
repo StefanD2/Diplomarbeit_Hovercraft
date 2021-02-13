@@ -13,6 +13,8 @@ Adafruit_ADS1115 adcright = Adafruit_ADS1115(0x49);
 #define CAN_ID_BATTERY_TEMPS_RIGHT 0xE1
 #define SERVO_FREQ 60
 
+#define ADC_ENABLED
+#define SERIAL_DEBUG
 /*
 Servo 1:
 Unterer Grenzwert: 163
@@ -43,7 +45,6 @@ unsigned long lastsentadc=0;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("8 channel Servo test!");
 
   pwm.begin();
 
@@ -61,6 +62,8 @@ void setup() {
 
   #ifdef ADC_ENABLED
   adcleft.begin();
+  adcleft.setGain(GAIN_FOUR);
+  adcright.setGain(GAIN_FOUR);
   adcright.begin();
   #endif
   canadcleft.can_dlc=8;
@@ -86,14 +89,23 @@ void loop() {
     int16_t battemps_right[4];
     for (int i=0;i<=3;i++){
       int16_t c_adc_left,c_adc_right;
+      int8_t c_temp_left,c_temp_right;
       c_adc_left=adcleft.readADC_SingleEnded(i);
       c_adc_right=adcright.readADC_SingleEnded(i);
+      c_temp_left=map(c_adc_left,0,52428,0,100);
+      c_temp_right=map(c_adc_right,0,52428,0,100);
+      #ifdef SERIAL_DEBUG
+      Serial.print("CH"+String(i)+": l:"+c_temp_left+" r:"+c_temp_right+"  ");
+      #endif
       canadcleft.data[2*i]=(c_adc_left>>8)&0xFF;
       canadcleft.data[1+2*i]=c_adc_left&0xFF;
 
       canadcright.data[2*i]=(c_adc_right>>8)&0xFF;
       canadcright.data[1+2*i]=c_adc_right&0xFF;
     }
+    #ifdef SERIAL_DEBUG
+    Serial.println();
+    #endif
     mcp2515.sendMessage(&canadcleft);
     mcp2515.sendMessage(&canadcright);
     lastsentadc=millis();
