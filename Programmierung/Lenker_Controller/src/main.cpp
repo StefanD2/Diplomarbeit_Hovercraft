@@ -1,6 +1,30 @@
 #include <SPI.h>
 #include <mcp2515.h>
 #include "Nextion.h"
+#include "my_TinyGPS++.h"
+#include <SoftwareSerial.h>
+
+static const int RXPin = 8, TXPin = 9;
+static const uint32_t GPSBaud = 9600;
+
+// The TinyGPS++ object
+TinyGPSPlus gps;
+
+// The serial connection to the GPS device
+SoftwareSerial ss(RXPin, TXPin);
+
+//This custom version of delay() ensures that the gps object
+//is being "fed".
+static void smartDelay(unsigned long ms)
+{
+  unsigned long start = millis();
+  do 
+  {
+    while (ss.available())
+      gps.encode(ss.read());
+  } while (millis() - start < ms);
+}
+
 #define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
 #define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
 #define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
@@ -103,6 +127,7 @@ void setup(){
   Serial.begin(38400);
   delay(500);
   #endif
+  ss.begin(9600); //initialize SoftwareSerial for GPS module
 }
 
 unsigned long last_update=0;
@@ -152,4 +177,5 @@ void loop(){
   }
   nexLoop(nex_listen_list);
   #endif
+  smartDelay(0);
 }
