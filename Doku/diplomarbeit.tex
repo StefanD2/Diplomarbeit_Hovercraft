@@ -83,7 +83,7 @@
 \usepackage{array}
 \usepackage{ragged2e}
 \usepackage{csvsimple}
-
+\usepackage{tikz}
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
@@ -170,9 +170,16 @@ Dieses ist in der Lage, eine erwachsene Person mehrere Minuten, über dem Boden 
 \responsible{Julia Stöger}
 Die Grundlage für das Schweben des Luftkissenbootes ist der auf den Boden gerichtete Luftstrom. Die Luft wird vertikal stark nach unten geleitet, wo ein Luftpolster entsteht. 
 Durch ein Loch im Boden des Hovercrafts kann die Luft entweichen und somit einen Druck erzeugen, um das Luftkissenboot zum Schweben zu bringen. \\
-Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt sich das Hovercraft lenken. 
+Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt sich das Hovercraft lenken. Für eine vereinfachte Darstellung der Funktionsweise siehe 
+\autoref{fig:Funktionsprinzip}.
 
-\todo[]{Funktionsweise Hovercraft}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../Funktionsprinzip/Funktionsprinzip.JPG}
+  \label{fig:Funktionsprinzip}
+  \caption{Funktionsprinzip eines Hovercrafts}
+\end{figure}
+
 
 \section{Individuelle Themenstellung}
 
@@ -216,6 +223,9 @@ Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Sicherheitskonzept}{Sicherheitskonzept.tex}
 
+\chapter{Motoren \& Regler}
+\responsible{Philipp Eilmsteiner}
+\subimport{Textparts/Eilmsteiner}{Aktoren.tex}
 \chapter{Boardelektronik}
 \responsible{Philipp Eilmsteiner}
 \subimport{Textparts/Eilmsteiner/Boardelektronik}{Boardelektronik.tex}
