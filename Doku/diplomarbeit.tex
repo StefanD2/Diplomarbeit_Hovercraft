@@ -89,6 +89,8 @@
 %\usepackage{pdflscape}
 \usepackage{lscape}
 
+\usepackage{caption}
+
 %%=== MY COMMANDS ====%%
 % \includeSkizze{file, name, number, date}
 \newcommand{\includeSkizze}[5]{
@@ -106,6 +108,8 @@
         \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
         {\includegraphics[width=\textheight]{#1}};
     \end{tikzpicture}}
+    \captionlistentry{Skizze #2}
+    %Skizze #2
     \label{#5}
   \end{figure}
 }
@@ -126,13 +130,26 @@
 %%====================================================%%
 
 
-% Hyperlinks im Dokument
+% % Hyperlinks im Dokument
+% \usepackage[colorlinks=true,
+% 			linkcolor=black,
+% 			citecolor=green,
+% 			bookmarks=true,
+% 			urlcolor=black,
+% 			bookmarksopen=true]{hyperref}
+
+
+\usepackage{nameref}
+% folowing  must be in this order
+\usepackage{varioref}
 \usepackage[colorlinks=true,
 			linkcolor=black,
 			citecolor=green,
 			bookmarks=true,
 			urlcolor=black,
 			bookmarksopen=true]{hyperref}
+\usepackage{cleveref}
+
 
 \begin{document}
 
