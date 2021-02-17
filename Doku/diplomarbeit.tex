@@ -83,6 +83,39 @@
 \usepackage{array}
 \usepackage{ragged2e}
 \usepackage{csvsimple}
+
+%\usepackage{afterpage}
+
+%\usepackage{pdflscape}
+\usepackage{lscape}
+
+\usepackage{caption}
+
+%%=== MY COMMANDS ====%%
+% \includeSkizze{file, name, number, date}
+\newcommand{\includeSkizze}[5]{
+  \begin{figure}[H]
+    \centering
+    \resizebox{.99\textheight}{!}{
+    \begin{tikzpicture}
+        \draw (0,0) rectangle (\textheight, \textwidth);
+        \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
+        \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
+        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
+        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
+        \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
+        \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
+        \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
+        {\includegraphics[width=\textheight]{#1}};
+    \end{tikzpicture}}
+    \captionlistentry{Skizze #2}
+    %Skizze #2
+    \label{#5}
+  \end{figure}
+}
+
+
+
 \usepackage{tikz}
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
@@ -97,13 +130,26 @@
 %%====================================================%%
 
 
-% Hyperlinks im Dokument
+% % Hyperlinks im Dokument
+% \usepackage[colorlinks=true,
+% 			linkcolor=black,
+% 			citecolor=green,
+% 			bookmarks=true,
+% 			urlcolor=black,
+% 			bookmarksopen=true]{hyperref}
+
+
+\usepackage{nameref}
+% folowing  must be in this order
+\usepackage{varioref}
 \usepackage[colorlinks=true,
 			linkcolor=black,
 			citecolor=green,
 			bookmarks=true,
 			urlcolor=black,
 			bookmarksopen=true]{hyperref}
+\usepackage{cleveref}
+
 
 \begin{document}
 
@@ -161,47 +207,21 @@
 \def\chapterpagestyle{headings} 
 \chapter{Einführung}
 \responsible{Julia Stöger}
-Aus einem Schlauchboot wurde mit Hilfe von zwei Elektromotoren ein voll funktiontüchtiges Luftkissenboot gebaut. \\
-Dieses ist in der Lage, eine erwachsene Person mehrere Minuten, über dem Boden schwebend, zu befördern. \\
+\subimport{Textparts/Stoeger/Einfuehrung/}{Einfuehrung.tex}
 
 
 \todo[]{Einführung bissal ausformulieren}
 \section{Funktionsprinzip eines Hovercrafts}
 \responsible{Julia Stöger}
-Die Grundlage für das Schweben des Luftkissenbootes ist der auf den Boden gerichtete Luftstrom. Die Luft wird vertikal stark nach unten geleitet, wo ein Luftpolster entsteht. 
-Durch ein Loch im Boden des Hovercrafts kann die Luft entweichen und somit einen Druck erzeugen, um das Luftkissenboot zum Schweben zu bringen. \\
-Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt sich das Hovercraft lenken. Für eine vereinfachte Darstellung der Funktionsweise siehe 
-\autoref{fig:Funktionsprinzip}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{../Funktionsprinzip/Funktionsprinzip.JPG}
-  \label{fig:Funktionsprinzip}
-  \caption{Funktionsprinzip eines Hovercrafts}
-\end{figure}
-
+\subimport{Textparts/Stoeger/Einfuehrung/}{Funktionsprinzip.tex}
 
 \section{Individuelle Themenstellung}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Einfuehrung/}{individuelleThemenstellung.tex}
 
-\begin{itemize}
-  \item \textbf{Stefan Deimel:}
-  \begin{itemize}
-    \item Konstruktion
-    \item Motorregelung
-  \end{itemize}
-  \item \textbf{Philipp Eilmsteiner:}
-  \begin{itemize}
-    \item Steuerelektronik
-    \item HMI
-  \end{itemize}
-  \item \textbf{Julia Stöger:}
-  \begin{itemize}
-    \item Sicherheitskonzept
-    \item Batteriemanagement
-  \end{itemize}
-\end{itemize}
-
-
+\chapter{Meilensteine}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
 \chapter{Erster Prototyp}
 \responsible{Stefan Deimel}
@@ -211,13 +231,6 @@ Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt
 \responsible{Stefan Deimel}
 \subimport{Textparts/Deimel/Konstruktion/}{Konstruktion.tex}
 
-
-
-
-
-\chapter{Meilensteine}
-\responsible{Julia Stöger}
-\subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
 \chapter{Sicherheitskonzept}
 \responsible{Julia Stöger}
@@ -230,6 +243,13 @@ Mithilfe von Fahnen, welche hinter dem Propeller am Boot angebracht sind, lässt
 \responsible{Philipp Eilmsteiner}
 \subimport{Textparts/Eilmsteiner/Boardelektronik}{Boardelektronik.tex}
 
+\chapter{Batteriemanagement}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Batteriemanagement/}{Batteriemanagement.tex}
+
+\chapter{Betriebsanleitung}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Anleitung/}{Anleitung.tex}
 \clearpage
 \appendix
 \def\chapterpagestyle{empty} 
