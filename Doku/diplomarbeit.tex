@@ -84,6 +84,34 @@
 \usepackage{ragged2e}
 \usepackage{csvsimple}
 
+%\usepackage{afterpage}
+
+%\usepackage{pdflscape}
+\usepackage{lscape}
+
+%%=== MY COMMANDS ====%%
+% \includeSkizze{file, name, number, date}
+\newcommand{\includeSkizze}[5]{
+  \begin{figure}[H]
+    \centering
+    \resizebox{.99\textheight}{!}{
+    \begin{tikzpicture}
+        \draw (0,0) rectangle (\textheight, \textwidth);
+        \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
+        \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
+        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
+        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
+        \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
+        \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
+        \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
+        {\includegraphics[width=\textheight]{#1}};
+    \end{tikzpicture}}
+    \label{#5}
+  \end{figure}
+}
+
+
+
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
