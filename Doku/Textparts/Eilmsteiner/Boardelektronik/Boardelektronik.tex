@@ -13,12 +13,37 @@ Um eine zuverlässige Übertragung der Regelparameter für unsere Motoren sowie 
 Neben seiner Robustheit trotz relativ hoher Übertragungsgeschwindigkeit, war es vorallem sein dezentraler Aufbau, der ihn für unseren Anwendungszweck optimal gemacht hat.
 \todo[]{Verfeinerung des Textes, Bilder!}
 \newpage
-\section{Die zur Steuerung entworfenen Controller}
+\section{Die zur Steuerung entworfenen Platinen}
 \subsection{Lenker}
 Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
 Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
+
+\begin{minipage}{8.5cm}
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.9\textwidth]{Fotos/Regler_Lenker.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \draw[red,ultra thick,rounded corners,rotate around={-30:(0.77,0.47)}] (0.6,0.47) rectangle (0.77,0.62);
+            \draw[blue,ultra thick,rounded corners,rotate around={-30:(0.4,0.58)}] (0.25,0.58) rectangle (0.4,0.68);
+            \draw[orange,ultra thick,rounded corners,rotate around={-30:(0.47,0.67)}] (0.33,0.67) rectangle (0.47,0.76);
+            \draw[green,ultra thick,rounded corners,rotate around={-34:(0.57,0.67)}] (0.45,0.67) rectangle (0.57,0.8);
+            \draw[yellow,ultra thick,rounded corners,rotate around={-34:(0.62,0.60)}] (0.54,0.60) rectangle (0.62,0.75);
+        \end{scope}
+    \end{tikzpicture}
+    \captionof{figure}{Platine des Lenkers}
+\end{minipage}
+\begin{minipage}{7cm}
+    \textcolor{red}{CAN-Bus Anschlüsse}\\
+    \textcolor{blue}{Serielle Verbindung zum GPS-Modul}\\
+    \textcolor{orange}{Serielle Verbindung zum Bildschirm}\\
+    \textcolor{green}{Daumengas Anschlüsse}\\
+    \textcolor{yellow}{Anschluss Lenkerpotenziometer}\\
+    
+\end{minipage}
+
 \begin{figure}[h]
+    \centering
     \includegraphics[width=0.5\textwidth]{Fotos/GPS_Modul.png}
+    \caption{verwendetes GPS-Modul}
 \end{figure}
 
 \newpage
