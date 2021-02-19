@@ -30,6 +30,7 @@
 \ReplacePackage{scrpage2}{scrlayer-scrpage}
 
 \documentclass[paper=a4,12pt]{scrreprt}
+\pdfminorversion=6 % because proteus exports are 1.6
 % Encoding UTF8
 \usepackage[utf8]{inputenc}
 % 8 Bit Aufloesung der Buchstaben
@@ -86,34 +87,44 @@
 
 %\usepackage{afterpage}
 
-%\usepackage{pdflscape}
-\usepackage{lscape}
+\usepackage{pdflscape}
+%\usepackage{lscape}
 
 \usepackage{caption}
 
 %%=== MY COMMANDS ====%%
 % \includeSkizze{file, name, number, date}
-\newcommand{\includeSkizze}[5]{
+% \newcommand{\includeSkizzeOld}[5]{
+%   \begin{figure}[H]
+%     \centering
+%     \resizebox{.99\textheight}{!}{
+%     \begin{tikzpicture}
+%         \draw (0,0) rectangle (\textheight, \textwidth);
+%         \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
+%         \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
+%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
+%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
+%         \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
+%         \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
+%         \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
+%         {\includegraphics[width=\textheight]{#1}};
+%     \end{tikzpicture}}
+%     \captionlistentry{Skizze #2, Blatt #4}
+%     Skizze #2
+%     \label{#5}
+%   \end{figure}
+% }
+
+\newcommand{\includeSkizze}[4]{
   \begin{figure}[H]
     \centering
     \resizebox{.99\textheight}{!}{
-    \begin{tikzpicture}
-        \draw (0,0) rectangle (\textheight, \textwidth);
-        \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
-        \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
-        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
-        \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
-        \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
-        \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
-        \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
-        {\includegraphics[width=\textheight]{#1}};
-    \end{tikzpicture}}
+    \includegraphics[width=\textheight, page=#4]{#1}
+    }
     \captionlistentry{Skizze #2}
-    %Skizze #2
-    \label{#5}
+    \label{#3}
   \end{figure}
 }
-
 
 
 \usepackage{tikz}
