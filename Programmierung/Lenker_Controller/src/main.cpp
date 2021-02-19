@@ -7,6 +7,9 @@
 static const int RXPin = 8, TXPin = 9;
 static const uint32_t GPSBaud = 9600;
 
+#define MIN_VALUE_A0 43
+#define MIN_VALUE_A1 43
+
 // The TinyGPS++ object
 TinyGPSPlus gps;
 
@@ -135,13 +138,6 @@ void setup(){
   pinMode(A3,INPUT);
   pinMode(A4,INPUT);
 
-  //Initialize CAN-Bus shield
-  mcp2515.reset();
-  mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
-  mcp2515.setNormalMode();
-  canMsg.can_id=CAN_ID_CONTROL_MOTORS_SERVOS;
-  canMsg.can_dlc=3;
-
   //initialize NEXTION display
   #ifdef NEXTION_ENABLED
   Serial.begin(9600);
@@ -155,7 +151,7 @@ void setup(){
   disp_slid_lenk_offset.attachPop(slid_lenk_offset);
   disp_slid_maxbackpower.attachPop(slid_maxbackpower);
   disp_slid_maxdownpower.attachPop(slid_maxdownpower);
-  delay(500);
+  delay(100);
 
   //change baudrate of nextion display from 9600 to 38400 baud
   Serial.print("baud=38400");
@@ -164,33 +160,46 @@ void setup(){
   Serial.write(0xff);
   Serial.end(); //end serial with 9600 baud
   Serial.begin(38400); //restart it with 38400 baud
-  delay(500);
+  delay(200);
   #endif
 
   ss.begin(9600); //initialize SoftwareSerial for GPS module
+
+    //Initialize CAN-Bus shield
+  mcp2515.reset();
+  mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
+  mcp2515.setNormalMode();
+  canMsg.can_id=CAN_ID_CONTROL_MOTORS_SERVOS;
+  canMsg.can_dlc=3;
 }
 
 unsigned long last_update=0;
 unsigned long last_gps_update=0;
-int test=0;
+//int last_back_power=0;
+//int last_lower_power=0;
+//int test=0;
 
 
 void loop(){
   if (millis()-last_update>50){
-  canMsg.data[0]=min(analogRead(A0)>>2,(int)max_power_lower); // unterer Motor
-  canMsg.data[1]=min(analogRead(A1)>>2,(int)max_power_back); //hinterer Motor
+    canMsg.data[0]=(int)map(analogRead(A0),MIN_VALUE_A0,1023,0,max_power_lower); //get value from left thumb throttle
+    canMsg.data[1]=(int)map(analogRead(A1),MIN_VALUE_A1,1023,0,max_power_back); //get value from right thumb throttle
+  //canMsg.data[0]=min(analogRead(A0)>>2,(int)max_power_lower); // unterer Motor
+  //canMsg.data[1]=min(analogRead(A1)>>2,(int)max_power_back); //hinterer Motor
+  //canMsg.data[0]=min(analogRead(A0)>>2,100); // unterer Motor
+  //canMsg.data[1]=min(analogRead(A1)>>2,100); //hinterer Motor
   canMsg.data[2]=(int)(steering_offset-10)+map(analogRead(A2)>>2,23,88,0,255); //Lenkung
   mcp2515.sendMessage(&canMsg);
   last_update=millis();
   }
   #ifdef NEXTION_ENABLED
-  if (millis()-last_gps_update>500){
+  if (millis()-last_gps_update>500){ //refresh gps data on display every 500ms
     if (nextion_page==0){
       disp_gps_speed.setText(String(gps.speed.kmph()/1.0).c_str());
     } else if (nextion_page==2){
       disp_gpsinf_sats.setText(String(gps.satellites.value()).c_str());
       disp_gpsinf_speed.setText(String(gps.speed.kmph()).c_str());
-      disp_gpsinf_course.setText(String(gps.speed.kmph()).c_str());
+      disp_gpsinf_course.setText(String(gps.course.deg()).c_str());
       disp_gpsinf_lon.setText(String(gps.location.lng()).c_str());
       disp_gpsinf_lat.setText(String(gps.location.lat()).c_str());
       disp_gpsinf_height.setText(String(gps.altitude.meters()).c_str());
@@ -198,19 +207,19 @@ void loop(){
     last_gps_update=millis();
   }
   disp_gps_speed.setText(String(gps.speed.kmph()/1.0).c_str());
-  if (mcp2515.readMessage(&canMsg_r) == MCP2515::ERROR_OK) {
+  if (mcp2515.readMessage(&canMsg_r) == MCP2515::ERROR_OK) { //check for new CAN-Bus messages
     if ((canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER || (canMsg_r.can_id==CAN_ID_INFOS_BACK_CONTROLLER))&&(canMsg_r.can_dlc==6)&&nextion_page==0){ //Infos from lower motor controller received
       int spannung = (canMsg_r.data[0]<<8)| canMsg_r.data[1];
       int drehzahl = (canMsg_r.data[4]<<8)|canMsg_r.data[5];
       int temperatur = canMsg_r.data[2];
       int percent = canMsg_r.data[3];
   
-        if (canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER){
+        if (canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER){ //message from lower controller
           disp_drz_u.setText(String(drehzahl).c_str());
           disp_temp_u.setText(String(temperatur).c_str());
           disp_gas_u.setText(String(percent).c_str());
           disp_spg_u.setText(String(spannung/100.0).c_str());
-        } else{
+        } else{ //message from back controller
           disp_drz_h.setText(String(drehzahl).c_str());
           disp_temp_h.setText(String(temperatur).c_str());
           disp_gas_h.setText(String(percent).c_str());
