@@ -87,8 +87,8 @@
 
 %\usepackage{afterpage}
 
-\usepackage{pdflscape}
-%\usepackage{lscape}
+%\usepackage{pdflscape}
+\usepackage{lscape}
 
 \usepackage{caption}
 
@@ -114,6 +114,8 @@
 %     \label{#5}
 %   \end{figure}
 % }
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
 \newcommand{\includeSkizze}[4]{
   \begin{figure}[H]
