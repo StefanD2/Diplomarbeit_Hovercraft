@@ -9,12 +9,52 @@ Zusammen mit der für den jeweiligen Einsatzzweck benötigten Peripherie bilden 
 \captionof{figure}{CAN-Bus Modul}
 \end{minipage}
 \section{Übertragungsmedium CAN-Bus}
+\subsection{Gründe für die Verwendung}
 Um eine zuverlässige Übertragung der Regelparameter für unsere Motoren sowie Servos garantieren zu können, wurde für deren Übertragung ein aus der Automobilbranche bekanntes Übertragungsmedium verwendet, der CAN-Bus. 
 Neben seiner Robustheit trotz relativ hoher Übertragungsgeschwindigkeit, war es vorallem sein dezentraler Aufbau, der ihn für unseren Anwendungszweck optimal gemacht hat.
-\todo[]{Verfeinerung des Textes, Bilder!}
+
 \newpage
+
+\subsection{Verwendete Adressen}
+\begin{table}[h]
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+    Name                              & CAN-ID & Info         & Länge \\\hline
+    CONTROL\_MOTORS\_SERVOS  & 0xC0   & Gas-\& Lenkerstellung & 3     \\
+    INFOS\_LOWER\_CONTROLLER & 0xC1   & Telemetriedaten Motor unten  & 6     \\
+    INFOS\_BACK\_CONTROLLER  & 0xC3   & Telemetriedaten Motor hinten & 6     \\
+    BATTERY\_TEMPS           & 0xE0   & Akku-Temperaturen            & 8    \\\hline
+    \end{tabular}
+    \caption{Verwendete CAN-Bus Adressen}
+\end{table}
+
 \section{Die zur Steuerung entworfenen Platinen}
+\subsection{Motorregleransteuerung}
+\subsubsection{Aufgaben \& verwendete Bauteile}
+Diese wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
+Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetriedaten an den Controller des Lenkers.
+
+\begin{minipage}{8.5cm}
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.9\textwidth]{Fotos/Regler_Platine.png}};
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \draw[red,ultra thick,rounded corners,rotate around={-23:(0.68,0.68)}] (0.62,0.67) rectangle (0.8,0.9);
+            \draw[blue,ultra thick,rounded corners,rotate around={-20:(0.3,0.68)}] (0.2,0.53) rectangle (0.35,0.7);
+            \draw[orange,ultra thick,rounded corners,rotate around={-20:(0.35,0.78)}] (0.26,0.66) rectangle (0.41,0.8);
+        \end{scope}
+    \end{tikzpicture}
+    \captionof{figure}{Platine zur Regleransteuerung}
+\end{minipage}
+\begin{minipage}{7cm}
+    \textcolor{red}{CAN-Bus Anschlüsse}\\
+    \textcolor{orange}{Serielle Verbindung zum Regler}\\
+    \textcolor{blue}{PWM-Ausgang}\\
+
+\end{minipage}
+
+\newpage
 \subsection{Lenker}
+\subsubsection{Aufgaben \& verwendete Bauteile}
 Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
 Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
 
@@ -47,30 +87,12 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 \end{figure}
 
 \newpage
-\subsection{Motorregleransteuerung}
-Diese wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
-Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetriedaten an den Controller des Lenkers.
-
-\begin{minipage}{8.5cm}
-    \begin{tikzpicture}
-        \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.9\textwidth]{Fotos/Regler_Platine.png}};
-        \begin{scope}[x={(image.south east)},y={(image.north west)}]
-            \draw[red,ultra thick,rounded corners,rotate around={-23:(0.68,0.68)}] (0.62,0.67) rectangle (0.8,0.9);
-            \draw[blue,ultra thick,rounded corners,rotate around={-20:(0.3,0.68)}] (0.2,0.53) rectangle (0.35,0.7);
-            \draw[orange,ultra thick,rounded corners,rotate around={-20:(0.35,0.78)}] (0.26,0.66) rectangle (0.41,0.8);
-        \end{scope}
-    \end{tikzpicture}
-    \captionof{figure}{Platine zur Regleransteuerung}
-\end{minipage}
-\begin{minipage}{7cm}
-    \textcolor{red}{CAN-Bus Anschlüsse}\\
-    \textcolor{orange}{Serielle Verbindung zum Regler}\\
-    \textcolor{blue}{PWM-Ausgang}\\
-    
-\end{minipage}
+\subsubsection{Auszüge aus dem Microcontrollerprogramm}
 
 \newpage
+
 \subsection{Fahnenansteuerung und Akkutemperaturen}
+\subsubsection{Aufgaben \& verwendete Bauteile}
 Auch die Ansteuerung der Servos erfolgte mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbunden GPIOs zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.
 
