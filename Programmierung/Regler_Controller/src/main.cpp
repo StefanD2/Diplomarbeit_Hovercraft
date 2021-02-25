@@ -50,9 +50,9 @@ void setup() {
   ICR1L=0B0;
 
   sei(); //Enabeling the interrupts
-  
+
   OCR1AH=0b01;
-  OCR1AL=0;
+  OCR1AL=40;
 
   //initialize canbus-shield
   mcp2515.reset();
@@ -68,6 +68,8 @@ void setup() {
 
   //initialize controller-decoder
   jeti->init();
+
+
 }
 
 void loop() {
@@ -82,13 +84,13 @@ void loop() {
           #endif
         
         OCR1AH=0b01;
-        OCR1AL=value;
+        OCR1AL=max(value,40);
     }
   }
 
   if (micros()-last_data_received>=MAX_TIME_WITHOUT_UPDATE){//Stop the motor if no data from CanBus was received for 2 seconds
     OCR1AH=0b01;
-    OCR1AL=0;
+    OCR1AL=10;
   }
 
 
