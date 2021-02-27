@@ -53,6 +53,15 @@ Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetried
 \end{minipage}
 
 \newpage
+
+\subsubsection{Schaltplan}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Regler-Platine.png}    
+    \caption{Schaltplan der Regler-Platine}
+\end{figure}
+
+\newpage
 \subsection{Lenker}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
@@ -87,12 +96,17 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 \end{figure}
 
 \newpage
-\subsubsection{Auszüge aus dem Microcontrollerprogramm}
+\subsubsection{Schaltplan}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Lenker-Platine.png}    
+    \caption{Schaltplan der Lenker-Platine}
+\end{figure}
 
 \newpage
 
 \subsection{Fahnenansteuerung und Akkutemperaturen}
-\subsubsection{Aufgaben \& verwendete Bauteile}
+\subsubsection{Fahnenansteuerung}
 Auch die Ansteuerung der Servos erfolgte mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbunden GPIOs zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.
 
@@ -120,6 +134,16 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
 \end{figure}
 
 \newpage
+\subsubsection{Schaltplan}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Servos-Platine.png}    
+    \caption{Schaltplan der Servoansteuerung-Platine}
+\end{figure}
+
+
+\newpage
+\subsubsection{Akkutemperaturen}
 Die zweite Aufgabe dieses Controllers ist es, die Temperaturen aller acht im Boot verbauten Akkus zu überwachen, und diese zur Darstellung an den Controller des Lenkers zu übermitteln.
 Dies geschieht mithilfe zweier (je einer pro Seite verbauten) ebenfalls über I2C verbundenen \textbf{ADS1115} Analog-Digital-Wandler, welche wiederum von Adafruit stammen.\\
 Zur Temperaturmessung selbst kommt je ein \textbf{LM35} Temperatursensor pro Akku zum Einsatz.\\
@@ -154,6 +178,14 @@ Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde fol
     \textcolor{orange}{I2C Adressen-Jumper}\\
     
 \end{minipage}\\
+
+\newpage
+\subsubsection{Schaltplan}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../Proteus/Exports/Temperatursensoren-Platine.png}    
+    \caption{Schaltplan der Temperatursensoren-Platine}
+\end{figure}
 
 \newpage
 \section{Bildschirm}

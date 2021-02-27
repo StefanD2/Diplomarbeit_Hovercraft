@@ -7,8 +7,10 @@
 static const int RXPin = 8, TXPin = 9;
 static const uint32_t GPSBaud = 9600;
 
-#define MIN_VALUE_A0 43
-#define MIN_VALUE_A1 43
+#define MIN_VALUE_A0 190
+#define MAX_VALUE_A0 862
+#define MIN_VALUE_A1 185
+#define MAX_VALUE_A1 865
 
 // The TinyGPS++ object
 TinyGPSPlus gps;
@@ -31,8 +33,7 @@ static void smartDelay(unsigned long ms)
 #define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
 #define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
 #define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
-#define CAN_ID_BATTERY_TEMPS_LEFT 0xE0
-#define CAN_ID_BATTERY_TEMPS_RIGHT 0xE1
+#define CAN_ID_BATTERY_TEMPS 0xE0
 
 
 
@@ -182,15 +183,15 @@ unsigned long last_gps_update=0;
 
 void loop(){
   if (millis()-last_update>50){
-    canMsg.data[0]=(int)map(analogRead(A0),MIN_VALUE_A0,1023,0,max_power_lower); //get value from left thumb throttle
-    canMsg.data[1]=(int)map(analogRead(A1),MIN_VALUE_A1,1023,0,max_power_back); //get value from right thumb throttle
+    //canMsg.data[0]=(map(analogRead(A1),MIN_VALUE_A1,MAX_VALUE_A1,40,(int)max_power_lower))&0xFF; //get value from left thumb throttle
+    //canMsg.data[1]=(map(analogRead(A0),MIN_VALUE_A0,MAX_VALUE_A0,40,(int)max_power_back))&0xFF; //get value from right thumb throttle
   //canMsg.data[0]=min(analogRead(A0)>>2,(int)max_power_lower); // unterer Motor
   //canMsg.data[1]=min(analogRead(A1)>>2,(int)max_power_back); //hinterer Motor
-  //canMsg.data[0]=min(analogRead(A0)>>2,100); // unterer Motor
-  //canMsg.data[1]=min(analogRead(A1)>>2,100); //hinterer Motor
-  canMsg.data[2]=(int)(steering_offset-10)+map(analogRead(A2)>>2,23,88,0,255); //Lenkung
+  canMsg.data[0]=min(analogRead(A1)>>2,255); // unterer Motor
+  canMsg.data[1]=min(analogRead(A0)>>2,255); //hinterer Motor
+  canMsg.data[2]=(int)(steering_offset)+map(analogRead(A2)>>2,23,88,0,255); //Lenkung
   mcp2515.sendMessage(&canMsg);
-  last_update=millis();
+  last_update=millis(); 
   }
   #ifdef NEXTION_ENABLED
   if (millis()-last_gps_update>500){ //refresh gps data on display every 500ms
@@ -225,18 +226,15 @@ void loop(){
           disp_gas_h.setText(String(percent).c_str());
           disp_spg_h.setText(String(spannung/100.0).c_str());
         }
-    } else if ((canMsg_r.can_id==CAN_ID_BATTERY_TEMPS_LEFT || (canMsg_r.can_id==CAN_ID_BATTERY_TEMPS_RIGHT))&&(canMsg_r.can_dlc==8)&&nextion_page==2){
-        if (canMsg_r.can_id==CAN_ID_BATTERY_TEMPS_LEFT){
-            disp_atemp_01.setText(String((canMsg_r.data[0]<<8)| canMsg_r.data[1]).c_str());
-            disp_atemp_02.setText(String((canMsg_r.data[2]<<8)| canMsg_r.data[3]).c_str());
-            disp_atemp_03.setText(String((canMsg_r.data[4]<<8)| canMsg_r.data[5]).c_str());
-            disp_atemp_04.setText(String((canMsg_r.data[6]<<8)| canMsg_r.data[7]).c_str());
-    } else{
-            disp_atemp_05.setText(String((canMsg_r.data[0]<<8)| canMsg_r.data[1]).c_str());
-            disp_atemp_06.setText(String((canMsg_r.data[2]<<8)| canMsg_r.data[3]).c_str());
-            disp_atemp_07.setText(String((canMsg_r.data[4]<<8)| canMsg_r.data[5]).c_str());
-            disp_atemp_08.setText(String((canMsg_r.data[6]<<8)| canMsg_r.data[7]).c_str());
-      }
+    } else if ((canMsg_r.can_id==CAN_ID_BATTERY_TEMPS)&&(canMsg_r.can_dlc==8)&&(nextion_page==2)){
+            disp_atemp_01.setText(String(canMsg_r.data[0]).c_str());
+            disp_atemp_02.setText(String(canMsg_r.data[1]).c_str());
+            disp_atemp_03.setText(String(canMsg_r.data[2]).c_str());
+            disp_atemp_04.setText(String(canMsg_r.data[3]).c_str());
+            disp_atemp_05.setText(String(canMsg_r.data[4]).c_str());
+            disp_atemp_06.setText(String(canMsg_r.data[5]).c_str());
+            disp_atemp_07.setText(String(canMsg_r.data[6]).c_str());
+            disp_atemp_08.setText(String(canMsg_r.data[7]).c_str());
     
     }
   }

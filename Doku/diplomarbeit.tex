@@ -87,8 +87,8 @@
 
 %\usepackage{afterpage}
 
-\usepackage{pdflscape}
-%\usepackage{lscape}
+%\usepackage{pdflscape}
+\usepackage{lscape}
 
 \usepackage{caption}
 \usepackage{setspace}\usepackage{threeparttable}
@@ -116,13 +116,15 @@
 %   \end{figure}
 % }
 
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
 \newcommand{\includeSkizze}[4]{
   \begin{figure}[H]
     \centering
     \resizebox{.99\textheight}{!}{
     \includegraphics[width=\textheight, page=#4]{#1}
     }
-    \captionlistentry{Skizze #2}
+    \captionlistentry{Zeichnung #2}
     \label{#3}
   \end{figure}
 }
@@ -132,7 +134,7 @@
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
-\title{Luftkissenboot}
+\title{Hovercraft}
 \author{Stefan Deimel \and Philipp Eilmsteiner \and Julia Stöger}
 \date{\today}
 \place{St. P\"olten}
