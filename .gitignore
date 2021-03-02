@@ -2,3 +2,5 @@
 *.pdsbak
 *.tmp
 *.lck
+
+**/OldVersions/*
