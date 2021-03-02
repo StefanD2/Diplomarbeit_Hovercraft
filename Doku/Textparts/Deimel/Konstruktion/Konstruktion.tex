@@ -33,12 +33,11 @@ In der Mitte der Bodenplatte wurde das Loch für den Propeller ausgeschnitten. I
         2 & Staffel Motorhalterung & Staffel gehobelt 40x60mm & Stichsäge & \ref{fig:bodenplatte:skizze:Staffel}\\\hline
         2 & Platte Motorhalterung & 10mm Pappel & LaserCutter & \ref{fig:bodenplatte:skizze:Motorhalterung}\\\hline
         1 & Platte Motorregler-Halterung & 10mm Pappel & LaserCutter & \ref{fig:bodenplatte:skizze:Motorreglerhalterung}\\\hline
-        1 & Gitter unten & Lochplatte & Gekauft & ?? \\\hline
+        1 & Gitter unten & Lochplatte & Gekauft & \ref{fig:konst:gitter} \\\hline
     \end{tabular}
     \caption{Stückliste Bodenplatte}
     \label{tab:konst:bodenplatte:stueckliste}
 \end{table}
-\todo{Stefan -- add ref Gitter}
 
 \clearpage
 \subsection{Inventor}
@@ -85,7 +84,10 @@ In der Mitte der Bodenplatte wurde das Loch für den Propeller ausgeschnitten. I
 \subsection{Gitter}
 Das untere Gitter muss so stabil sein, dass ein Mensch problem los darauf sitzen kann. Gleichzeitig muss es aber auch genug Luft durchlassen.\\
 Wir haben uns für deshalb für ein Lochblech mit quadratischen Löcher mit 5mm Sietenlänge entschieden. Der Steg zwischen den Löchern ist 3mm breit, insgesamt ist das Gitter 73x73cm groß.\\
-\missingfigure{Stefan -- Foto Gitter}
+\begin{figure}[H]
+    \missingfigure{Stefan -- Foto Gitter}
+    \caption{Foto Gitter \label{fig:konst:gitter}}    
+\end{figure}
 
 
 \subsection{Zusammenbau}
@@ -229,7 +231,17 @@ Um den Lenker automatisch zu zentrieren und der Lenkung ein Gegenmoment zu geben
         \textbf{Stk} & \textbf{Name} & \textbf{Material} & \textbf{Herstellung} & \textbf{Abbildung}\\\hline
         1 & Bodenplatte & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:bodenplatte}\\\hline
         2 & Platte Groß mit Loch & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:pgl}\\\hline
-        2 & Platte Groß mit Loch & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:pgl}\\\hline
+        2 & Platte Seite Lang & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:psl}\\\hline
+        2 & Platte Seite Kurz & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:psk}\\\hline
+        1 & Halterung Poti unten & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:psk}\\\hline
+        1 & Adapter Poti Teil 1 & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:apt1}\\\hline
+        1 & Adapter Poti Teil 2 & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:apt2}\\\hline
+        1 & Adapter Lenker & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:al}\\\hline
+        1 & Stange Mitte & \diameter 10mm Alu-Stange & Gekauft & \ref{fig:Lenkung:skizze:sm}\\\hline
+        1 & Gewindestange & M4 Gewindestange & Gekauft & \ref{fig:Lenkung:skizze:gs}\\\hline
+        2 & Displayhalterung Halterung & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhh}\\\hline
+        1 & Displayhalterung Hauptteil & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhm}\\\hline
+        1 & Displayhalterung Deckel & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhd}\\\hline
     \end{tabular}
     \caption{Stückliste Aufbau hinten}
     \label{tab:konst:aufbau:stueckliste}
@@ -249,11 +261,32 @@ Um den Lenker automatisch zu zentrieren und der Lenkung ein Gegenmoment zu geben
     \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteSeiteKurz.pdf}{Platte Seite Kurz}{fig:Lenkung:skizze:psk}{1}
     \clearpage
 
-    \missingfigure{Stefan -- Inventor Zeichnungen Lenker}
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PotiHalterungUnten.pdf}{Poti Halterung}{fig:Lenkung:skizze:poth}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterPoti1.pdf}{Adapter Poti Teil 1}{fig:Lenkung:skizze:apt1}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterPoti2.pdf}{Adapter Poti Teil 2}{fig:Lenkung:skizze:apt2}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterLenker.pdf}{Adapter Lenker}{fig:Lenkung:skizze:al}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/StangeMitte.pdf}{Stange Mitte}{fig:Lenkung:skizze:sm}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/M4Gewindestange.pdf}{Gewindestange}{fig:Lenkung:skizze:gs}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Halter.pdf}{Displayhalterung Halterung}{fig:Lenkung:skizze:nhh}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Main.pdf}{Displayhalterung Hauptteil}{fig:Lenkung:skizze:nhm}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Deckel.pdf}{Displayhalterung Deckel}{fig:Lenkung:skizze:nhd}{1}
     \clearpage
 \end{landscape}
 
-\missingfigure{Stefan -- Displayhalterung Zeichnung (weil ich jetzt schon weiss dass ichs vergess)}
+
 
 \cleardoublepage
 \subsection{Zusammenbau}
