@@ -202,23 +202,28 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
     \begin{tikzpicture}
         \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.9\textwidth]{Fotos/Platine_Relaischaltung.png}};
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
-            \draw[red,ultra thick,rounded corners,rotate around={-23:(0.78,0.0)}] (0.25,0.0) rectangle (0.78,0.4);
-            \draw[blue,ultra thick,rounded corners,,rotate around={-30:(0.00,0.59)}] (0.00,0.59) rectangle (0.20,0.99);
-            \draw[orange,ultra thick,rounded corners,,rotate around={-27:(0.3,0.4)}] (0.15,0.4) rectangle (0.34,0.57);
+            \draw[red,ultra thick,rounded corners,rotate around={30:(0.58,0.11)}] (0.58,0.11) rectangle (0.79,0.35);
+            \draw[blue,ultra thick,rounded corners,rotate around={30:(0.77,0.28)}] (0.77,0.28) rectangle (0.97,0.51);
+            \draw[orange,ultra thick,rounded corners,rotate around={37:(0.29,0.21)}] (0.29,0.21) rectangle (0.46,0.42);
+            \draw[green,ultra thick,rounded corners,rotate around={37:(0.16,0.38)}] (0.16,0.38) rectangle (0.34,0.55);
+            \draw[violet,ultra thick,rounded corners,rotate around={40:(0.78,0.56)}] (0.78,0.56) rectangle (0.93,0.81);
         \end{scope}
     \end{tikzpicture}
     \captionof{figure}{Platine zur Relaisansteuerung}
 \end{minipage}
-\begin{minipage}{7cm}
-    \textcolor{red}{Analogeingänge}\\
-    \textcolor{blue}{I2C Anschluss}\\
-    \textcolor{orange}{I2C Adressen-Jumper}\\
+\begin{minipage}{7.5cm}
+    \textcolor{green}{Hauptrelais}\\
+    \textcolor{blue}{Micro-Switches}\\
+    \textcolor{orange}{Buck-Converter (nicht mehr verwendet)}\\
+    \textcolor{violet}{geschaltene Relaisseite}\\
+    \textcolor{red}{Konstante +30 V}\\
 \end{minipage}\\
 
 
 \newpage
 \section{Bildschirm}
 \begin{figure}[h]
+    \centering
     \includegraphics[width=0.8\textwidth]{Fotos/Nextion_Display.png}
     \caption{Nextion-Display}
 \end{figure}
