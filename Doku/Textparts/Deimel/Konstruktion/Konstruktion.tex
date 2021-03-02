@@ -212,6 +212,7 @@ Die Winkelverbinder sind mit Holzschrauben an der Bodenplatte fix befestigt. Der
 Die Löcher für die M8 Schrauben sind in den Zeichnungen nicht vorhanden, da diese erst beim Zusammenbauen gebohrt wurden, um einen Passgenauigkeit zu garantieren.\\
 \missingfigure{Stefan -- Zusammenbau - hinterer Aufbau}
 
+\clearpage
 \section{Lenkung}
 Die Lenkung beinhaltet die komplette Steuerung des Hovercrafts.\\
 Der Lenker selbst ist ein Fahrrad-Lenker, welcher auf einer Metallstange befestigt wird. Diese Metallstange sollte stabil sein, damit sich der Fahrer an der Lenkung festhalten kann. Die Lenkerstellung wird mit einem Potenziometer, welches ebenfalls in der Box verbaut ist, ausgelesen.\\
@@ -221,12 +222,37 @@ Um den Lenker automatisch zu zentrieren und der Lenkung ein Gegenmoment zu geben
 
 \clearpage
 \subsection{Stückliste}
-
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|M{4.5cm}|M{3.5cm}|c|c|}
+        \hline
+        \textbf{Stk} & \textbf{Name} & \textbf{Material} & \textbf{Herstellung} & \textbf{Abbildung}\\\hline
+        1 & Bodenplatte & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:bodenplatte}\\\hline
+        2 & Platte Groß mit Loch & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:pgl}\\\hline
+        2 & Platte Groß mit Loch & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:pgl}\\\hline
+    \end{tabular}
+    \caption{Stückliste Aufbau hinten}
+    \label{tab:konst:aufbau:stueckliste}
+\end{table}
 
 \clearpage
 \subsection{Inventor}
 \missingfigure{Stefan -- allgemeine Inventor ansichten}
-\missingfigure{Stefan -- Inventor Zeichnungen Lenker}
+
+\begin{landscape}
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Bodenplatte.pdf}{Bodenplatte}{fig:Lenkung:skizze:bodenplatte}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteGrossLoch.pdf}{Platte Groß mit Loch}{fig:Lenkung:skizze:pgl}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteSeiteLang.pdf}{Platte Seite Lang}{fig:Lenkung:skizze:psl}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteSeiteKurz.pdf}{Platte Seite Kurz}{fig:Lenkung:skizze:psk}{1}
+    \clearpage
+
+    \missingfigure{Stefan -- Inventor Zeichnungen Lenker}
+    \clearpage
+\end{landscape}
+
 \missingfigure{Stefan -- Displayhalterung Zeichnung (weil ich jetzt schon weiss dass ichs vergess)}
 
 \cleardoublepage
