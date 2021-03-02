@@ -181,12 +181,12 @@ unsigned long last_gps_update=0;
 
 void loop(){
   if (millis()-last_update>50){
-    //canMsg.data[0]=(map(analogRead(A1),MIN_VALUE_A1,MAX_VALUE_A1,40,(int)max_power_lower))&0xFF; //get value from left thumb throttle
-    //canMsg.data[1]=(map(analogRead(A0),MIN_VALUE_A0,MAX_VALUE_A0,40,(int)max_power_back))&0xFF; //get value from right thumb throttle
+    canMsg.data[0]=(int)(map(analogRead(A1),MIN_VALUE_A1,MAX_VALUE_A1,30,(int)max_power_lower))&0xFF; //get value from left thumb throttle
+    canMsg.data[1]=(int)(map(analogRead(A0),MIN_VALUE_A0,MAX_VALUE_A0,30,(int)max_power_back))&0xFF; //get value from right thumb throttle
   //canMsg.data[0]=min(analogRead(A0)>>2,(int)max_power_lower); // unterer Motor
   //canMsg.data[1]=min(analogRead(A1)>>2,(int)max_power_back); //hinterer Motor
-  canMsg.data[0]=min(analogRead(A1)>>2,255); // unterer Motor
-  canMsg.data[1]=min(analogRead(A0)>>2,255); //hinterer Motor
+  //canMsg.data[0]=min(analogRead(A1)>>2,255); // unterer Motor
+  //canMsg.data[1]=min(analogRead(A0)>>2,255); //hinterer Motor
   canMsg.data[2]=(int)(steering_offset)+map(analogRead(A2)>>2,23,88,0,255); //Lenkung
   mcp2515.sendMessage(&canMsg);
   last_update=millis(); 
