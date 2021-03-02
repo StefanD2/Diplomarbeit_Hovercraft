@@ -12,11 +12,9 @@ static const uint32_t GPSBaud = 9600;
 #define MIN_VALUE_A1 185
 #define MAX_VALUE_A1 865
 
-// The TinyGPS++ object
-TinyGPSPlus gps;
+TinyGPSPlus gps;//TinyGPS++ object
 
-// The serial connection to the GPS device
-SoftwareSerial ss(RXPin, TXPin);
+SoftwareSerial ss(RXPin, TXPin); //serial connection the GPS device
 
 //This custom version of delay() ensures that the gps object
 //is being "fed".
