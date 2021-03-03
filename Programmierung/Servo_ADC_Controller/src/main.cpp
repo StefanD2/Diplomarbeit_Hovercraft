@@ -53,7 +53,7 @@ void setup() {
   delay(10);
   pwm.setPWM(0,0,355);
   pwm.setPWM(4,0,355);
-  pwm.setPWM(8,0,355);
+  pwm.setPWM(8,0,322);
 
   mcp2515.reset();
   mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
@@ -89,14 +89,14 @@ void loop() {
       int8_t c_temp_left,c_temp_right;
       c_adc_left=adcleft.readADC_SingleEnded(i);
       c_adc_right=adcright.readADC_SingleEnded(i);
-      c_temp_left=map(c_adc_left,0,52428,0,100);
-      c_temp_right=map(c_adc_right,0,52428,0,100);
+      c_temp_left=(int)map(c_adc_left,0,52428,0,100);
+      c_temp_right=(int)map(c_adc_right,0,52428,0,100);
       #ifdef SERIAL_DEBUG
       Serial.print("CH"+String(i)+": l:"+c_temp_left+" r:"+c_temp_right+"  ");
       #endif
-      cantemps.data[i]=c_adc_left;
+      cantemps.data[i]=c_adc_left&0xFF;
 
-      cantemps.data[4+i]=c_adc_right;
+      cantemps.data[4+i]=c_adc_right&0xFF;
 
       lastsentadc=millis();
     }

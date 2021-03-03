@@ -7,7 +7,7 @@
 #define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
 #define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
 //--------------------------------------------------------------
-
+#define MIN_PWM_VALUE 30 
 
 #define CONTROLLER_ID 0 //either 0 for bottom or 1 for back controller
 
@@ -52,7 +52,7 @@ void setup() {
   sei(); //Enabeling the interrupts
 
   OCR1AH=0b01;
-  OCR1AL=40;
+  OCR1AL=MIN_PWM_VALUE;
 
   //initialize canbus-shield
   mcp2515.reset();
@@ -84,13 +84,13 @@ void loop() {
           #endif
         
         OCR1AH=0b01;
-        OCR1AL=max(value,40);
+        OCR1AL=max(value,MIN_PWM_VALUE);
     }
   }
 
   if (micros()-last_data_received>=MAX_TIME_WITHOUT_UPDATE){//Stop the motor if no data from CanBus was received for 2 seconds
     OCR1AH=0b01;
-    OCR1AL=10;
+    OCR1AL=MIN_PWM_VALUE;
   }
 
 
