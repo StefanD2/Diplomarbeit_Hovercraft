@@ -19,6 +19,7 @@ In der Mitte der Bodenplatte wurde das Loch für den Propeller ausgeschnitten. I
     \caption{Bodenplatte 3D-Modell\label{fig:konst:bodenplatte:gesamt}}
 \end{figure}
 
+\clearpage
 \subsection{Stückliste}
 \begin{table}[H]
     \centering
@@ -32,22 +33,26 @@ In der Mitte der Bodenplatte wurde das Loch für den Propeller ausgeschnitten. I
         2 & Staffel Motorhalterung & Staffel gehobelt 40x60mm & Stichsäge & \ref{fig:bodenplatte:skizze:Staffel}\\\hline
         2 & Platte Motorhalterung & 10mm Pappel & LaserCutter & \ref{fig:bodenplatte:skizze:Motorhalterung}\\\hline
         1 & Platte Motorregler-Halterung & 10mm Pappel & LaserCutter & \ref{fig:bodenplatte:skizze:Motorreglerhalterung}\\\hline
-        1 & Gitter unten & Lochplatte & Gekauft & ??\\\hline
+        1 & Gitter unten & Lochplatte & Gekauft & \ref{fig:konst:gitter} \\\hline
     \end{tabular}
     \caption{Stückliste Bodenplatte}
     \label{tab:konst:bodenplatte:stueckliste}
 \end{table}
-\todo{add ref}
 
+\clearpage
 \subsection{Inventor}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{../Inventor/Bodenplatte/png/Bodenplatte_Praesentation_Hauptansicht.png}
-    \includegraphics[width=\textwidth]{../Inventor/Bodenplatte/png/Bodenplatte_Praesentation_SeitlichUnten.png}
-    \label{fig:konst:bodenplatte:inventor}
-    \caption{Bodenplatte Inventor Explosionsansicht}
+    \includegraphics[width=.92\textwidth]{../Inventor/Bodenplatte/png/Bodenplatte_unten.png}
+    \label{fig:konst:bodenplatte:inventor1}
+    \caption{Bodenplatte Ansicht unten}
 \end{figure}
-\clearpage
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.92\textwidth]{../Inventor/Bodenplatte/png/Bodenplatte_seitlich.png}
+    \label{fig:konst:bodenplatte:inventor2}
+    \caption{Bodenplatte Ansicht unten seitlich}
+\end{figure}
 
 \begin{landscape}
     \includeSkizze{../Inventor/Bodenplatte/Zeichnung/Bodenplatte-Holz.pdf}{Bodenplatte Pappel}{fig:bodenplatte:skizze:BodenplattePappel}{1}
@@ -73,29 +78,62 @@ In der Mitte der Bodenplatte wurde das Loch für den Propeller ausgeschnitten. I
     \includeSkizze{../Inventor/Bodenplatte/Zeichnung/HalterungMotorregler.pdf}{Motorregler-Halterung}{fig:bodenplatte:skizze:Motorreglerhalterung}{1}
     \clearpage
 
-    \missingfigure{Foto Gitter?}
-    \clearpage
 \end{landscape}
-
-
 \cleardoublepage
+
+\subsection{Gitter}
+Das untere Gitter muss so stabil sein, dass ein Mensch problem los darauf sitzen kann. Gleichzeitig muss es aber auch genug Luft durchlassen.\\
+Wir haben uns für deshalb für ein Lochblech mit quadratischen Löcher mit 5mm Sietenlänge entschieden. Der Steg zwischen den Löchern ist 3mm breit, insgesamt ist das Gitter 73x73cm groß.\\
+\begin{figure}[H]
+    \centering
+    \missingfigure{Foto Gitter machen von oben}
+    \caption{Foto Gitter \label{fig:konst:gitter}}    
+\end{figure}
+
+\clearpage
 \subsection{Zusammenbau}
 Die XPS-Platte wurde aus 4 einzelnen 100mm dicken XPS-Platten zusammengeklebt und mit einem Messer zugeschnitten. Die Schlitze für die Holzlatten wurden mit einer Oberflächenfräse eingefräst und die Holzlatten (\autoref{fig:bodenplatte:skizze:VHOLZL} \&\ \autoref{fig:bodenplatte:skizze:VHOLZR}) wurden mit Silikon eingeklebt.\\
 Die Pappelsperrholzplatte wurde mit 8 M8x120mm Schrauben mit der XPS-Platte verschraubt.\\
-Danach wurde das Metallgitter angeschraubt und die Staffel zur Motorhalterung wurden darüber geleimt und geschraubt.\\ 
-\missingfigure{Fotos Bodenplatte reintuen}
+Danach wurde das Metallgitter angeschraubt und die Staffel zur Motorhalterung wurden darüber geleimt und geschraubt.\\
+Um die anderen beiden Teile befestigen zu können, wurden einige Winkel an der Bodenplatte angeschraubt -- siehe \autoref{fig:konst:Winkelverbinder}.\\
+Außerdem wurde in die XPS-Platte ein Kablekanal für eine CAN-Bus Leitung, eine Leitung für den Notaus, sowie eine für den Precharge-Button eingefräst. Dieser Kabelkanal läuft von der Lenkung bis zum hinteren Aufbau.
+\begin{figure}[H]
+    \centering
+    \missingfigure{Foto Winkelverbinder machen (neu für DSC\_8596)}
+    \caption{Bodenplatte Winkelverbinder\label{fig:konst:Winkelverbinder}}    
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{Fotos/Konstruktion/DSC_8622.png}
+    \caption{Zusammenbau Bodenplatte \label{fig:konst:bodenplatte_zusammenbau}}    
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{Fotos/Konstruktion/DSC_8600.png}
+    \caption{Zusammenbau Bodenplatte Sicht von unten}    
+\end{figure}
 
 \subsection{Monatage am Boot}
 Die Bodenplatte soll möglichst luftdicht mit dem Schlauchboot verbunden werden. Um dies zu erreichen wurde eine Teichfolie mit doppelseitigem Klebeband am Boot angeklebt und an der Holzplatte mit einer Leiste angeschraubt.\\
 Um die Unterseite des Bootes beim bremsen zu schützen, wurde ein Stück aus einer Bodenplatte ausgeschnitten und mit Pattex Kraftkleber an das Boot geklebt.\\
-Um ein Verrutschen der Konstruktion verhindern, wurde die Bodenplatte zusätzlich mit Lochband am Boot befestigt -- siehe \todo{add ref fotot}
-\missingfigure{add foto lochband befestigung}
-
+Um ein Verrutschen der Konstruktion verhindern, wurde die Bodenplatte zusätzlich mit Lochband am Boot befestigt -- siehe \autoref{fig:konst:fotoLochband}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{Fotos/Konstruktion/DSC_8616.png}
+    \caption{Befestigung Lochband\label{fig:konst:fotoLochband}}    
+\end{figure}
+ 
 
 \clearpage
 \section{Aufbau hinten}
-Der hintere Aufbau beinhaltet den Motor für den Vortrieb, sowie die Fahnen zum Lenken. Die 3 Fahnen werden von 3 Servos angesteuert.\\ Außerdem sind die Akkus und die Kupferschienen zur Stromverteilung im unteren Teil des Aufbaus versteckt. Um die Akkus erreichbar zu machen sind die zwei äußeren Platten aufklappbar.
+Der hintere Aufbau beinhaltet den Motor für den Vortrieb, sowie die Fahnen zum Lenken. Die 3 Fahnen werden von 3 Servos angesteuert.\\ Außerdem sind die Akkus und die Kupferschienen zur Stromverteilung im unteren Teil des Aufbaus versteckt. Um die Akkus erreichbar zu machen sind die zwei äußeren Platten (\autoref{fig:Aufbau:skizze:aussengross}) aufklappbar.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{../Inventor/hintererAufbau/png/hintererAufbau_hauptansicht.png}
+    \label{fig:aufbau:haupt}
+    \caption{hinterer Aufbau 3D-Modell}
+\end{figure}
 
 \subsection{Stückliste}
 \begin{table}[H]
@@ -130,8 +168,20 @@ Der hintere Aufbau beinhaltet den Motor für den Vortrieb, sowie die Fahnen zum 
     \caption{Stückliste Aufbau hinten}
     \label{tab:konst:aufbau:stueckliste}
 \end{table}
-\todo{add 3D Druck Files}
+\todo{Stefan -- add skizzen + ref halterung für kupferschienen}
 
+\clearpage
+\subsection{Inventor}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.92\textwidth]{../Inventor/hintererAufbau/png/hintererAufbau_hinten.png}
+    \caption{hinterer Aufbau Ansicht schräg hinten}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.92\textwidth]{../Inventor/hintererAufbau/png/hintererAufbau_hintenOben.png}
+    \caption{hinterer Aufbau Ansicht hinten oben}
+\end{figure}
 
 \begin{landscape}
     \includeSkizze{../Inventor/hintererAufbau/Zeichnungen/Hauptplatte.pdf}{Hauptplatte}{fig:Aufbau:skizze:hauptplatte}{1}
@@ -182,6 +232,127 @@ Der hintere Aufbau beinhaltet den Motor für den Vortrieb, sowie die Fahnen zum 
     \includeSkizze{../Inventor/hintererAufbau/Zeichnungen/Fahnen_Halter_rechteck.pdf}{Fahnenhalter Rechteck}{fig:Aufbau:skizze:fhr}{1}
     \clearpage
     
-   
-    
 \end{landscape}
+
+\subsection{Zusammenbau}
+Der hintere Aufbau wurde wie in Inventor geplant aufgebaut und mit 16 Stück 70x70x55mm Winkelverbinder mit der Bodenplatte verbunden. Zusätzlich sind die schrägen Verstärkungen (\autoref{fig:Aufbau:skizze:vhintenschraeg}) mit je 2 Stück 50x50x35mm Winkelverbinder befestigt.\\
+Die Winkelverbinder sind mit Holzschrauben an der Bodenplatte fix befestigt. Der hintere Aufbau wird mit 10 Stück M8 Schrauben an den Winkelverbindern festgeschraubt und somit relativ leicht abnehmbar.\\
+Die Löcher für die M8 Schrauben sind in den Zeichnungen nicht vorhanden, da diese erst beim Zusammenbauen gebohrt wurden, um einen Passgenauigkeit zu garantieren.\\
+\begin{figure}[H]
+    \centering
+    \missingfigure{Zusammenbau hinterer Aufbau Foto machen (ev. von 2 Perspektiven oder mehr)}
+    \caption{Zusammenbau hinterer Aufbau}
+\end{figure}
+
+\clearpage
+\section{Lenkung}
+Die Lenkung beinhaltet die komplette Steuerung des Hovercrafts.\\
+Der Lenker selbst ist ein Fahrrad-Lenker, welcher auf einer Metallstange befestigt wird. Diese Metallstange sollte stabil sein, damit sich der Fahrer an der Lenkung festhalten kann. Die Lenkerstellung wird mit einem Potenziometer, welches ebenfalls in der Box verbaut ist, ausgelesen.\\
+An dem Fahrradlenker ist zusätzlich zu den beiden Daumengas noch ein Display um alle für den Fahrer wichtigen Informationen anzuzeigen.\\
+Um den Lenker automatisch zu zentrieren und der Lenkung ein Gegenmoment zu geben, wurden Federn verwendet.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.25\textwidth]{../Inventor/Lenker/png/Lenkung_Hauptansicht.png}
+    \caption{Lenkung 3D-Modell}
+\end{figure}
+
+\clearpage
+\subsection{Stückliste}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|M{4.5cm}|M{3.5cm}|c|c|}
+        \hline
+        \textbf{Stk} & \textbf{Name} & \textbf{Material} & \textbf{Herstellung} & \textbf{Abbildung}\\\hline
+        1 & Bodenplatte & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:bodenplatte}\\\hline
+        2 & Platte Groß mit Loch & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:pgl}\\\hline
+        2 & Platte Seite Lang & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:psl}\\\hline
+        2 & Platte Seite Kurz & 10mm Pappel & LaserCutter & \ref{fig:Lenkung:skizze:psk}\\\hline
+        1 & Halterung Poti unten & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:psk}\\\hline
+        1 & Adapter Poti Teil 1 & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:apt1}\\\hline
+        1 & Adapter Poti Teil 2 & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:apt2}\\\hline
+        1 & Adapter Lenker & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:al}\\\hline
+        1 & Stange Mitte & \diameter 10mm Alu-Stange & Gekauft & \ref{fig:Lenkung:skizze:sm}\\\hline
+        1 & Gewindestange & M4 Gewindestange & Gekauft & \ref{fig:Lenkung:skizze:gs}\\\hline
+        2 & Displayhalterung Halterung & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhh}\\\hline
+        1 & Displayhalterung Hauptteil & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhm}\\\hline
+        1 & Displayhalterung Deckel & PETG & 3D-Drucker & \ref{fig:Lenkung:skizze:nhd}\\\hline
+    \end{tabular}
+    \caption{Stückliste Aufbau hinten}
+    \label{tab:konst:lenkung:stueckliste}
+\end{table}
+
+\clearpage
+\subsection{Inventor}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{../Inventor/Lenker/png/Lenkung_offen.png}
+    \caption{Lenkung Ansicht vorne, offen}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{../Inventor/Lenker/png/Lenkung_Display.png}
+    \caption{Lenkung Ansicht Display-Halterung}
+\end{figure}
+
+\begin{landscape}
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Bodenplatte.pdf}{Bodenplatte}{fig:Lenkung:skizze:bodenplatte}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteGrossLoch.pdf}{Platte Groß mit Loch}{fig:Lenkung:skizze:pgl}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteSeiteLang.pdf}{Platte Seite Lang}{fig:Lenkung:skizze:psl}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PlatteSeiteKurz.pdf}{Platte Seite Kurz}{fig:Lenkung:skizze:psk}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/PotiHalterungUnten.pdf}{Poti Halterung}{fig:Lenkung:skizze:poth}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterPoti1.pdf}{Adapter Poti Teil 1}{fig:Lenkung:skizze:apt1}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterPoti2.pdf}{Adapter Poti Teil 2}{fig:Lenkung:skizze:apt2}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/AdapterLenker.pdf}{Adapter Lenker}{fig:Lenkung:skizze:al}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/StangeMitte.pdf}{Stange Mitte}{fig:Lenkung:skizze:sm}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/M4Gewindestange.pdf}{Gewindestange}{fig:Lenkung:skizze:gs}{1}
+    \clearpage
+
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Halter.pdf}{Displayhalterung Halterung}{fig:Lenkung:skizze:nhh}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Main.pdf}{Displayhalterung Hauptteil}{fig:Lenkung:skizze:nhm}{1}
+    \clearpage
+    \includeSkizze{../Inventor/Lenker/Zeichnungen/Mount_Nextion_Display_Deckel.pdf}{Displayhalterung Deckel}{fig:Lenkung:skizze:nhd}{1}
+    \clearpage
+\end{landscape}
+
+
+
+\cleardoublepage
+\subsection{Zusammenbau}
+Die Lenkung wurde wie in Inventor geplant zusammengebaut. Die Löcher für den Notaus, den Precharge-Taster und die Kabel von dem Display und den Daumengas wurde gebort.\\
+Um die 4 Federn, welchen den Lenker zentrieren zu befestigen und spannen zu können wurden M6 Schrauben verwendet -- siehe \autoref{fig:lenkung:federsys}.\\
+Die Lenkung ist wie der hintere Aufbau ebenfalls mit 4 Stück 50x50x35mm Winkelverbinder an der Bodenplatte befestigt.
+\begin{figure}[H]
+    \centering
+    \missingfigure{Foto Federung Lenkung machen}
+    \caption{Foto Federsystem Lenkung \label{fig:lenkung:federsys}}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.99\textwidth]{Fotos/Konstruktion/DSC_8590.png}
+    \caption{Zusammenbau Lenkung}
+\end{figure}
+
+\clearpage
+\section{Zusammenbau}
+Die Konstruktion wurde wie in den Unterkapiteln darüber beschrieben zusammengebaut.\\
+Zusätzlich wurden Sticker mit den Logos der Sponsoren angebracht.
+\begin{figure}[H]
+    \centering
+    \missingfigure{Fotos (2) gesamter Zusammenbau machen (ev. draussen mit schönem Hintergrund)}
+    \caption{gesamter Zusammenbau}
+\end{figure}

@@ -39,7 +39,7 @@ public:
     // convert msg (String)
     static jetiTelemetry_t getTelemetry(String msg);
 
-    // interrrupt functions (internall functions, must not be called in main)
+    // interrrupt functions (internal functions, must not be called in main)
     virtual void interrupt_RX() = 0;
     virtual void interrupt_TX() = 0;
     virtual void interrupt_UDRE() = 0;

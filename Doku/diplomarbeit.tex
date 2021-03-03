@@ -7,7 +7,7 @@
   % The latest version of this license is in
   %   http://www.latex-project.org/lppl.txt
   % and version 1.3 or later is part of all distributions of LaTeX
-  % version 2005/12/01 or later.
+  % version 2005/12/01 or later. 
   %
   % This work has the LPPL maintenance status `author maintained'.
   % 
@@ -30,7 +30,7 @@
 \ReplacePackage{scrpage2}{scrlayer-scrpage}
 
 \documentclass[paper=a4,12pt]{scrreprt}
-\pdfminorversion=6 % because proteus exports are 1.6
+\pdfminorversion=6 % because inventor exports are 1.6
 % Encoding UTF8
 \usepackage[utf8]{inputenc}
 % 8 Bit Aufloesung der Buchstaben
@@ -85,6 +85,8 @@
 \usepackage{ragged2e}
 \usepackage{csvsimple}
 
+
+\usepackage{ wasysym }
 %\usepackage{afterpage}
 
 %\usepackage{pdflscape}
@@ -92,6 +94,9 @@
 
 \usepackage{caption}
 \usepackage{setspace}\usepackage{threeparttable}
+\usepackage{graphbox} %loads graphicx package
+
+\usetikzlibrary{arrows}
 
 %%=== MY COMMANDS ====%%
 % \includeSkizze{file, name, number, date}
@@ -129,7 +134,6 @@
   \end{figure}
 }
 
-
 \usepackage{tikz}
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
@@ -142,7 +146,6 @@
 \professor{Dipl.-Ing. Helge Frank}
 \dipacolor{htlgruen}
 %%====================================================%%
-
 
 % % Hyperlinks im Dokument
 % \usepackage[colorlinks=true,
@@ -160,7 +163,7 @@
 			linkcolor=black,
 			citecolor=green,
 			bookmarks=true,
-			urlcolor=black,
+			urlcolor=blue,
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
@@ -233,33 +236,36 @@
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{individuelleThemenstellung.tex}
 
-\chapter{Meilensteine}
-\responsible{Julia Stöger}
-\subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
-
 \chapter{Erster Prototyp}
 \responsible{Stefan Deimel}
 \subimport{Textparts/Deimel/ErsterPrototyp/}{ErsterPrototyp.tex}
 
 \chapter{Konstruktion}
+\todo{wenn alle bilder drinnen sind die größen und neue seiten anpassen}
 \responsible{Stefan Deimel}
 \subimport{Textparts/Deimel/Konstruktion/}{Konstruktion.tex}
 
-
-\chapter{Sicherheitskonzept}
-\responsible{Julia Stöger}
-\subimport{Textparts/Stoeger/Sicherheitskonzept}{Sicherheitskonzept.tex}
-
-\chapter{Verwendete Bauteile}
+\chapter{Leistungselektronik}
 \responsible{Philipp Eilmsteiner}
-\subimport{Textparts/Eilmsteiner}{Aktoren.tex}
+\subimport{Textparts/Eilmsteiner/Leistungselektronik}{Leistungselektronik.tex}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Leistungselektronik}{Leistungselektronik.tex}
+\responsible{Philipp Eilmsteiner}
+\subimport{Textparts/Eilmsteiner/Leistungselektronik}{Leistungselektronik_Stueckliste.tex}
 \chapter{Boardelektronik}
 \responsible{Philipp Eilmsteiner}
-\subimport{Textparts/Eilmsteiner/Boardelektronik}{Boardelektronik.tex}
+\subimport{Textparts/Eilmsteiner/Boardelektronik}{Einfuehrung.tex}
+\subimport{Textparts/Eilmsteiner/Boardelektronik}{Installation_Software.tex}
+\subimport{Textparts/Eilmsteiner/Boardelektronik}{Platinen.tex}
+\subimport{Textparts/Eilmsteiner/Boardelektronik}{HMI.tex}
 
 \chapter{Batteriemanagement}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Batteriemanagement/}{Batteriemanagement.tex}
+
+\chapter{Sicherheitskonzept}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Sicherheitskonzept}{Sicherheitskonzept.tex}
 
 \chapter{Anleitungen}
 \section{Betriebsanleitung}
@@ -269,6 +275,10 @@
 \section{Anleitung zum Laden \label{sec:Anleitung_Laden}}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Anleitung/}{Anleitung_Laden.tex}
+
+\chapter{Meilensteine}
+\responsible{Julia Stöger}
+\subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
 \clearpage
 \appendix
