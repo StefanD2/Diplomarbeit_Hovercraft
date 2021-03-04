@@ -4,8 +4,17 @@
 #include "my_TinyGPS++.h"
 #include <SoftwareSerial.h>
 
+#define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
+#define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
+#define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
+#define CAN_ID_BATTERY_TEMPS 0xE0
+
 static const int RXPin = 8, TXPin = 9;
 static const uint32_t GPSBaud = 9600;
+
+uint32_t max_power_lower=255;
+uint32_t max_power_back=255;
+uint32_t steering_offset=0;
 
 #define MIN_VALUE_A0 190
 #define MAX_VALUE_A0 862
@@ -28,23 +37,11 @@ static void smartDelay(unsigned long ms)
   } while (millis() - start < ms);
 }
 
-#define CAN_ID_CONTROL_MOTORS_SERVOS 0xC0
-#define CAN_ID_INFOS_LOWER_CONTROLLER 0xC1
-#define CAN_ID_INFOS_BACK_CONTROLLER 0xC3
-#define CAN_ID_BATTERY_TEMPS 0xE0
-
-
-
-
 #define NEXTION_ENABLED
 
+#ifdef NEXTION_ENABLED
 
 int nextion_page=0;
-uint32_t max_power_lower=255;
-uint32_t max_power_back=255;
-uint32_t steering_offset=0;
-
-#ifdef NEXTION_ENABLED
 
 //Main page nextion objects
 NexText disp_gps_speed = NexText(0,15,"gpsspeed");
@@ -61,6 +58,7 @@ NexText disp_spg_h = NexText(0,11,"spghint");
 
 NexButton disp_but00_settings = NexButton(0,22,"b00");
 NexButton disp_but01_infos = NexButton(0,23,"b01");
+//NexButton disp_but01_infos = NexButton(0,1,"b0");
 
 //info page nextion objects
 //akku infos
@@ -97,6 +95,10 @@ NexTouch *nex_listen_list[] =
     &disp_but00_settings,
     &disp_but01_infos,
     &disp_but20_back,
+    &disp_slid_lenk_offset,
+    &disp_slid_maxbackpower,
+    &disp_slid_maxdownpower,
+    &disp_but10_back,
     NULL
 };
 
@@ -142,7 +144,18 @@ void setup(){
   Serial.begin(9600);
   nexInit();
 
-  //attach interrupts to ISR
+  delay(100);
+
+  // //change baudrate of nextion display from 9600 to 38400 baud
+  // Serial.print("baud=38400");
+  // Serial.write(0xff);
+  // Serial.write(0xff);
+  // Serial.write(0xff);
+  // Serial.end(); //end serial with 9600 baud
+  // Serial.begin(38400); //restart it with 38400 baud
+  // delay(200);
+
+    //attach interrupts to ISR
   disp_but01_infos.attachPush(but01_infos_push);
   disp_but00_settings.attachPush(but00_settings_push);
   disp_but10_back.attachPush(but10_back);
@@ -150,16 +163,8 @@ void setup(){
   disp_slid_lenk_offset.attachPop(slid_lenk_offset);
   disp_slid_maxbackpower.attachPop(slid_maxbackpower);
   disp_slid_maxdownpower.attachPop(slid_maxdownpower);
-  delay(100);
 
-  //change baudrate of nextion display from 9600 to 38400 baud
-  Serial.print("baud=38400");
-  Serial.write(0xff);
-  Serial.write(0xff);
-  Serial.write(0xff);
-  Serial.end(); //end serial with 9600 baud
-  Serial.begin(38400); //restart it with 38400 baud
-  delay(200);
+
   #endif
 
   ss.begin(9600); //initialize SoftwareSerial for GPS module
@@ -181,19 +186,18 @@ unsigned long last_gps_update=0;
 
 void loop(){
   if (millis()-last_update>50){
-    canMsg.data[0]=(int)(map(analogRead(A1),MIN_VALUE_A1,MAX_VALUE_A1,30,(int)max_power_lower))&0xFF; //get value from left thumb throttle
-    canMsg.data[1]=(int)(map(analogRead(A0),MIN_VALUE_A0,MAX_VALUE_A0,30,(int)max_power_back))&0xFF; //get value from right thumb throttle
-  //canMsg.data[0]=min(analogRead(A0)>>2,(int)max_power_lower); // unterer Motor
-  //canMsg.data[1]=min(analogRead(A1)>>2,(int)max_power_back); //hinterer Motor
-  //canMsg.data[0]=min(analogRead(A1)>>2,255); // unterer Motor
-  //canMsg.data[1]=min(analogRead(A0)>>2,255); //hinterer Motor
-  canMsg.data[2]=(int)(steering_offset)+map(analogRead(A2)>>2,23,88,0,255); //Lenkung
+    
+    int int_0 = map(analogRead(A0),MIN_VALUE_A0,MAX_VALUE_A0,30,max_power_back);
+    int int_1 = map(analogRead(A1),MIN_VALUE_A1,MAX_VALUE_A1,30,max_power_lower);
+    canMsg.data[0]=min(int_0,255); //get value from left thumb throttle
+    canMsg.data[1]=min(int_1,255); //get value from right thumb throttle
+  canMsg.data[2]=(int)(steering_offset)+map(analogRead(A2)>>2,23,88,255,0); //Lenkung
   mcp2515.sendMessage(&canMsg);
   last_update=millis(); 
   }
   #ifdef NEXTION_ENABLED
   if (millis()-last_gps_update>500){ //refresh gps data on display every 500ms
-    if (nextion_page==0){
+    if (nextion_page==0 && gps.speed.isValid()){
       disp_gps_speed.setText(String(gps.speed.kmph()/1.0).c_str());
     } else if (nextion_page==2){
       disp_gpsinf_sats.setText(String(gps.satellites.value()).c_str());
@@ -205,7 +209,6 @@ void loop(){
     }
     last_gps_update=millis();
   }
-  disp_gps_speed.setText(String(gps.speed.kmph()/1.0).c_str());
   if (mcp2515.readMessage(&canMsg_r) == MCP2515::ERROR_OK) { //check for new CAN-Bus messages
     if ((canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER || (canMsg_r.can_id==CAN_ID_INFOS_BACK_CONTROLLER))&&(canMsg_r.can_dlc==6)&&nextion_page==0){ //Infos from lower motor controller received
       int spannung = (canMsg_r.data[0]<<8)| canMsg_r.data[1];

@@ -9,10 +9,10 @@
 //--------------------------------------------------------------
 #define MIN_PWM_VALUE 30 
 
-#define CONTROLLER_ID 0 //either 0 for bottom or 1 for back controller
+#define CONTROLLER_ID 1 //either 0 for bottom or 1 for back controller
 
 #define INFO_SEND_INTERVAL 1000000 //in micro-seconds
-#define MAX_TIME_WITHOUT_UPDATE 2000000 //in micro-seconds
+#define MAX_TIME_WITHOUT_UPDATE 4000000 //in micro-seconds
 
 
 
@@ -77,10 +77,10 @@ void loop() {
     if ((canMsg.can_id==CAN_ID_CONTROL_MOTORS_SERVOS)&&(canMsg.can_dlc==3)){
         last_data_received=micros();
           #if CONTROLLER_ID == 0
-            char value = canMsg.data[0];
+            int value = canMsg.data[0];
           #endif
           #if CONTROLLER_ID == 1
-            char value = canMsg.data[1];
+            int value = canMsg.data[1];
           #endif
         
         OCR1AH=0b01;
