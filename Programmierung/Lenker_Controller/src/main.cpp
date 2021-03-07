@@ -41,7 +41,7 @@ static void smartDelay(unsigned long ms)
 
 #ifdef NEXTION_ENABLED
 
-int nextion_page=0;
+int nextion_page=0; //screen number currently displayed on screen
 
 //Main page nextion objects
 NexText disp_gps_speed = NexText(0,15,"gpsspeed");
@@ -61,7 +61,7 @@ NexButton disp_but01_infos = NexButton(0,23,"b01");
 //NexButton disp_but01_infos = NexButton(0,1,"b0");
 
 //info page nextion objects
-//akku infos
+//battery infos
 NexText disp_atemp_01 = NexText(2,14,"temp01");
 NexText disp_atemp_02 = NexText(2,15,"temp02");
 NexText disp_atemp_03 = NexText(2,16,"temp03");
@@ -86,10 +86,6 @@ NexSlider disp_slid_maxbackpower = NexSlider(1,2,"h0");
 NexSlider disp_slid_maxdownpower = NexSlider(1,4,"h2");
 NexButton disp_but10_back = NexButton(1,1,"b10");
 
-
-char buffer[100] = {0};
-
-
 NexTouch *nex_listen_list[] = 
 {
     &disp_but00_settings,
@@ -103,6 +99,9 @@ NexTouch *nex_listen_list[] =
 };
 
 void but00_settings_push(void *ptr){
+  disp_slid_lenk_offset.setValue(steering_offset);
+  disp_slid_maxbackpower.setValue(max_power_back);
+  disp_slid_maxdownpower.setValue(max_power_lower);
   nextion_page=1;
 };
 void but01_infos_push(void *ptr){
@@ -123,14 +122,10 @@ void slid_maxbackpower(void *ptr){
 void slid_maxdownpower(void *ptr){
   disp_slid_maxdownpower.getValue(&max_power_lower);
 }
-
-
 #endif
 
-
-
-struct can_frame canMsg;
-struct can_frame canMsg_r;
+struct can_frame canMsg; //CAN-Bus object used for writting to CAN-Bus
+struct can_frame canMsg_r; //CAN-Bus object used for reading from CAN-Bus
 MCP2515 mcp2515(7);
 
 void setup(){
@@ -169,7 +164,7 @@ void setup(){
 
   ss.begin(9600); //initialize SoftwareSerial for GPS module
 
-    //Initialize CAN-Bus shield
+  //Initialize CAN-Bus shield
   mcp2515.reset();
   mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
   mcp2515.setNormalMode();
@@ -210,13 +205,13 @@ void loop(){
     last_gps_update=millis();
   }
   if (mcp2515.readMessage(&canMsg_r) == MCP2515::ERROR_OK) { //check for new CAN-Bus messages
-    if ((canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER || (canMsg_r.can_id==CAN_ID_INFOS_BACK_CONTROLLER))&&(canMsg_r.can_dlc==6)&&nextion_page==0){ //Infos from lower motor controller received
-      int spannung = (canMsg_r.data[0]<<8)| canMsg_r.data[1];
-      int drehzahl = (canMsg_r.data[4]<<8)|canMsg_r.data[5];
+    if ((canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER || (canMsg_r.can_id==CAN_ID_INFOS_BACK_CONTROLLER))&&(canMsg_r.can_dlc==6)&&nextion_page==0){ //check if message is controller telemetry and valid
+      int spannung = (canMsg_r.data[0]<<8)| canMsg_r.data[1]; //recombine High & Lowbyte of voltage back to integer
+      int drehzahl = (canMsg_r.data[4]<<8)|canMsg_r.data[5];  //recombine High & Lowbyte of rotations back to integer
       int temperatur = canMsg_r.data[2];
       int percent = canMsg_r.data[3];
   
-        if (canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER){ //message from lower controller
+        if (canMsg_r.can_id==CAN_ID_INFOS_LOWER_CONTROLLER){ //lower controller
           disp_drz_u.setText(String(drehzahl).c_str());
           disp_temp_u.setText(String(temperatur).c_str());
           disp_gas_u.setText(String(percent).c_str());
@@ -227,7 +222,7 @@ void loop(){
           disp_gas_h.setText(String(percent).c_str());
           disp_spg_h.setText(String(spannung/100.0).c_str());
         }
-    } else if ((canMsg_r.can_id==CAN_ID_BATTERY_TEMPS)&&(canMsg_r.can_dlc==8)&&(nextion_page==2)){
+    } else if ((canMsg_r.can_id==CAN_ID_BATTERY_TEMPS)&&(canMsg_r.can_dlc==8)&&(nextion_page==2)){ //battery temperatures received and valid
             disp_atemp_01.setText(String(canMsg_r.data[0]).c_str());
             disp_atemp_02.setText(String(canMsg_r.data[1]).c_str());
             disp_atemp_03.setText(String(canMsg_r.data[2]).c_str());
@@ -239,7 +234,7 @@ void loop(){
     
     }
   }
-  nexLoop(nex_listen_list);
+  nexLoop(nex_listen_list); //check for button presses on nextion screen
   #endif
-  smartDelay(0);
+  smartDelay(0); //loop function for gps module
 }
