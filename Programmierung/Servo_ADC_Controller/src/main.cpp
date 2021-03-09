@@ -15,24 +15,18 @@ Adafruit_ADS1115 adcright = Adafruit_ADS1115(0x49);
 #define ADC_ENABLED
 //#define SERIAL_DEBUG
 /*
-Servo 1:
-Unterer Grenzwert: 163
-Mitte: 322
-Obere Grenze: 446
+Servo 1 Grenzwerte:
+163 - 322 - 446
 */
 
 /*
-Servo 2 (Mitte)
-Unten: 223
-Mitte: 355
-Oben: 490
+Servo 2 (Mitte) Grenzwerte:
+223 - 355 - 490
 */
 
 /*
-Servo 3
-Unten: 231
-Mitte: 355
-Oben: 493
+Servo 3 Grenzwerte:
+231 - 355 - 493
 */
 
 struct can_frame canMsg;
