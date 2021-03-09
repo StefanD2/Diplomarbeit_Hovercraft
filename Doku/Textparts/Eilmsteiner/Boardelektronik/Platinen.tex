@@ -46,12 +46,23 @@ Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetried
 
 \end{minipage}
 
+\subsubsection{Anmerkung}
+Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmierung dieses der Operationsverstärker entfernt werden.
 \newpage
 
 \subsubsection{Schaltplan}
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Regler-Platine.png}    
+    \caption{Schaltplan der Regler-Platine}
+\end{figure}
+
+\newpage
+
+\subsubsection{PCB-Layout}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Regler_Platine_PCB.png}    
     \caption{Schaltplan der Regler-Platine}
 \end{figure}
 
@@ -101,8 +112,18 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 \end{figure}
 
 \newpage
+
+\subsubsection{PCB-Layout}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Lenker_Platine_PCB.png}    
+    \caption{PCB-Layout der Lenker-Platine}
+\end{figure}
+
+\newpage
 \subsubsection{Programmcode}
 \lstinputlisting[basicstyle=\scriptsize]{../Programmierung/Lenker_Controller/src/main.cpp}
+
 \newpage
 
 \subsection{Fahnenansteuerung und Akkutemperaturen}
@@ -141,6 +162,13 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
     \caption{Schaltplan der Servoansteuerung-Platine}
 \end{figure}
 
+\newpage
+\subsubsection{PCB-Layout}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../Proteus/Exports/Servos-Platine-PCB.png}    
+    \caption{PCB-Layout der Servoansteuerung-Platine}
+\end{figure}
 
 \newpage
 \subsubsection{Programmcode}
@@ -164,6 +192,7 @@ Zur Temperaturmessung selbst kommt je ein \textbf{LM35} Temperatursensor pro Akk
 \end{minipage}\\
 \vspace{0.5cm}
 
+\subsection{ADC-Platinen}
 Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde folgende Platine entworfen:\\ 
 \begin{minipage}{9cm}
     \begin{tikzpicture}
@@ -186,8 +215,17 @@ Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde fol
 \subsubsection{Schaltplan}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.65\textwidth]{../Proteus/Exports/Temperatursensoren-Platine.png}    
+    \includegraphics[width=0.62\textwidth]{../Proteus/Exports/Temperatursensoren-Platine.png}    
     \caption{Schaltplan der Temperatursensoren-Platine}
+\end{figure}
+
+\newpage
+
+\subsubsection{PCB-Layout}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../Proteus/Exports/Temperatursensoren-Platine-PCB.png}    
+    \caption{PCB-Layout der Temperatursensoren-Platine}
 \end{figure}
 
 \newpage
@@ -217,9 +255,9 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
 \end{minipage}
 \begin{minipage}{7.5cm}
     \textcolor{Green}{Hauptrelaisspule (A- \& GND)}\\
-    \textcolor{blue}{Micro-Switches}\\
-    \textcolor{orange}{Buck-Converter (nicht mehr verwendet)}\\
-    \textcolor{violet}{geschaltene Relaisseite}\\
+    \textcolor{blue}{Micro-Switches im Ladedeckel}\\
+    \textcolor{orange}{Buck-Converter (nicht verwendet)}\\
+    \textcolor{violet}{+30 V von geschalteter Relaisseite}\\
     \textcolor{red}{Konstante +30 V}\\
 \end{minipage}\\
 
