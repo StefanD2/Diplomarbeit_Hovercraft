@@ -46,7 +46,7 @@ Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetried
 
 \end{minipage}
 
-\subsubsection{Anmerkung}
+\subsubsection{Anmerkung:}
 Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmierung dieses der Operationsverstärker entfernt werden.
 \newpage
 
@@ -224,7 +224,7 @@ Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde fol
 \subsubsection{PCB-Layout}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.75\textwidth]{../Proteus/Exports/Temperatursensoren-Platine-PCB.png}    
+    \includegraphics[width=0.8\textwidth]{../Proteus/Exports/Temperatursensoren-Platine-PCB.png}    
     \caption{PCB-Layout der Temperatursensoren-Platine}
 \end{figure}
 
@@ -261,13 +261,18 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
     \textcolor{red}{Konstante +30 V}\\
 \end{minipage}\\
 \newpage
+\subsubsection{Funktionsweise}
+Durch das Zusammenschalten der Akkus, über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand, beginnen sich sowohl die Kondensatoren beider Motorregler, aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
+Erreicht dieser eine bestimmte Schwellspannung, wird das Hauptrelais mithilfe eines MOSFETs durch den Operationsverstärker der Komperatorschaltung aktiviert.\\
+Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des NOTAUS-Schalters oder dem Öffnen einer der beiden Mikroschalter unterbrochen werden kann.
 \subsubsection{Schaltplan}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.99\textwidth]{../Proteus/Exports/Relaisansteuerung.png}
     \caption{Schaltplan der Platine zur Relaisansteuerung}
 \end{figure}
-
+\textbf{Anmerkung:}\\
+Der OPV \textbf{U2} und die damit verbunde Klemme \textbf{J2} werden aufgrund einer nachträglichen Änderung im Schaltplan nicht mehr benötigt.
 \newpage
 \subsubsection{PCB-Layout}
 \begin{figure}[h]
