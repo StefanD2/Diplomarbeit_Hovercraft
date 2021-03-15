@@ -191,8 +191,8 @@ void loop()
 
     int int_0 = map(analogRead(A0), MIN_VALUE_A0, MAX_VALUE_A0, 30, max_power_back);
     int int_1 = map(analogRead(A1), MIN_VALUE_A1, MAX_VALUE_A1, 30, max_power_lower);
-    canMsg.data[0] = min(int_0, 255);                                                   //get value from left thumb throttle
-    canMsg.data[1] = min(int_1, 255);                                                   //get value from right thumb throttle
+    canMsg.data[0] = min(int_0, 255); //get value from left thumb throttle
+    canMsg.data[1] = min(int_1, 255); //get value from right thumb throttle
     canMsg.data[2] = (int)(steering_offset) + map(analogRead(A2) >> 2, 23, 88, 255, 0); //Lenkung
     mcp2515.sendMessage(&canMsg);
     last_update = millis();
