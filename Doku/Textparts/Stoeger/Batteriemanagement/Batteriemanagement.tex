@@ -1,8 +1,29 @@
-\section{Einleitung}
-Nach längerer Überlegung wurde entschieden ein Batteriemanagement zuzukaufen anstatt es selbst zu bauen.  
+\section{Ladeelektronik}
+\subsection{Einleitung}
+Nach längerer Überlegung wurde entschieden kein Batteriemanagement selbst zu entwerfen, sondern ein Ladegerät und ein Schaltnetzteil zuzukaufen. \\
+Als Akkus wurden 2x vier, TopFuel LiPo 35C Power-X 7500mAh 7s in Serie geschaltet, siehe \ref{sec:Akkus}. \\
 
-\section{Ladegerät}
+\textbf{Eine Anleitung für den Ladevorgang findet man im \autoref{sec: bilderanleitung_laden}.}
 
-\section{Schaltnetzteil}
+\missingfigure{Akkus}
+\subsection{Ladegerät}
+Verwendet wird das Ladegerät $"$iSDT SMART Dup Ladegerät P30 - 1500W, 30A$"$. Das Ladegerät ist ein 2-Kanalladegerät, das heißt, 
+dass beide Akku-Stränge gleichzeitig geladen werden können. 
+Das P30 kann mit dem Programm $"$Dual Task$"$ beide Kanäle mit dem selben Programm laufen lassen. Somit gibt man die Ladeparameter nur einmal ein. \\
+Der maximale Ladestrom beträgt 30$\mathrm{A}$ pro Strang. \\
+Weitere Infos sind unter \href{https://www.modell-hubschrauber.at/Ladegeraete-Netzteile-Ladekabel-und-Zubehoer/Ladegeraete/Ladegeraete-12Volt/iSDT-SMART-Dup-Ladegeraet-P30-1500W-30A-8S-Lipo::43075.html}{Link zur Website} 
+zu finden. 
+\missingfigure{Ladegeraet}
+
+\subsection{Schaltnetzteil}
 Nach gründlicher Überlegung fiel die Entscheidung auf das $"$iSDT SP3060 SMART POWER Schaltnetzteil$"$.
 Das Schaltnetzteil ist gegen Überlast, Überspannung, Überhitzung und Kurzschluss geschützt. 
+
+\begin{minipage}{13cm}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Fotos/SP3060.png}
+    \captionof{figure}{Schaltnetzteil}   
+\end{minipage}
+
+\newpage
+
