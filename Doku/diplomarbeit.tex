@@ -100,33 +100,12 @@
 \usepackage[most]{tcolorbox}
 
 
-%%=== MY COMMANDS ====%%
-% \includeSkizze{file, name, number, date}
-% \newcommand{\includeSkizzeOld}[5]{
-%   \begin{figure}[H]
-%     \centering
-%     \resizebox{.99\textheight}{!}{
-%     \begin{tikzpicture}
-%         \draw (0,0) rectangle (\textheight, \textwidth);
-%         \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
-%         \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
-%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
-%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
-%         \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
-%         \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
-%         \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
-%         {\includegraphics[width=\textheight]{#1}};
-%     \end{tikzpicture}}
-%     \captionlistentry{Skizze #2, Blatt #4}
-%     Skizze #2
-%     \label{#5}
-%   \end{figure}
-% }
-
-% % ------------------ DELETE THIS, JUST FOR SPEED ------------------%
+%---------------- DELETE THIS, JUST FOR SPEED ------------------%
 % \pdfcompresslevel=0 
 % \pdfobjcompresslevel=0
 % %------------------------------------------------------------------%
+
+%%=== MY COMMANDS ====%%
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -152,14 +131,6 @@
 \dipacolor{htlgruen}
 %%====================================================%%
 
-% % Hyperlinks im Dokument
-% \usepackage[colorlinks=true,
-% 			linkcolor=black,
-% 			citecolor=green,
-% 			bookmarks=true,
-% 			urlcolor=black,
-% 			bookmarksopen=true]{hyperref}
-
 
 \usepackage{nameref}
 % folowing  must be in this order
@@ -172,6 +143,7 @@
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
+\RedeclareSectionCommand[beforeskip=0pt]{chapter}
 
 \begin{document}
 
@@ -193,6 +165,10 @@
 \unterschrift{Julia Stöger}
 \end{Eid}\newpage
 %%======================================================%%
+\chapter*{Gendererklärung}
+Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf hingewiesen, dass die ausschließliche Verwendung der männlichen Form geschlechtsunabhängig verstanden werden soll.
+\newpage
+
 
 %%================ Diplomandenvorstellung ==============%%
 \input{Textparts/diplomanden.tex}
@@ -210,10 +186,8 @@
 %\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
 
 %%================ Abstract /Zusammenfass. =============%%
-\input{Textparts/zusammenfassung.tex}
-\todo[]{add zusammenfassung}
 \input{Textparts/abstract.tex}
-\todo[]{add abstract}
+\input{Textparts/zusammenfassung.tex}
 %\selectlanguage{english} % necessary for English speaking users
 
 % delete this line if your native language is German 
