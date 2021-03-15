@@ -115,11 +115,10 @@
 \newcommand{\includeSkizze}[4]{
   \begin{figure}[H]
     \centering
-    \resizebox{.99\textheight}{!}{
+    \resizebox{.95\textheight}{!}{
     \includegraphics[width=\textheight, page=#4]{#1}
     }
-    \captionlistentry{Zeichnung #2}
-    \label{#3}
+    \caption{Zeichnung #2\label{#3}}
   \end{figure}
 }
 
@@ -147,6 +146,18 @@
 \usepackage{cleveref}
 
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
+
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikzexternalize/]
+
+\usepackage{letltxmacro}
+
+\LetLtxMacro{\oldmissingfigure}{\missingfigure}
+\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
+
+\LetLtxMacro{\oldtodo}{\todo}
+\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
 
 \begin{document}
 
