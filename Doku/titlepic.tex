@@ -1,13 +1,15 @@
 % =============================================================================
 % Erzeugung des Kopfes fuer die Titelseite                (W.Haager, 26.3.2019)
 % =============================================================================
+\RequirePackage{scrlfile}
+\ReplacePackage{scrpage2}{scrlayer-scrpage}
 \documentclass[11pt,a4paper,fleqn]{article}
+\usepackage{scrlayer-scrpage}
 \usepackage[T1]{fontenc}
 \usepackage[naustrian]{babel}
-\usepackage{dina4b,haa}
-\usepackage{tabellen}
+\usepackage{tikz}
+\usepackage{xcolor}
 \usepackage{graphicx}\pagestyle{empty}
-\usepackage{haatikz}
 \textwidth=18cm
 
 \def\htlstplogo#1{{%
@@ -34,8 +36,8 @@
 
 \definecolor{colx}{RGB}{38,80,164}
 \definecolor{grau}{rgb}{0.8,0.8,0.8}
-\definecolor{htlgruenp}{cmyk}{0.48,0,0.66,0.22}
-\definecolor{htlgraup}{cmyk}{0,0.05,0.04,0.69}
+\definecolor{htlgruenp}{cmyk}{0.6,0,0.96,0}
+\definecolor{htlgraup}{cmyk}{0,0,0,80}
 
 \def\etheader{%
    {\htlstptextlogo{35mm}\hfill
