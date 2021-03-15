@@ -59,7 +59,10 @@
 \usepackage{pdfpages}
 % Source Code Einbindung, Setup siehe:
 % http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings									
-\usepackage{listings,scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..			
+\usepackage{listings,scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..
+
+\usepackage{verbatim}
+\usepackage{textcomp}
 			
 \usepackage{eurosym}
 \usepackage{lscape}
@@ -165,6 +168,8 @@
 \unterschrift{Julia Stöger}
 \end{Eid}\newpage
 %%======================================================%%
+\def\chapterpagestyle{headings} 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 \chapter*{Gendererklärung}
 Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf hingewiesen, dass die ausschließliche Verwendung der männlichen Form geschlechtsunabhängig verstanden werden soll.
 \newpage
@@ -194,13 +199,14 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 %%======================================================%%
 
 %%================ Inhaltsverzeichnis ==================%%
+\def\chapterpagestyle{headings} 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 \tableofcontents
 %%======================================================%%
 
 
 %Ab hier Hauptteil
 \mainmatter
-\def\chapterpagestyle{headings} 
 \chapter{Einführung}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Einfuehrung.tex}

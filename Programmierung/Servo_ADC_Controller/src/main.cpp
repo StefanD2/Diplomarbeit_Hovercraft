@@ -34,73 +34,77 @@ struct can_frame cantemps;
 
 MCP2515 mcp2515(7);
 
-unsigned long lastsentadc=0;
+unsigned long lastsentadc = 0;
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   pwm.begin();
 
   pwm.setOscillatorFrequency(27000000);
-  pwm.setPWMFreq(SERVO_FREQ);  // Analog servos run at ~50 Hz updates
+  pwm.setPWMFreq(SERVO_FREQ); // Analog servos run at ~50 Hz updates
 
   delay(10);
-  pwm.setPWM(0,0,355);
-  pwm.setPWM(4,0,355);
-  pwm.setPWM(8,0,322);
+  pwm.setPWM(0, 0, 355);
+  pwm.setPWM(4, 0, 355);
+  pwm.setPWM(8, 0, 322);
 
   mcp2515.reset();
-  mcp2515.setBitrate(CAN_500KBPS,MCP_8MHZ);
+  mcp2515.setBitrate(CAN_500KBPS, MCP_8MHZ);
   mcp2515.setNormalMode();
 
-  #ifdef ADC_ENABLED
+#ifdef ADC_ENABLED
   adcleft.begin();
   adcleft.setGain(GAIN_FOUR);
   adcright.setGain(GAIN_FOUR);
   adcright.begin();
-  #endif
-  cantemps.can_id=CAN_ID_BATTERY_TEMPS;
-  cantemps.can_dlc=8;
+#endif
+  cantemps.can_id = CAN_ID_BATTERY_TEMPS;
+  cantemps.can_dlc = 8;
   //canMsg.can_id=CAN_ID_CONTROL_MOTORS_SERVOS;
 }
 
-void loop() {
+void loop()
+{
 
-   if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK) {
-     if ((canMsg.can_id==CAN_ID_CONTROL_MOTORS_SERVOS)&&(canMsg.can_dlc==3)){
-       int anw = map(canMsg.data[2],0,255,-127,127);
-        pwm.setPWM(0,0,355+anw);
-        pwm.setPWM(4,0,355+anw);
-        pwm.setPWM(8,0,322+anw);
-     }
-   }
-   #ifdef ADC_ENABLED
-   if (millis()-lastsentadc>2000){
+  if (mcp2515.readMessage(&canMsg) == MCP2515::ERROR_OK)
+  {
+    if ((canMsg.can_id == CAN_ID_CONTROL_MOTORS_SERVOS) && (canMsg.can_dlc == 3))
+    {
+      int anw = map(canMsg.data[2], 0, 255, -127, 127);
+      pwm.setPWM(0, 0, 355 + anw);
+      pwm.setPWM(4, 0, 355 + anw);
+      pwm.setPWM(8, 0, 322 + anw);
+    }
+  }
+#ifdef ADC_ENABLED
+  if (millis() - lastsentadc > 2000)
+  {
     int16_t battemps_left[4];
     int16_t battemps_right[4];
-    for (int i=0;i<=3;i++){
-      int16_t c_adc_left,c_adc_right;
-      int8_t c_temp_left,c_temp_right;
-      c_adc_left=adcleft.readADC_SingleEnded(i);
-      c_adc_right=adcright.readADC_SingleEnded(i);
-      c_temp_left=(int)map(c_adc_left,0,52428,0,100);
-      c_temp_right=(int)map(c_adc_right,0,52428,0,100);
-      #ifdef SERIAL_DEBUG
-      Serial.print("CH"+String(i)+": l:"+c_temp_left+" r:"+c_temp_right+"  ");
-      #endif
-      cantemps.data[i]=c_adc_left&0xFF;
+    for (int i = 0; i <= 3; i++)
+    {
+      int16_t c_adc_left, c_adc_right;
+      int8_t c_temp_left, c_temp_right;
+      c_adc_left = adcleft.readADC_SingleEnded(i);
+      c_adc_right = adcright.readADC_SingleEnded(i);
+      c_temp_left = (int)map(c_adc_left, 0, 52428, 0, 100);
+      c_temp_right = (int)map(c_adc_right, 0, 52428, 0, 100);
+#ifdef SERIAL_DEBUG
+      Serial.print("CH" + String(i) + ": l:" + c_temp_left + " r:" + c_temp_right + "  ");
+#endif
+      cantemps.data[i] = c_adc_left & 0xFF;
 
-      cantemps.data[4+i]=c_adc_right&0xFF;
+      cantemps.data[4 + i] = c_adc_right & 0xFF;
 
-      lastsentadc=millis();
+      lastsentadc = millis();
     }
-    #ifdef SERIAL_DEBUG
+#ifdef SERIAL_DEBUG
     Serial.println();
-    #endif
+#endif
     mcp2515.sendMessage(&cantemps);
-    lastsentadc=millis();
-    
-   }
-  #endif
+    lastsentadc = millis();
+  }
+#endif
 }
-
