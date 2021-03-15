@@ -2,7 +2,7 @@
     language=C++,
     breaklines=true,
     postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-    basicstyle=\small\ttfamily,
+    basicstyle=\scriptsize\ttfamily,
     keywordstyle=\color{red!60!blue}\ttfamily,
     stringstyle=\color{red}\ttfamily,
     commentstyle=\color{green!50!black}\ttfamily,
@@ -22,6 +22,7 @@
     {ö}{{\"o}}1
     {~}{{\textasciitilde}}1,
 }
+
 \section{Die zur Steuerung entworfenen Platinen}
 \subsection{Motorregleransteuerung}
 \subsubsection{Aufgaben \& verwendete Bauteile}
@@ -68,7 +69,7 @@ Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmi
 
 \newpage
 \subsubsection{Programmcode}
-\lstinputlisting[basicstyle=\scriptsize]{../Programmierung/Regler_Controller/src/main.cpp}
+\lstinputlisting{../Programmierung/Regler_Controller/src/main.cpp}
 \newpage
 \subsection{Lenker}
 \subsubsection{Aufgaben \& verwendete Bauteile}
@@ -94,7 +95,7 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
     \textcolor{orange}{Serielle Verbindung zum Bildschirm}\\
     \textcolor{Green}{Daumengas Anschlüsse}\\
     \textcolor{violet}{Anschluss Lenkerpotenziometer}\\
-    
+
 \end{minipage}
 
 \vspace{0.5cm}
@@ -130,7 +131,7 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 
 \newpage
 \subsubsection{Programmcode}
-\lstinputlisting[basicstyle=\scriptsize]{../Programmierung/Lenker_Controller/src/main.cpp}
+\lstinputlisting{../Programmierung/Lenker_Controller/src/main.cpp}
 
 \newpage
 
@@ -180,7 +181,7 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
 
 \newpage
 \subsubsection{Programmcode}
-\lstinputlisting[basicstyle=\scriptsize]{../Programmierung/Servo_ADC_Controller/src/main.cpp}
+\lstinputlisting{../Programmierung/Servo_ADC_Controller/src/main.cpp}
 \newpage
 
 \subsubsection{Akkutemperaturen}

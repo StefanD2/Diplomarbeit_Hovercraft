@@ -1,39 +1,27 @@
-\documentclass[paper=a4,12pt]{scrreprt}
-\pdfminorversion=6 % because inventor exports are 1.6
-% Encoding UTF8
-\usepackage[utf8]{inputenc}
-% 8 Bit Aufloesung der Buchstaben
-\usepackage[T1]{fontenc}
-% Seitenraender
-\usepackage[scale=0.72]{geometry}
-% Spracheinstellungen
-\usepackage[english, naustrian]{babel} % your native language must be the last one!!
-% erweiterte Farbenpalette
-\usepackage[dvipsnames]{xcolor}
-% Abbildungen
-\usepackage{graphicx}
-% Tabellen (erweitert)
-\usepackage{tabularx}
-% TikZ + Circuit-TikZ (fuer Schaltungen)									
-\usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
-% Nuetzliche TikZ Libraries
-\usetikzlibrary{arrows,automata,positioning}
-\usetikzlibrary{math}
-% Mathematikpakete!
-\usepackage{amsmath,amssymb}							
-%\usepackage{mathtools}	
-% PDF Einbindung (zB Datenblaetter)
-\usepackage{pdfpages}
+\tikzmath{
+    \offsetx1=0;\offsetx2=.7;
+    \offxmotor=14.5;
+    \offymotor=-10;
+    \offymh = -12;  
+    \buckxA = 10.5;
+    \buckxB = 1;
+    \buckxC = 1;
+    \buckxD = 1;
+    \buckyA = -14;
+    \buckyB = -10;
+    \buckyC = -12;
+    \buckyD = -14;
+    \platineX = 10;
+    \platineY = -1.5;
+} 
 
-\tikzmath{\offsetx1=0;\offsetx2=.7;} 
-
-\begin{document}
+\resizebox{.99\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
     % Akkus highside
     \foreach \i in {0,2,4, 6}
-        {\draw (\i,0)  to[battery, l=7S, *-*] (\i,-2);}
-    \draw[very thick] (0,0) -- (6,0); % [line width=.65mm]
-    \draw[very thick] (0,-2) -- (6,-2);
+        {\draw (\i,0)  to[battery, l=7S] (\i,-2);}
+    \draw[very thick] (0,0) to [short,-*] ++(2,0) to [short,*-*] ++(2,0) to[short,*-*] ++(2,0);
+    \draw[very thick] (0,-2) to [short,*-*] ++(2,0) to [short,*-*] ++(2,0) to[short,*-] ++(2,0);
     \draw (0+\offsetx1,-2) to[fuse, *-] (0+\offsetx1,-3.5);
 
 
@@ -46,21 +34,100 @@
     % Akkus lowside
     \draw (0+\offsetx1,-4.5) to[fuse, -*] (0+\offsetx1,-6);
     \foreach \i in {0,2,4, 6}
-        {\draw (\i,-6)  to[battery, l=7S, *-*] (\i,-8);}
-    \draw[very thick] (0,-6) -- (6,-6); % [line width=.65mm]
-    \draw[very thick] (0,-8) -- (6,-8);
+        {\draw (\i,-6)  to[battery, l=7S] (\i,-8);}
+    \draw[very thick] (0,-6) to [short,*-*] ++(2,0) to [short,*-*] ++(2,0) to[short,*-*] ++(2,0);
+    \draw[very thick] (0,-8) to [short,-*] ++(2,0) to [short,*-*] ++(2,0) to[short,*-*] ++(2,0);
+
+    % Pfeile Akkus
+    \draw[-latex] (6,0) -- ++(.5,0) node[right] {\scriptsize BHH};
+    \draw[-latex] (6,-2) -- ++(.5,0) node[right] {\scriptsize BHL};
+    \draw[-latex] (6,-8) -- ++(.5,0) node[right] {\scriptsize BLL};
+    \draw[-latex] (6,-6) -- ++(.5,0) node[right] {\scriptsize BLH};
 
     % Notaus
     \draw (1.5+\offsetx1,-3.5) to[normal closed switch, mirror, l_=NOTAUS, -*] (1.5+\offsetx1,-2);
-    \draw (1.5+\offsetx1,-3.5) -- (1.5+\offsetx1,-3.6) -- (.8+\offsetx1,-3.6);
+    \draw (1.5+\offsetx1,-3.5) to[short, -*] (1.5+\offsetx1,-3.6) -- (.8+\offsetx1,-3.6);
 
     % Precharge button
     % \draw (0+\offsetPrechargeX, -6) to[R, l_=10<\ohm>] (0+\offsetPrechargeX, -4) to[nopb, mirror, l={{{{\rotatebox[origin=c]{-90}{\scriptsize PRECHARGE}}}}}] (0+\offsetPrechargeX, -2);
-    \draw (.8+\offsetx2, -3.6) to[nopb, l_={{{{\scriptsize PRECHARGE}}}}, *-] (3+\offsetx2, -3.6) -- (3.5+\offsetx2, -3.6) to[R, l=10<\ohm>, -*] (3.5+\offsetx2,-6);
+    \draw (.8+\offsetx2, -3.6) to[nopb] (3+\offsetx2, -3.6); 
+    \path (.8+\offsetx2, -3.6) -- (3+\offsetx2, -3.6) node[midway, below] {\scriptsize PRECHARGE};
+    \draw (3+\offsetx2, -3.6) -- (4, -3.6) to[R, l=10<\ohm>, -*] (4,-6);
+  
 
     % Minus relay auf platine
-    \draw (.8+\offsetx1, -4.4) -- (4,-4.4);
-    \draw (4.4,-4.4) -- (6,-4.4);
+    %\draw (.8+\offsetx1, -4.4) -- (4,-4.4);
+    %\draw (4.4,-4.4) -- (6,-4.4);
+    \draw (.8+\offsetx1, -4.4) -- (1,-4.4);
+    \draw[-latex] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
+
+    %%--------------------------------------------------------------%%
+
+    % Motorregler, Motor
+    \foreach \x/\y in {\offxmotor/\offymotor, \offxmotor/\offymh}{
+        \draw (\x, \y-.25) -- (\x-1.5,\y-.25);
+        \draw (\x, \y) -- (\x-1.5,\y);
+        \draw (\x, \y+.25) -- (\x-1.5,\y+.25);
+        \draw (\x, \y) node[very thick, circle, draw, minimum size=3, fill=white] {A200};
+
+        %\draw[thick] (\offxmotor-4, \offymotor-.5) rectangle (\offxmotor-1.5, \offymotor+.5);
+        \node[thick, draw, fit={(\x-4, \y-.8) (\x-1.5, \y+.8)},inner sep=0, align=center] {\scriptsize Master SPIN 220 PRO OPTO};
+
+        \draw[-latex reversed, thick] (\x-4, \y-.6) -- ++(-.65,0) node[left] {\scriptsize BLL};
+        \draw[-latex reversed, thick] (\x-4, \y+.6) -- ++(-.65,0) node[left] {\scriptsize BHH};
+        \draw[-latex reversed] (\x-4, \y+.2) -- ++(-.4,0) node[left] {\scriptsize PWM};
+        \draw[-latex reversed] (\x-4, \y-.2) -- ++(-.4,0) node[left] {\scriptsize Serial};
+    }
+
+    % Buck converter
+    \foreach \x/\y in {\buckxA/\buckyA, \buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+        \node[thick, draw, fit={(\x, \y+.55) (\x+2.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize DC/DC}}}};
+        
+        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-.5,0) node[left] {\scriptsize BLL};
+        \draw[-latex reversed] (\x, \y+.4) node[right=-.1] {\tiny VIN+} -- ++(-.5,0) node[left] {\scriptsize BHH};
+    }
+
+    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0);
+    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0);
+    \draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
+    \draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
+
+    \foreach \x/\y in {\buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+        \draw (\x+2.5, \y+.4) node[left=-.1] {\tiny VOUT+} -- ++(2,0);
+        \draw (\x+2.5, \y-.4) node[left=-.1] {\tiny VOUT-} -- ++(2,0);
+        
+        \node[thick, draw, fit={(\x+4.5, \y+.55) (\x+6.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize SERVO}}}};
+        \draw(\x+4.5, \y+.4) node[right=-.1] {\tiny VCC};
+        \draw(\x+4.5, \y-.4) node[right=-.1] {\tiny GND};
+        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.5,0) node[left] {\tiny PWM};
+
+        \draw[thick] (\x+6.3, \y) circle (.07);
+        \draw (\x+6.3, \y+.12) arc (90:270:.12);
+        \draw (\x+6.8, \y+.05) arc (90:-90:.05);
+        \draw[fill] (\x+6.8, \y) circle (.025);
+        \draw (\x+6.3 , \y+.12) -- (\x+6.8, \y+.05);
+        \draw (\x+6.3 , \y-.12) -- (\x+6.8, \y-.05);
+    }
+
+    %% Ansteuerungs-Platine Relay
+    \draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
+    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung};
+
+    \foreach \y/\text in {.5/7, 2/6, 3.5/8}{
+        \draw (\platineX, \platineY-\y) -- ++(.5,0) -- ++(0,-1) -- ++(-.5,0);
+        \draw (\platineX, \platineY-.25-\y) to[short, -*] ++(.25,0);
+        \draw (\platineX, \platineY-.75-\y) to[short, -*] ++(.25,0);
+        \draw (\platineX+.5, \platineY-.5-\y) node[right] {\small J\text};
+    }
+
+    \draw[-latex reversed] (\platineX, \platineY-.75) -- ++(-.5,0) node[left] {\scriptsize BHL};
+    \draw[-latex reversed] (\platineX, \platineY-1.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
+
+    \draw[-latex reversed] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
+    \draw[-latex reversed] (\platineX, \platineY-2.75) -- ++(-.5,0) node[left] {\scriptsize BLL};
     
+    \draw[-latex reversed] (\platineX, \platineY-3.75) -- ++(-.5,0) node[left] {\scriptsize BLH};
+    \draw[-latex reversed] (\platineX, \platineY-4.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
+
 \end{circuitikz}
-\end{document}
+}

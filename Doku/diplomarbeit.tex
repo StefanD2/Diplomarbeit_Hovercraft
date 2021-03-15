@@ -45,11 +45,13 @@
 \usepackage{graphicx}
 % Tabellen (erweitert)
 \usepackage{tabularx}
-% TikZ + Circuit-TikZ (fuer Schaltungen)									
-\usepackage[europeanresistors,							
-			europeaninductors]{circuitikz}
+% TikZ + Circuit-TikZ (fuer Schaltungen)			
+\usepackage{tikz}						
+\usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
 % Nuetzliche TikZ Libraries
 \usetikzlibrary{arrows,automata,positioning}
+\usetikzlibrary{math}
+\usetikzlibrary{fit}
 % Mathematikpakete!
 \usepackage{amsmath,amssymb}							
 %\usepackage{mathtools}	
@@ -57,7 +59,10 @@
 \usepackage{pdfpages}
 % Source Code Einbindung, Setup siehe:
 % http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings									
-\usepackage{listings,scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..			
+\usepackage{listings,scrhack} %scrhack vermeidet Umschaltung auf KOMA Floats..
+
+\usepackage{verbatim}
+\usepackage{textcomp}
 			
 \usepackage{eurosym}
 \usepackage{lscape}
@@ -97,31 +102,13 @@
 \usepackage{graphbox} %loads graphicx package
 \usepackage[most]{tcolorbox}
 
-\usetikzlibrary{arrows}
 
+%---------------- DELETE THIS, JUST FOR SPEED ------------------%
+% \pdfcompresslevel=0 
+% \pdfobjcompresslevel=0
+% %------------------------------------------------------------------%
 
 %%=== MY COMMANDS ====%%
-% \includeSkizze{file, name, number, date}
-% \newcommand{\includeSkizzeOld}[5]{
-%   \begin{figure}[H]
-%     \centering
-%     \resizebox{.99\textheight}{!}{
-%     \begin{tikzpicture}
-%         \draw (0,0) rectangle (\textheight, \textwidth);
-%         \draw (\textheight, .15\textwidth) --(.7\textheight, .15\textwidth) -- (.7\textheight, 0);
-%         \draw(.7\textheight, .075\textwidth) -- (\textheight, .075\textwidth);
-%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .08\textwidth) {\Large #2};
-%         \node[anchor=south west,inner sep=0pt] (name) at (.71\textheight, .01\textwidth) {\Large Blatt #3};
-%         \node[anchor=south west,inner sep=0pt] (name) at (.85\textheight, .01\textwidth) {\Large #4};
-%         \draw (.84\textheight, .075\textwidth) -- (.84\textheight, 0);
-%         \node[anchor=north east,inner sep=0pt] (fig1) at (\textheight,\textwidth)
-%         {\includegraphics[width=\textheight]{#1}};
-%     \end{tikzpicture}}
-%     \captionlistentry{Skizze #2, Blatt #4}
-%     Skizze #2
-%     \label{#5}
-%   \end{figure}
-% }
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
@@ -136,8 +123,6 @@
   \end{figure}
 }
 
-\usepackage{tikz}
-
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
 \title{Hovercraft}
@@ -148,14 +133,6 @@
 \professor{Dipl.-Ing. Helge Frank}
 \dipacolor{htlgruen}
 %%====================================================%%
-
-% % Hyperlinks im Dokument
-% \usepackage[colorlinks=true,
-% 			linkcolor=black,
-% 			citecolor=green,
-% 			bookmarks=true,
-% 			urlcolor=black,
-% 			bookmarksopen=true]{hyperref}
 
 
 \usepackage{nameref}
@@ -169,6 +146,7 @@
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
+\RedeclareSectionCommand[beforeskip=0pt]{chapter}
 
 \begin{document}
 
@@ -190,6 +168,12 @@
 \unterschrift{Julia Stöger}
 \end{Eid}\newpage
 %%======================================================%%
+\def\chapterpagestyle{headings} 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
+\chapter*{Gendererklärung}
+Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf hingewiesen, dass die ausschließliche Verwendung der männlichen Form geschlechtsunabhängig verstanden werden soll.
+\newpage
+
 
 %%================ Diplomandenvorstellung ==============%%
 \input{Textparts/diplomanden.tex}
@@ -207,29 +191,26 @@
 %\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
 
 %%================ Abstract /Zusammenfass. =============%%
-\input{Textparts/zusammenfassung.tex}
-\todo[]{add zusammenfassung}
 \input{Textparts/abstract.tex}
-\todo[]{add abstract}
+\input{Textparts/zusammenfassung.tex}
 %\selectlanguage{english} % necessary for English speaking users
 
 % delete this line if your native language is German 
 %%======================================================%%
 
 %%================ Inhaltsverzeichnis ==================%%
+\def\chapterpagestyle{headings} 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 \tableofcontents
 %%======================================================%%
 
 
 %Ab hier Hauptteil
 \mainmatter
-\def\chapterpagestyle{headings} 
 \chapter{Einführung}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Einfuehrung.tex}
 
-
-\todo[]{Einführung bissal ausformulieren}
 \section{Funktionsprinzip eines Hovercrafts}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Funktionsprinzip.tex}
