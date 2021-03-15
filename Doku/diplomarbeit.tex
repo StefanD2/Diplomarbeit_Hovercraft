@@ -45,7 +45,8 @@
 \usepackage{graphicx}
 % Tabellen (erweitert)
 \usepackage{tabularx}
-% TikZ + Circuit-TikZ (fuer Schaltungen)									
+% TikZ + Circuit-TikZ (fuer Schaltungen)			
+\usepackage{tikz}						
 \usepackage[europeanresistors,							
 			europeaninductors]{circuitikz}
 % Nuetzliche TikZ Libraries
@@ -97,8 +98,6 @@
 \usepackage{graphbox} %loads graphicx package
 \usepackage[most]{tcolorbox}
 
-\usetikzlibrary{arrows}
-
 
 %%=== MY COMMANDS ====%%
 % \includeSkizze{file, name, number, date}
@@ -135,8 +134,6 @@
     \label{#3}
   \end{figure}
 }
-
-\usepackage{tikz}
 
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
