@@ -1,4 +1,5 @@
 \section{Servos}
+Die Steuerung der, für die Umleitung des zur Fortbewegung erzeugten Luftstromes, verwendeten Fahnen übernimmt je ein \textbf{DS5160 Digital Servo}.
 \missingfigure{Servos}
 
 \newpage
@@ -12,13 +13,13 @@ wurde es zwischen den beiden Parallelschaltungen von jeweils 4 Akkus platziert.
 \end{figure}
 
 \newpage
-\section{Schmelzsicherungen}
+\section{Schmelzsicherungen\label{sec:schmelzsicherungen}}
+Um im Falle eines Fehlers einen dauerhaften Kurzschluss aller Akkus zu verhindern, wurde sowohl vor als auch nach dem Hauptrelais eine $500\,\mathrm{A}$ Kfz-DC Sicherung verbaut.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{Fotos/kfz_Sicherung.png}
+    \includegraphics[width=0.7\textwidth]{Fotos/kfz_Sicherung.png}
     \caption{Automotive Kfz Sicherung}
 \end{figure}
-\todo{Schreib was dazu}
 \newpage
 \section{Buck-Converter}
 Die Versorgung der Bootelektronik und der Servos übernehmen Buck-Converter, von welchen jeweils einer für ein Servo und einer für die gesamte restliche Elektronik verbaut sind.
