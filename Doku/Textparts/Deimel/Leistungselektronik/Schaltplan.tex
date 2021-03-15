@@ -1,53 +1,21 @@
-\documentclass[paper=a4,12pt]{scrreprt}
-\pdfminorversion=6 % because inventor exports are 1.6
-% Encoding UTF8
-\usepackage[utf8]{inputenc}
-% 8 Bit Aufloesung der Buchstaben
-\usepackage[T1]{fontenc}
-% Seitenraender
-\usepackage[scale=0.72]{geometry}
-% Spracheinstellungen
-\usepackage[english, naustrian]{babel} % your native language must be the last one!!
-% erweiterte Farbenpalette
-\usepackage[dvipsnames]{xcolor}
-% Abbildungen
-\usepackage{graphicx}
-% Tabellen (erweitert)
-\usepackage{tabularx}
-% TikZ + Circuit-TikZ (fuer Schaltungen)									
-\usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
-% Nuetzliche TikZ Libraries
-\usetikzlibrary{arrows,automata,positioning}
-\usetikzlibrary{math}
-\usetikzlibrary{fit}
-% Mathematikpakete!
-\usepackage{amsmath,amssymb}							
-%\usepackage{mathtools}	
-% PDF Einbindung (zB Datenblaetter)
-\usepackage{pdfpages}
-
-\usepackage{pdflscape}
-
 \tikzmath{
     \offsetx1=0;\offsetx2=.7;
-    \offxmotor=14;
-    \offymotor=-1;
-    \offymh = -3;  
-    \buckxA = 10;
+    \offxmotor=14.5;
+    \offymotor=-10;
+    \offymh = -12;  
+    \buckxA = 10.5;
     \buckxB = 1;
     \buckxC = 1;
     \buckxD = 1;
-    \buckyA = -6;
+    \buckyA = -14;
     \buckyB = -10;
     \buckyC = -12;
     \buckyD = -14;
     \platineX = 10;
-    \platineY = -10;
+    \platineY = -1.5;
 } 
 
-\begin{document}
-\pagestyle{empty}
-%\begin{landscape}
+\resizebox{.99\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
     % Akkus highside
     \foreach \i in {0,2,4, 6}
@@ -72,6 +40,7 @@
 
     % Pfeile Akkus
     \draw[-latex] (6,0) -- ++(.5,0) node[right] {\scriptsize BHH};
+    \draw[-latex] (6,-2) -- ++(.5,0) node[right] {\scriptsize BHL};
     \draw[-latex] (6,-8) -- ++(.5,0) node[right] {\scriptsize BLL};
     \draw[-latex] (6,-6) -- ++(.5,0) node[right] {\scriptsize BLH};
 
@@ -141,10 +110,24 @@
     }
 
     %% Ansteuerungs-Platine Relay
-    %\draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
-    \node[thick, draw, fit={(\platineX, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung};   
+    \draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
+    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung};
+
+    \foreach \y/\text in {.5/7, 2/6, 3.5/8}{
+        \draw (\platineX, \platineY-\y) -- ++(.5,0) -- ++(0,-1) -- ++(-.5,0);
+        \draw (\platineX, \platineY-.25-\y) to[short, -*] ++(.25,0);
+        \draw (\platineX, \platineY-.75-\y) to[short, -*] ++(.25,0);
+        \draw (\platineX+.5, \platineY-.5-\y) node[right] {\small J\text};
+    }
+
+    \draw[-latex reversed] (\platineX, \platineY-.75) -- ++(-.5,0) node[left] {\scriptsize BHL};
+    \draw[-latex reversed] (\platineX, \platineY-1.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
+
+    \draw[-latex reversed] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
+    \draw[-latex reversed] (\platineX, \platineY-2.75) -- ++(-.5,0) node[left] {\scriptsize BLL};
     
+    \draw[-latex reversed] (\platineX, \platineY-3.75) -- ++(-.5,0) node[left] {\scriptsize BLH};
+    \draw[-latex reversed] (\platineX, \platineY-4.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
 
 \end{circuitikz}
-%\end{landscape}
-\end{document}
+}
