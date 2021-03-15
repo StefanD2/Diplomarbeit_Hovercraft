@@ -19,15 +19,33 @@
 % Nuetzliche TikZ Libraries
 \usetikzlibrary{arrows,automata,positioning}
 \usetikzlibrary{math}
+\usetikzlibrary{fit}
 % Mathematikpakete!
 \usepackage{amsmath,amssymb}							
 %\usepackage{mathtools}	
 % PDF Einbindung (zB Datenblaetter)
 \usepackage{pdfpages}
 
-\tikzmath{\offsetx1=0;\offsetx2=.7;} 
+\usepackage{pdflscape}
+
+\tikzmath{
+    \offsetx1=0;\offsetx2=.7;
+    \offxmotor=14;
+    \offymotor=-1;
+    \offymh = -3;  
+    \buckxA = 10;
+    \buckxB = 1;
+    \buckxC = 1;
+    \buckxD = 1;
+    \buckyA = -6;
+    \buckyB = -10;
+    \buckyC = -12;
+    \buckyD = -14;
+} 
 
 \begin{document}
+\pagestyle{empty}
+%\begin{landscape}
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
     % Akkus highside
     \foreach \i in {0,2,4, 6}
@@ -50,17 +68,87 @@
     \draw[very thick] (0,-6) -- (6,-6); % [line width=.65mm]
     \draw[very thick] (0,-8) -- (6,-8);
 
+    % Pfeile Akkus
+    \draw[-latex] (6,0) -- ++(.5,0) node[right] {\scriptsize BHH};
+    \draw[-latex] (6,-8) -- ++(.5,0) node[right] {\scriptsize BLL};
+    \draw[-latex] (6,-6) -- ++(.5,0) node[right] {\scriptsize BLH};
+
     % Notaus
     \draw (1.5+\offsetx1,-3.5) to[normal closed switch, mirror, l_=NOTAUS, -*] (1.5+\offsetx1,-2);
     \draw (1.5+\offsetx1,-3.5) -- (1.5+\offsetx1,-3.6) -- (.8+\offsetx1,-3.6);
 
     % Precharge button
     % \draw (0+\offsetPrechargeX, -6) to[R, l_=10<\ohm>] (0+\offsetPrechargeX, -4) to[nopb, mirror, l={{{{\rotatebox[origin=c]{-90}{\scriptsize PRECHARGE}}}}}] (0+\offsetPrechargeX, -2);
-    \draw (.8+\offsetx2, -3.6) to[nopb, l_={{{{\scriptsize PRECHARGE}}}}, *-] (3+\offsetx2, -3.6) -- (3.5+\offsetx2, -3.6) to[R, l=10<\ohm>, -*] (3.5+\offsetx2,-6);
+    \draw (.8+\offsetx2, -3.6) to[nopb] (3+\offsetx2, -3.6); 
+    \path (.8+\offsetx2, -3.6) -- (3+\offsetx2, -3.6) node[midway, below] {\scriptsize PRECHARGE};
+    \draw (3+\offsetx2, -3.6) -- (4, -3.6) to[R, l=10<\ohm>, -*] (4,-6);
+  
 
     % Minus relay auf platine
-    \draw (.8+\offsetx1, -4.4) -- (4,-4.4);
-    \draw (4.4,-4.4) -- (6,-4.4);
+    %\draw (.8+\offsetx1, -4.4) -- (4,-4.4);
+    %\draw (4.4,-4.4) -- (6,-4.4);
+    \draw (.8+\offsetx1, -4.4) -- (1,-4.4);
+    \draw[-latex] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
+
+    %%--------------------------------------------------------------%%
+
+    % Motorregler, Motor
+    \draw (\offxmotor, \offymotor-.25) -- (\offxmotor-1.5,\offymotor-.25);
+    \draw (\offxmotor, \offymotor) -- (\offxmotor-1.5,\offymotor);
+    \draw (\offxmotor, \offymotor+.25) -- (\offxmotor-1.5,\offymotor+.25);
+    \draw (\offxmotor, \offymotor) node[very thick, circle, draw, minimum size=3, fill=white] {A200};
+
+    %\draw[thick] (\offxmotor-4, \offymotor-.5) rectangle (\offxmotor-1.5, \offymotor+.5);
+    \node[thick, draw, fit={(\offxmotor-4, \offymotor-.6) (\offxmotor-1.5, \offymotor+.6)},inner sep=0, align=center] {\scriptsize Master SPIN 220 PRO OPTO};
+
+    \draw[-latex reversed] (\offxmotor-4, \offymotor-.5) -- (\offxmotor-4.5, \offymotor-.5) node[left] {\scriptsize BLL};
+    \draw[-latex reversed] (\offxmotor-4, \offymotor+.5) -- (\offxmotor-4.5, \offymotor+.5) node[left] {\scriptsize BHH};
+
+    % n2
+    \draw (\offxmotor, \offymh-.25) -- (\offxmotor-1.5,\offymh-.25);
+    \draw (\offxmotor, \offymh) -- (\offxmotor-1.5,\offymh);
+    \draw (\offxmotor, \offymh+.25) -- (\offxmotor-1.5,\offymh+.25);
+    \draw (\offxmotor, \offymh) node[very thick, circle, draw, minimum size=3, fill=white] {A200};
+
+    \node[thick, draw, fit={(\offxmotor-4, \offymh-.6) (\offxmotor-1.5, \offymh+.6)},inner sep=0, align=center] {\scriptsize Master SPIN 220 PRO OPTO};
+
+    \draw[-latex reversed] (\offxmotor-4, \offymh-.5) -- (\offxmotor-4.5, \offymh-.5) node[left] {\scriptsize BLL};
+    \draw[-latex reversed] (\offxmotor-4, \offymh+.5) -- (\offxmotor-4.5, \offymh+.5) node[left] {\scriptsize BHH};
+
+    % Buck converter
+
+    \foreach \x/\y in {\buckxA/\buckyA, \buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+        \node[thick, draw, fit={(\x, \y+.55) (\x+2.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize DC/DC}}}};
+        
+        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-.5,0) node[left] {\scriptsize BLL};
+        \draw[-latex reversed] (\x, \y+.4) node[right=-.1] {\tiny VIN+} -- ++(-.5,0) node[left] {\scriptsize BHH};
+    }
+
+    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0);
+    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0);
+    \draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
+    \draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
+
+    \foreach \x/\y in {\buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+        \draw (\x+2.5, \y+.4) node[left=-.1] {\tiny VOUT+} -- ++(2,0);
+        \draw (\x+2.5, \y-.4) node[left=-.1] {\tiny VOUT-} -- ++(2,0);
+        
+        \node[thick, draw, fit={(\x+4.5, \y+.55) (\x+6.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize SERVO}}}};
+        \draw(\x+4.5, \y+.4) node[right=-.1] {\tiny VCC};
+        \draw(\x+4.5, \y-.4) node[right=-.1] {\tiny GND};
+        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.5,0) node[left] {\tiny PWM};
+
+        \draw[thick] (\x+6.3, \y) circle (.07);
+        \draw (\x+6.3, \y+.12) arc (90:270:.12);
+        \draw (\x+6.8, \y+.05) arc (90:-90:.05);
+        \draw[fill] (\x+6.8, \y) circle (.025);
+        \draw (\x+6.3 , \y+.12) -- (\x+6.8, \y+.05);
+        \draw (\x+6.3 , \y-.12) -- (\x+6.8, \y-.05);
+    }
+
+
+       
     
 \end{circuitikz}
+%\end{landscape}
 \end{document}
