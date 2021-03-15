@@ -13,3 +13,6 @@
 *.tdo
 # exlude working pdf to avoid merging conflicts:
 diplomarbeit.pdf
+tikzexternalize/**
+*.auxlock
+SchaltplanTest.pdf

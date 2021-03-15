@@ -47,10 +47,11 @@
 \usepackage{tabularx}
 % TikZ + Circuit-TikZ (fuer Schaltungen)			
 \usepackage{tikz}						
-\usepackage[europeanresistors,							
-			europeaninductors]{circuitikz}
+\usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
 % Nuetzliche TikZ Libraries
 \usetikzlibrary{arrows,automata,positioning}
+\usetikzlibrary{math}
+\usetikzlibrary{fit}
 % Mathematikpakete!
 \usepackage{amsmath,amssymb}							
 %\usepackage{mathtools}	
@@ -121,6 +122,11 @@
 %     \label{#5}
 %   \end{figure}
 % }
+
+% % ------------------ DELETE THIS, JUST FOR SPEED ------------------%
+% \pdfcompresslevel=0 
+% \pdfobjcompresslevel=0
+% %------------------------------------------------------------------%
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
