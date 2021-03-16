@@ -23,7 +23,7 @@
     {~}{{\textasciitilde}}1,
 }
 
-\section{Die zur Steuerung entworfenen Platinen}
+\section{Steuerungsplatinen}
 \subsection{Motorregleransteuerung}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Diese wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
@@ -135,7 +135,7 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 
 \newpage
 
-\subsection{Fahnenansteuerung und Akkutemperaturen}
+\subsection{Fahnenansteuerung \&\ Akkutemperaturen}
 \subsubsection{Fahnenansteuerung}
 Auch die Ansteuerung der Servos erfolgte mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbunden GPIOs zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.

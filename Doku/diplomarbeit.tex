@@ -45,6 +45,7 @@
 \usepackage{graphicx}
 % Tabellen (erweitert)
 \usepackage{tabularx}
+\usepackage{tabu}
 % TikZ + Circuit-TikZ (fuer Schaltungen)			
 \usepackage{tikz}						
 \usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
@@ -133,6 +134,7 @@
 \dipacolor{htlgruen}
 %%====================================================%%
 
+\usepackage{longtable}
 
 \usepackage{nameref}
 % folowing  must be in this order
@@ -272,9 +274,16 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Anleitung/}{Anleitung_Laden.tex}
 
-\chapter{Meilensteine}
+\chapter{Besprechungsprotokoll \&\ Meilensteine}
 \responsible{Julia Stöger}
+\section{Besprechungsprotokoll}
+\todo{Besprechungsprotokoll}
+\section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
+
+\chapter{Zeitaufzeichnung}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Zeit/}{Zeit.tex}
 
 \clearpage
 \appendix
