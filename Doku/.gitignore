@@ -16,3 +16,4 @@ diplomarbeit.pdf
 tikzexternalize/**
 *.auxlock
 SchaltplanTest.pdf
+.vscode

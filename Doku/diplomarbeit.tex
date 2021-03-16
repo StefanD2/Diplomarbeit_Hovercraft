@@ -45,6 +45,7 @@
 \usepackage{graphicx}
 % Tabellen (erweitert)
 \usepackage{tabularx}
+\usepackage{tabu}
 % TikZ + Circuit-TikZ (fuer Schaltungen)			
 \usepackage{tikz}						
 \usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
@@ -104,8 +105,8 @@
 \usepackage{multirow}
 
 %---------------- DELETE THIS, JUST FOR SPEED ------------------%
-% \pdfcompresslevel=0 
-% \pdfobjcompresslevel=0
+\pdfcompresslevel=0 
+\pdfobjcompresslevel=0
 % %------------------------------------------------------------------%
 
 %%=== MY COMMANDS ====%%
@@ -115,11 +116,10 @@
 \newcommand{\includeSkizze}[4]{
   \begin{figure}[H]
     \centering
-    \resizebox{.99\textheight}{!}{
+    \resizebox{.95\textheight}{!}{
     \includegraphics[width=\textheight, page=#4]{#1}
     }
-    \captionlistentry{Zeichnung #2}
-    \label{#3}
+    \caption{Zeichnung #2\label{#3}}
   \end{figure}
 }
 
@@ -134,6 +134,7 @@
 \dipacolor{htlgruen}
 %%====================================================%%
 
+\usepackage{longtable}
 
 \usepackage{nameref}
 % folowing  must be in this order
@@ -147,6 +148,18 @@
 \usepackage{cleveref}
 
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
+
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikzexternalize/]
+
+\usepackage{letltxmacro}
+
+\LetLtxMacro{\oldmissingfigure}{\missingfigure}
+\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
+
+\LetLtxMacro{\oldtodo}{\todo}
+\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
 
 \begin{document}
 
@@ -261,9 +274,18 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Anleitung/}{Anleitung_Laden.tex}
 
-\chapter{Meilensteine}
+\chapter{Besprechungsprotokoll \&\ Meilensteine}
 \responsible{Julia Stöger}
+\section{Besprechungsprotokoll}
+\subimport{Textparts/Stoeger/Meilensteine/}{Besprechungsprotokoll.tex}
+
+\todo{Besprechungsprotokoll}
+\section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
+
+\chapter{Zeitaufzeichnung}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Zeit/}{Zeit.tex}
 
 \clearpage
 \appendix
