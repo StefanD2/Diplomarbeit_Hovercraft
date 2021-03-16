@@ -104,6 +104,34 @@
 \usepackage[most]{tcolorbox}
 \usepackage{multirow}
 
+\usepackage{longtable}
+
+\usepackage{nameref}
+% folowing  must be in this order
+\usepackage{varioref}
+\usepackage[colorlinks=true,
+			linkcolor=black,
+			citecolor=green,
+			bookmarks=true,
+			urlcolor=blue,
+			bookmarksopen=true]{hyperref}
+\usepackage{cleveref}
+
+\usepackage{letltxmacro}
+
+
+\RedeclareSectionCommand[beforeskip=0pt]{chapter}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikzexternalize/]
+
+\LetLtxMacro{\oldmissingfigure}{\missingfigure}
+\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
+
+\LetLtxMacro{\oldtodo}{\todo}
+\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
+
+
 %---------------- DELETE THIS, JUST FOR SPEED ------------------%
 \pdfcompresslevel=0 
 \pdfobjcompresslevel=0
@@ -123,6 +151,7 @@
   \end{figure}
 }
 
+
 %%==== Definitionen fuer die Diplomarbeit ============%%
 \dokumenttyp{DIPLOMARBEIT}
 \title{Hovercraft}
@@ -133,33 +162,6 @@
 \professor{Dipl.-Ing. Helge Frank}
 \dipacolor{htlgruen}
 %%====================================================%%
-
-\usepackage{longtable}
-
-\usepackage{nameref}
-% folowing  must be in this order
-\usepackage{varioref}
-\usepackage[colorlinks=true,
-			linkcolor=black,
-			citecolor=green,
-			bookmarks=true,
-			urlcolor=blue,
-			bookmarksopen=true]{hyperref}
-\usepackage{cleveref}
-
-\RedeclareSectionCommand[beforeskip=0pt]{chapter}
-
-
-\usetikzlibrary{external}
-\tikzexternalize[prefix=tikzexternalize/]
-
-\usepackage{letltxmacro}
-
-\LetLtxMacro{\oldmissingfigure}{\missingfigure}
-\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
-
-\LetLtxMacro{\oldtodo}{\todo}
-\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
 
 \begin{document}
 
@@ -289,8 +291,9 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 
 \clearpage
 \appendix
-\def\chapterpagestyle{empty} 
+%\def\chapterpagestyle{empty} 
 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%================ Abkuerzungsverzeichnis ==============%%
 \input{Textparts/abkuerzungen.tex}
 %%======================================================%%
