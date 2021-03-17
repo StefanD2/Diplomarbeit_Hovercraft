@@ -165,6 +165,31 @@
 \dipacolor{htlgruen}
 %%====================================================%%
 
+\lstset {
+    language=C++,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    basicstyle=\scriptsize\ttfamily,
+    keywordstyle=\color{red!60!blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green!50!black}\ttfamily,
+    numbers=left, numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    emph={
+        uint16_t, uint32_t, size_t, string, std, override, private, public, class, int, double, float, char, long, bool, void, protected, virtual, static, volatile, __cplusplus, extern, ISR,  TIMER1_COMPA_vect,TIMER0_COMPA_vect, true, false, this, namespace, if, else, for, while, return, sizeof, new, delete, unsigned, struct
+    },emphstyle={\color{blue}\ttfamily},
+    literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1,
+}
+
 \begin{document}
 
 \listoftodos
@@ -283,13 +308,17 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \section{Besprechungsprotokoll}
 \subimport{Textparts/Stoeger/Meilensteine/}{Besprechungsprotokoll.tex}
 
-\todo{Besprechungsprotokoll}
 \section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
 \chapter{Zeitaufzeichnung}
 \responsible{Stefan Deimel}
 \subimport{Textparts/Deimel/Zeit/}{Zeit.tex}
+
+\chapter{Anhang}
+\responsible{Philipp Eilmsteiner}
+\subimport{Textparts/Eilmsteiner/Anhang/}{arduino_bibliotheken.tex}
+\subimport{Textparts/Eilmsteiner/Anhang/}{Datenblaetter.tex}
 
 \clearpage
 \appendix
