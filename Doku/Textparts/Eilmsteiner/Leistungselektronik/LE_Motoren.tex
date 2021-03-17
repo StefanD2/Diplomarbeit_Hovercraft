@@ -1,4 +1,5 @@
-\section{Motoren}
+\section{Antrieb}
+\subsection{Motoren}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{Fotos/Motor.png}
@@ -6,14 +7,21 @@
 \end{figure}
 \todo[]{Text und Bilder zu Motoren einfügen}
 \newpage
-\section{Motorregler}
+\subsection{Propeller}
+
+\missingfigure{Wie DSC 8600 nur steiler und Propeller hinten}
+
+
+\newpage
+\subsection{Motorregler}
 Die Ansteuerung der Motoren übernimmt der dafür empfohlene \textbf{MasterSpin 220 Pro OPTO}.
+Hierbei handelt es sich um einen Brushless-DC Regler, welcher einen maximalen Dauerstrom von $220\,\mathrm{A}$ aufweist.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{Fotos/MasterSpin_ohne_Halter.png}
     \caption{MasterSPIN 220 Pro OPTO}
 \end{figure}
-\subsection*{Parametrierung durch JetiBox}
+\subsubsection*{Parametrierung durch JetiBox}
 Um den Regler auf unsere Bedürfnisse parametrieren zu können, wurde eine sogenannte "JetiBox" verwendet.
 \begin{figure}[h]
     \centering
@@ -59,5 +67,6 @@ Konkret wurden folgende Einstellungen getroffen:\\
     \end{threeparttable}
     \caption{Durch JetiBox am Regler konfigurierte Parameter}
 \end{table}
-
+\todo{add beschreibung Shitty-box}
+\todo{genauer beschreiben}
 \newpage

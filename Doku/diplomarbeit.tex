@@ -45,6 +45,7 @@
 \usepackage{graphicx}
 % Tabellen (erweitert)
 \usepackage{tabularx}
+\usepackage{tabu}
 % TikZ + Circuit-TikZ (fuer Schaltungen)			
 \usepackage{tikz}						
 \usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
@@ -101,39 +102,9 @@
 \usepackage{setspace}\usepackage{threeparttable}
 \usepackage{graphbox} %loads graphicx package
 \usepackage[most]{tcolorbox}
+\usepackage{multirow}
 
-
-%---------------- DELETE THIS, JUST FOR SPEED ------------------%
-% \pdfcompresslevel=0 
-% \pdfobjcompresslevel=0
-% %------------------------------------------------------------------%
-
-%%=== MY COMMANDS ====%%
-
-\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
-
-\newcommand{\includeSkizze}[4]{
-  \begin{figure}[H]
-    \centering
-    \resizebox{.99\textheight}{!}{
-    \includegraphics[width=\textheight, page=#4]{#1}
-    }
-    \captionlistentry{Zeichnung #2}
-    \label{#3}
-  \end{figure}
-}
-
-%%==== Definitionen fuer die Diplomarbeit ============%%
-\dokumenttyp{DIPLOMARBEIT}
-\title{Hovercraft}
-\author{Stefan Deimel \and Philipp Eilmsteiner \and Julia Stöger}
-\date{\today}
-\place{St. P\"olten}
-\schuljahr{2020/21}
-\professor{Dipl.-Ing. Helge Frank}
-\dipacolor{htlgruen}
-%%====================================================%%
-
+\usepackage{longtable}
 
 \usepackage{nameref}
 % folowing  must be in this order
@@ -146,7 +117,51 @@
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
+\usepackage{letltxmacro}
+
+
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikzexternalize/]
+
+\LetLtxMacro{\oldmissingfigure}{\missingfigure}
+\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
+
+\LetLtxMacro{\oldtodo}{\todo}
+\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
+
+
+%---------------- DELETE THIS, JUST FOR SPEED ------------------%
+\pdfcompresslevel=0 
+\pdfobjcompresslevel=0
+% %------------------------------------------------------------------%
+
+%%=== MY COMMANDS ====%%
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+\newcommand{\includeSkizze}[4]{
+  \begin{figure}[H]
+    \centering
+    \resizebox{.95\textheight}{!}{
+    \includegraphics[width=\textheight, page=#4]{#1}
+    }
+    \caption{Zeichnung #2\label{#3}}
+  \end{figure}
+}
+
+
+%%==== Definitionen fuer die Diplomarbeit ============%%
+\dokumenttyp{DIPLOMARBEIT}
+\title{Hovercraft}
+\author{Stefan Deimel \and Philipp Eilmsteiner \and Julia Stöger}
+\date{\today}
+\place{St. P\"olten}
+\schuljahr{2020/21}
+\professor{Dipl.-Ing. Helge Frank}
+\dipacolor{htlgruen}
+%%====================================================%%
 
 \begin{document}
 
@@ -261,14 +276,24 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Anleitung/}{Anleitung_Laden.tex}
 
-\chapter{Meilensteine}
+\chapter{Besprechungsprotokoll \&\ Meilensteine}
 \responsible{Julia Stöger}
+\section{Besprechungsprotokoll}
+\subimport{Textparts/Stoeger/Meilensteine/}{Besprechungsprotokoll.tex}
+
+\todo{Besprechungsprotokoll}
+\section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
+
+\chapter{Zeitaufzeichnung}
+\responsible{Stefan Deimel}
+\subimport{Textparts/Deimel/Zeit/}{Zeit.tex}
 
 \clearpage
 \appendix
-\def\chapterpagestyle{empty} 
+%\def\chapterpagestyle{empty} 
 
+\responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%================ Abkuerzungsverzeichnis ==============%%
 \input{Textparts/abkuerzungen.tex}
 %%======================================================%%
