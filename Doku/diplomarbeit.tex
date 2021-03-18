@@ -119,19 +119,7 @@
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
-\usepackage{letltxmacro}
-
-
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
-
-\usetikzlibrary{external}
-\tikzexternalize[prefix=tikzexternalize/]
-
-\LetLtxMacro{\oldmissingfigure}{\missingfigure}
-\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
-
-\LetLtxMacro{\oldtodo}{\todo}
-\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
 
 
 %---------------- DELETE THIS, JUST FOR SPEED ------------------%
@@ -191,7 +179,6 @@
 }
 
 \begin{document}
-
 \listoftodos
 
 \frontmatter
