@@ -17,3 +17,4 @@ tikzexternalize/**
 *.auxlock
 SchaltplanTest.pdf
 .vscode
+~$*.*

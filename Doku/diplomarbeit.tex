@@ -79,6 +79,9 @@
 %% Ganttdiagramme
 \usepackage{pgfgantt}
 
+\usepackage{keyval}
+\usepackage{caption}
+
 %% Subfigures
 \usepackage[lofdepth]{subfig}
 
@@ -98,7 +101,6 @@
 %\usepackage{pdflscape}
 \usepackage{lscape}
 
-\usepackage{caption}
 \usepackage{setspace}\usepackage{threeparttable}
 \usepackage{graphbox} %loads graphicx package
 \usepackage[most]{tcolorbox}
@@ -117,19 +119,7 @@
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
 
-\usepackage{letltxmacro}
-
-
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
-
-\usetikzlibrary{external}
-\tikzexternalize[prefix=tikzexternalize/]
-
-\LetLtxMacro{\oldmissingfigure}{\missingfigure}
-\renewcommand{\missingfigure}[2][]{\tikzexternaldisable\oldmissingfigure[{#1}]{#2}\tikzexternalenable}
-
-\LetLtxMacro{\oldtodo}{\todo}
-\renewcommand{\todo}[2][]{\tikzexternaldisable\oldtodo[#1]{#2}\tikzexternalenable}
 
 
 %---------------- DELETE THIS, JUST FOR SPEED ------------------%
@@ -163,8 +153,36 @@
 \dipacolor{htlgruen}
 %%====================================================%%
 
-\begin{document}
+\lstset {
+    language=C++,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    basicstyle=\scriptsize\ttfamily,
+    keywordstyle=\color{red!60!blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{green!50!black}\ttfamily,
+    numbers=left, numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    emph={
+        uint16_t, uint32_t, size_t, string, std, override, private, public, class, int, double, float, char, long, bool, void, protected, virtual, static, volatile, __cplusplus, extern, ISR, true, false, this, namespace, if, else, for, while, return, sizeof, new, delete, unsigned, struct, typedef, nullptr, const 
+    },emphstyle={\color{blue}\ttfamily},
+    columns=fullflexible,keepspaces,
+    literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+    {\# if}{{{{{\textcolor{red!60!blue}{\#if}}}}}}1
+    {\# ifdef}{{{{{\textcolor{red!60!blue}{\#ifdef}}}}}}1
+    {\# ifndef}{{{{{\textcolor{red!60!blue}{\#ifndef}}}}}}1,
+}
 
+\begin{document}
 \listoftodos
 
 \frontmatter
@@ -201,16 +219,14 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 %%======================================================%%
 
 %% Kurzfassungen
-\todo[]{add Kurzfassungen}
-%\includepdf[pages={1-2}, scale=1,]{KurzfassungDADE.pdf}
-%\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
+\includepdf[pages={1-2}, scale=1]{Kurzfassungen/De.pdf}
+\includepdf[pages={1-2}, scale=1]{Kurzfassungen/En.pdf}
+\todo[]{Kurzfassung EN fertigschreiben}
+\todo[]{Kurzfassung -- schönere Fotos suchen/nehmen}
 
 %%================ Abstract /Zusammenfass. =============%%
 \input{Textparts/abstract.tex}
 \input{Textparts/zusammenfassung.tex}
-%\selectlanguage{english} % necessary for English speaking users
-
-% delete this line if your native language is German 
 %%======================================================%%
 
 %%================ Inhaltsverzeichnis ==================%%
@@ -222,17 +238,14 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 
 %Ab hier Hauptteil
 \mainmatter
-\chapter{Einführung}
+\chapter{Themenvorstellung}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Einfuehrung.tex}
 
-\section{Funktionsprinzip eines Hovercrafts}
+\chapter{Funktionsprinzip}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Funktionsprinzip.tex}
 
-\section{Individuelle Themenstellung}
-\responsible{Julia Stöger}
-\subimport{Textparts/Stoeger/Einfuehrung/}{individuelleThemenstellung.tex}
 
 \chapter{Erster Prototyp}
 \responsible{Stefan Deimel}
@@ -276,18 +289,24 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Anleitung/}{Anleitung_Laden.tex}
 
+\chapter{Kostenrechnung}
+\todo{wie nennen wir das kapitel?}
+
 \chapter{Besprechungsprotokoll \&\ Meilensteine}
 \responsible{Julia Stöger}
 \section{Besprechungsprotokoll}
 \subimport{Textparts/Stoeger/Meilensteine/}{Besprechungsprotokoll.tex}
-
-\todo{Besprechungsprotokoll}
 \section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
 \chapter{Zeitaufzeichnung}
 \responsible{Stefan Deimel}
 \subimport{Textparts/Deimel/Zeit/}{Zeit.tex}
+
+\chapter{Anhang}
+\responsible{Philipp Eilmsteiner}
+\subimport{Textparts/Eilmsteiner/Anhang/}{arduino_bibliotheken.tex}
+\subimport{Textparts/Eilmsteiner/Anhang/}{Datenblaetter.tex}
 
 \clearpage
 \appendix
