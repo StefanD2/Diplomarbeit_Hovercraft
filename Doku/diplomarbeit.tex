@@ -167,6 +167,7 @@
     emph={
         uint16_t, uint32_t, size_t, string, std, override, private, public, class, int, double, float, char, long, bool, void, protected, virtual, static, volatile, __cplusplus, extern, ISR,  TIMER1_COMPA_vect,TIMER0_COMPA_vect, true, false, this, namespace, if, else, for, while, return, sizeof, new, delete, unsigned, struct
     },emphstyle={\color{blue}\ttfamily},
+    columns=fullflexible,keepspaces,
     literate=%
     {Ö}{{\"O}}1
     {Ä}{{\"A}}1
@@ -175,7 +176,10 @@
     {ü}{{\"u}}1
     {ä}{{\"a}}1
     {ö}{{\"o}}1
-    {~}{{\textasciitilde}}1,
+    {~}{{\textasciitilde}}1
+    {\# if}{{{{{\textcolor{red!60!blue}{\#if}}}}}}1
+    {\# ifdef}{{{{{\textcolor{red!60!blue}{\#ifdef}}}}}}1
+    {\# ifndef}{{{{{\textcolor{red!60!blue}{\#ifndef}}}}}}1,
 }
 
 \begin{document}
@@ -219,14 +223,10 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \includepdf[pages={1-2}, scale=1]{Kurzfassungen/En.pdf}
 \todo[]{Kurzfassung EN fertigschreiben}
 \todo[]{Kurzfassung -- schönere Fotos suchen/nehmen}
-%\includepdf[pages={1-2}, scale=1,]{KurzfassungDAEN.pdf}
 
 %%================ Abstract /Zusammenfass. =============%%
 \input{Textparts/abstract.tex}
 \input{Textparts/zusammenfassung.tex}
-%\selectlanguage{english} % necessary for English speaking users
-
-% delete this line if your native language is German 
 %%======================================================%%
 
 %%================ Inhaltsverzeichnis ==================%%
@@ -296,7 +296,6 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \responsible{Julia Stöger}
 \section{Besprechungsprotokoll}
 \subimport{Textparts/Stoeger/Meilensteine/}{Besprechungsprotokoll.tex}
-
 \section{Meilensteine}
 \subimport{Textparts/Stoeger/Meilensteine/}{Meilensteine.tex}
 
