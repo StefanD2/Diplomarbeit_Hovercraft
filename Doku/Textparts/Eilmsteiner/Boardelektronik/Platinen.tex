@@ -1,6 +1,7 @@
 \section{Steuerungsplatinen}
 \subsection{Motorregleransteuerung}
 \subsubsection{Aufgaben \& verwendete Bauteile}
+\todo{auf was bezieht sich das diese?}
 Diese wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
 Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetriedaten an den Controller des Lenkers.
 
@@ -23,7 +24,7 @@ Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetried
 \end{minipage}
 
 \subsubsection{Anmerkung:}
-Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmierung dieses der Operationsverstärker entfernt werden.
+Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmierung der Operationsverstärker entfernt werden.
 \newpage
 
 \subsubsection{Schaltplan}
@@ -39,7 +40,7 @@ Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmi
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Regler_Platine_PCB.png}    
-    \caption{Schaltplan der Regler-Platine}
+    \caption{PCB-Layout der Regler-Platine}
 \end{figure}
 
 \newpage
@@ -48,8 +49,8 @@ Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmi
 \newpage
 \subsection{Lenker}
 \subsubsection{Aufgaben \& verwendete Bauteile}
-Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
-Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
+Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen, ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
+Dazu zählen neben den Informationen über die beiden Motoren vor allem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
 
 \begin{minipage}{8.5cm}
     \begin{tikzpicture}
@@ -112,7 +113,7 @@ Dazu zählen neben den Informationen über die beiden Motoren vorallem auch die 
 
 \subsection{Fahnenansteuerung \&\ Akkutemperaturen}
 \subsubsection{Fahnenansteuerung}
-Auch die Ansteuerung der Servos erfolgte mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbunden GPIOs zu erzeugen 
+Die Ansteuerung der Servos erfolgt ebenfalls mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbundenen GPIOs zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.
 
 \begin{minipage}{8.5cm}
@@ -161,7 +162,7 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
 
 \subsubsection{Akkutemperaturen}
 Die zweite Aufgabe dieses Controllers ist es, die Temperaturen aller acht im Boot verbauten Akkus zu überwachen, und diese zur Darstellung an den Controller des Lenkers zu übermitteln.
-Dies geschieht mithilfe zweier (je einer pro Seite verbauten) ebenfalls über I2C verbundenen \textbf{ADS1115} Analog-Digital-Wandler, welche wiederum von Adafruit stammen.\\
+Dies geschieht mithilfe zweier (je einer pro Seite), ebenfalls über I2C verbundenen, \textbf{ADS1115} Analog-Digital-Wandler, welche wiederum von Adafruit stammen.\\
 Zur Temperaturmessung selbst kommt je ein \textbf{LM35} Temperatursensor pro Akku zum Einsatz.\\
 
 \begin{minipage}{8cm}
@@ -214,7 +215,7 @@ Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde fol
 
 \newpage
 \subsection{Precharge \& Relaisansteuerung}
-Da sowohl die Motorregler als auch die Buck-Converter einen, durch die darin verbauten sehr großen Kondensatoren bedingten, sehr großen Einschaltstrom haben, 
+Da sowohl die Motorregler als auch die Buck-Converter einen, bedingt durch die darin verbauten sehr großen Kondensatoren, sehr großen Einschaltstrom haben, 
 müssen diese über einen Leistungswiderstand vorgeladen werden, bevor sie permanent mit Spannung versorgt werden können.\\
 \begin{figure}[h]
     \centering
@@ -222,7 +223,7 @@ müssen diese über einen Leistungswiderstand vorgeladen werden, bevor sie perma
     \caption{Zur Vorladung verwendeter Leistungswiderstand}
 \end{figure}
 
-Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe einer im folgenden genauer erläuterten Platine realisiert. 
+Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe einer im Folgenden genauer erläuterten Platine realisiert. 
 
 \begin{minipage}{9cm}
     \begin{tikzpicture}
@@ -246,9 +247,9 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
 \end{minipage}\\
 \newpage
 \subsubsection{Funktionsweise}
-Durch das Zusammenschalten der Akkus, über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand, beginnen sich sowohl die Kondensatoren beider Motorregler, aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
+Durch das Zusammenschalten der Akkus über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand beginnen sich sowohl die Kondensatoren beider Motorregler und aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
 Erreicht dieser eine bestimmte Schwellspannung, wird das Hauptrelais mithilfe eines MOSFETs durch den Operationsverstärker der Komperatorschaltung aktiviert.\\
-Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des NOTAUS-Schalters oder dem Öffnen einer der beiden Mikroschalter unterbrochen werden kann.
+Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des Not-Aus--Schalters oder das Öffnen einer der beiden Mikroschalter unterbrochen werden kann.
 \subsubsection{Schaltplan}
 \begin{figure}[h]
     \centering
@@ -267,14 +268,14 @@ Der OPV \textbf{U2} und die damit verbunde Klemme \textbf{J2} werden aufgrund ei
 \newpage
 
 \subsection{Platzierung am Boot}
-Folgende \autoref{fig:Platinen:Aufbau_Rechts} \& \autoref{fig:Platinen:Aufbau_Links} zeigen die Position aller verbauten Platinen am Boot.
+Die Abbildungen \ref{fig:Platinen:Aufbau_Rechts} \& \ref{fig:Platinen:Aufbau_Links} zeigen die Positionen aller verbauten Platinen am Boot.\\
 
 \begin{minipage}{\textwidth}
     \centering
     \begin{tikzpicture}
         \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.85\textwidth]{../Inventor/PlatinenBilder/Seite1.png}};
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
-            \draw[blue,thick,->]  (0.66,0.85) -- (0.29,0.85) node [at start, above] {Temperatursensoren Rechts} -- (0.22,0.40);
+            \draw[blue,thick,->]  (0.66,0.85) -- (0.29,0.85) node [at start, above] {Temperatursensoren rechts} -- (0.22,0.40);
             \draw[black,thick,->]  (0.66,0.75) -- (0.29,0.75) node [at start, above] {Relaisansteuerung} -- (0.27,0.60);
             \draw[red,thick,->]  (0.66,0.65) -- (0.29,0.65) node [at start, above] {Regler-hinten Platine}  -- (0.27,0.51);
             \draw[black,thick,->]  (0.66,0.55) -- (0.5,0.55) node [at start, above] {Regler-unten Platine} -- (0.47,0.19);
@@ -292,7 +293,7 @@ Folgende \autoref{fig:Platinen:Aufbau_Rechts} \& \autoref{fig:Platinen:Aufbau_Li
         \begin{scope}[x={(image.south east)},y={(image.north west)}]
             \draw[red,thick,->]  (0.22,0.75) -- (0.5,0.75) node [midway, above] {Servo-ADC Platine}  -- (0.6,0.61);
             \draw[blue,thick,->]  (0.22,0.85) -- (0.5,0.85) node [midway, above] {Servo-Controller}  -- (0.61,0.81);
-            \draw[black,thick,->]  (0.22,0.65) -- (0.49,0.65) node [near start, above] {Temperatursensoren Links}  -- (0.545,0.42);
+            \draw[black,thick,->]  (0.22,0.65) -- (0.49,0.65) node [near start, above] {Temperatursensoren links}  -- (0.545,0.42);
         \end{scope}
     \end{tikzpicture}
     \captionof{figure}{Platinen auf der linken Seite des Bootes}
