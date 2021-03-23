@@ -213,7 +213,7 @@ Um den Anschluss der Temperatursensoren an diesem ADC zu vereinfachen, wurde fol
 \end{figure}
 
 \newpage
-\subsection{Precharge \& Relaisansteuerung}
+\subsection{Precharge \& Relaisansteuerung\label{sec:precharge}}
 Da sowohl die Motorregler als auch die Buck-Converter einen, bedingt durch die darin verbauten sehr großen Kondensatoren, sehr großen Einschaltstrom haben, 
 müssen diese über einen Leistungswiderstand vorgeladen werden, bevor sie permanent mit Spannung versorgt werden können.\\
 \begin{figure}[h]
@@ -244,6 +244,10 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
     \textcolor{violet}{+30 V von geschalteter Relaisseite}\\
     \textcolor{red}{Konstante +30 V}\\
 \end{minipage}\\
+
+\textbf{Anmerkung:}\\
+Die Relais der Buck-Converter werden nicht mehr, wie ursprünglich gedacht, über eine separate Zeitkonstante angesteuert, sondern verwenden nun den selben MOSFET wie das Hauptrelais. 
+
 \newpage
 \subsubsection{Funktionsweise}
 Durch das Zusammenschalten der Akkus über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand beginnen sich sowohl die Kondensatoren beider Motorregler und aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\

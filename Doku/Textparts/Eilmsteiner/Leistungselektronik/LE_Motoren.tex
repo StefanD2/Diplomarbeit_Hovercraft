@@ -1,12 +1,28 @@
 \section{Antrieb}
 \subsection{Motoren}
-Angetrieben wird das Luftkissenboot von zwei \textbf{Hacker A200-6} Elektromotoren mit einer Dauerleistung von jeweils $10\,\mathrm{kW}$.
-\todo{Motordaten schreiben}
+Angetrieben wird das Luftkissenboot von zwei \textbf{Hacker A200-6} Elektromotoren mit einer Dauerleistung von jeweils $10\,\mathrm{kW}$.\\
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{Fotos/Motor.png}
+    \includegraphics[width=0.55\textwidth]{Fotos/Motor.png}
     \caption{Hacker A200 Elektromotor}
 \end{figure}
+
+Konkret weisen die Motoren folgende Leistungsdaten auf:\\
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Parameter & Wert\\\hline
+        Leistung & $10\,\mathrm{kW}$ ($15\,\mathrm{kW}$ max 15 sec.)\\
+        Leerlaufstrom ($8.4\,\mathrm{V}$) & $5.1\,\mathrm{A}$\\
+        Innenwiderstand & $0.011\,\mathrm{\Omega}$\\
+        Polzahl & 20 \\
+        empf. Timing & $22^\circ$\\
+        Leerlaufdrehzahl&$151\,\mathrm{U/min^{-1}/V}$\\\hline
+
+    \end{tabular}
+    \caption{Hacker A200 Leistungsdaten}
+\end{table}
 
 \newpage
 \subsection{Propeller}
@@ -14,14 +30,25 @@ Angetrieben wird das Luftkissenboot von zwei \textbf{Hacker A200-6} Elektromotor
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{Fotos/Propeller_Hinten.png}
+    \includegraphics[width=0.8\textwidth]{Fotos/Propeller_Hinten.png}
     \caption{Hinterer Propeller}
 \end{figure}
 
-\missingfigure{Wie DSC 8600 nur steiler und Propeller hinten}
+\newpage
+\subsubsection{Zur Erzeugung des Auftriebes}
+Um das Luftkissen, auf dem das Boot zu schweben beginnt, erzeugen zu können, wurden zwei, drei blättrige, XOAR Elektro Flugzeug-Propeller 28 x 10 Zoll verwendet.  
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Fotos/Propeller_unten.png}
+    \caption{unterer Propeller}
+\end{figure}
+
+Diese sind $60^\circ$ zueinander versetzt, wodurch die effektive Blattzahl auf sechs erhöht wird, 
+um das Entweichen der Luft zurück nach oben hin zu verhindern.
 
 
 \newpage
+
 \subsection{Motorregler}
 Die Ansteuerung der Motoren übernimmt der dafür empfohlene \textbf{MasterSpin 220 Pro OPTO}.
 Hierbei handelt es sich um einen Brushless-DC Regler, welcher einen maximalen Dauerstrom von $220\,\mathrm{A}$ aufweist.
@@ -80,7 +107,7 @@ Konkret wurden folgende Einstellungen getroffen:\\
 Eine genauere Beschreibung der einzelnen Parameter findet sich in der Anleitung des MasterSpin 220 Pro OPTO's im \autoref{sec:Master_Spin_Anleitung}.
 
 \newpage
-\section{Servos}
+\section{Servos\label{sec:servos}}
 Die Steuerung der, für die Umleitung des zur Fortbewegung erzeugten Luftstromes, verwendeten Fahnen, übernimmt je ein \textbf{DS5160 Digital Servo}.
 \begin{figure}[h]
     \centering
