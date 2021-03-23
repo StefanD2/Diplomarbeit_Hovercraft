@@ -1,19 +1,20 @@
 \tikzmath{
     \offsetx1=0;\offsetx2=.7;
-    \offxmotor=14.5;
-    \offymotor=-10;
-    \offymh = -12;  
-    \buckxA = 10.5;
-    \buckxB = 1;
-    \buckxC = 1;
-    \buckxD = 1;
+    \offxmotor=16;
+    \offymotor=-9.5;
+    \offymh = -11.5;  
+    \buckxA = 12.5;
+    \buckxB = 2;
+    \buckxC = 2;
+    \buckxD = 2;
     \buckyA = -14;
     \buckyB = -10;
     \buckyC = -12;
     \buckyD = -14;
-    \platineX = 10;
+    \platineX = 10.5;
     \platineY = -1.5;
-} 
+    \relayRunter=.35;
+}
 
 \resizebox{.99\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
@@ -80,11 +81,21 @@
     }
 
     % Buck converter
+    ctikzset{inductors/scale=.4, inductor=american}
     \foreach \x/\y in {\buckxA/\buckyA, \buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
         \node[thick, draw, fit={(\x, \y+.55) (\x+2.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize DC/DC}}}};
+
+        \draw (\x-1.25,\y+1-\relayRunter) to[normal open switch] ++(.5,0) --++(.25,0) -- ++(0.35,0) -- (\x-.15,\y+.4) -- (\x,\y+.4) node[right=-.1] {\tiny VIN+};
+
+        \draw (\x-1.35, \y+1.3-\relayRunter) rectangle (\x-.4, \y+.5-\relayRunter);
+
+        \draw (\x-1.25, \y+.4-\relayRunter) -- (\x-1.25, \y+.6-\relayRunter) to[L, loops=4] (\x-.5,\y+.6-\relayRunter) -- (\x-.5,\y+.4-\relayRunter) to[short, -*] (\x-.5,\y-.4);
+
+        \draw[-latex reversed] (\x-1.25, \y+.4-\relayRunter) -- (\x-1.5, \y+.4-\relayRunter) node[left] {\tiny BHL};
+
         
-        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-.5,0) node[left] {\scriptsize BLL};
-        \draw[-latex reversed] (\x, \y+.4) node[right=-.1] {\tiny VIN+} -- ++(-.5,0) node[left] {\scriptsize BHH};
+        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-1.75,0) node[left] {\scriptsize BLL};
+        \draw[-latex reversed] (\x-1.25, \y+1-\relayRunter) -- ++(-.5,0) node[left] {\scriptsize BHH};
     }
 
     \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0);
