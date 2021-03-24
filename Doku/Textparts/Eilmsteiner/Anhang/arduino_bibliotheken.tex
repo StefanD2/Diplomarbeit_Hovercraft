@@ -1,4 +1,5 @@
-\section{Jeti Decoder Arduino Bibliothek}
+\section{Arduino Bibliotheken}
+\subsection{Jeti Decoder}
 \subsubsection{Jeti.hpp}
 \lstinputlisting{../Programmierung/libs/Jeti/Jeti_UNO.hpp}
 \subsubsection{Jeti\_ ATmega\_ Serial1.hpp}
@@ -9,5 +10,12 @@
 \lstinputlisting{../Programmierung/libs/Jeti/JetiBase.hpp}
 \subsubsection{JetiBase.cpp}
 \lstinputlisting{../Programmierung/libs/Jeti/JetiBase.cpp}
+
+\newpage
 \subsubsection{JetiModes.hpp}
 \lstinputlisting{../Programmierung/libs/Jeti/JetiModes.hpp}
+\subsection{TinyGPS++}
+\subsubsection{my\_TinyGPS++.cpp}
+Da es sich bei dem in der Diplomarbeit verbauten GPS-Modul um das \textbf{NEO-8M} 
+und nicht um das ältere \textbf{NEO-6M} handelt, musste die verwendete Arduino-Bibliothek leicht verändert werden.
+\lstinputlisting[firstline=30,lastline=40]{../Programmierung/libs/myTinyGPS/src/my_TinyGPS++.cpp}
