@@ -1,3 +1,7 @@
+/*
+* Jeti-Library by Stefan Deimel, 23.10.2020
+* JetiBase.cpp -- all platform independant functions
+*/
 #include "JetiBase.hpp"
 
 JetiBase::JetiBase()
@@ -21,23 +25,25 @@ JetiBase::JetiBase()
 
 void JetiBase::loop()
 {
-    // recieving
+    // recieving data
     for (; recieve_buffer_read != recieve_buffer_write; recieve_buffer_read = (recieve_buffer_read + 1) & (RECIEVE_BUFFER_SIZE - 1))
     {
         if (!recieve_buffer[recieve_buffer_read].bit9 && recieving_msg != "")
-        { // end of msg
+        {
+            // end of message
             newMsgString = recieving_msg;
             recieving_msg = "";
             recieving = false;
         }
         else
         {
+            // add values from buffer to String
             recieving_msg += (char)recieve_buffer[recieve_buffer_read].databyte;
             recieving = true;
         }
     }
 
-    // sending
+    // sending data
     if (send_count && !recieving)
     {
         send_init();
@@ -78,7 +84,7 @@ String JetiBase::getMsg()
 
 jetiTelemetry_t JetiBase::getTelemetry(String msg)
 {
-	String voltage=msg.substring(17,22);
-    voltage.replace(",",".");
+    String voltage = msg.substring(17, 22);
+    voltage.replace(",", ".");
     return {.mode = (char)msg.charAt(1), .percent = (int)msg.substring(2, 5).toInt(), .rpm = msg.substring(10, 14).toInt(), .voltage = voltage.toDouble(), .temperature = (int)msg.substring(29, 31).toInt()};
 }
