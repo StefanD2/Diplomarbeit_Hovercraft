@@ -182,8 +182,21 @@
     {\# ifndef}{{{{{\textcolor{red!60!blue}{\#ifndef}}}}}}1,
 }
 
+%% ----------------- define für Leerseiten bei Doppelseitigem-Druck --------------- %%
+% 1 akitv, nicht 1 inaktiv
+%\def\emptyprintpages{1}
+\def\emptyprintpages{0}
+
+
+\def\blankpage{
+      \clearpage
+      \thispagestyle{empty}
+      \addtocounter{page}{-1}
+      \null
+      \clearpage}
+
 \begin{document}
-\listoftodos
+%\listoftodos
 
 \frontmatter
 
@@ -193,6 +206,9 @@
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%======================================================%%
 
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Eidesstattliche Erklaerung ==========%%
 \begin{Eid}%Unterschrift der Diplomanden hinzufuegen!
@@ -203,21 +219,30 @@
 %%======================================================%%
 \def\chapterpagestyle{headings} 
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
+\if\emptyprintpages1
+\blankpage
+\fi
 \chapter*{Gendererklärung}
 Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf hingewiesen, dass die ausschließliche Verwendung der männlichen Form geschlechtsunabhängig verstanden werden soll.
 \newpage
-
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Diplomandenvorstellung ==============%%
 \input{Textparts/diplomanden.tex}
 %%======================================================%%
 \responsible{Stefan Deimel}
-
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Danksagungen ========================%%
 \input{Textparts/danksagungen.tex}
 %%======================================================%%
-
+\if\emptyprintpages1
+\blankpage
+\fi
 %% Kurzfassungen
 \includepdf[pages={1-2}, scale=1]{Kurzfassungen/De.pdf}
 \includepdf[pages={1-2}, scale=1]{Kurzfassungen/En.pdf}
@@ -230,10 +255,15 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 %%================ Inhaltsverzeichnis ==================%%
 \def\chapterpagestyle{headings} 
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
+\if\emptyprintpages1
+\blankpage
+\fi
 \tableofcontents
 %%======================================================%%
 
-
+\if\emptyprintpages1
+\blankpage
+\fi
 %Ab hier Hauptteil
 \mainmatter
 \chapter{Themenvorstellung}
