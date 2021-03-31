@@ -247,11 +247,11 @@ Um diese Umschaltung so einfach wie möglich zu gestalten, wurde dies mithilfe e
     \captionof{figure}{Platine zur Relaisansteuerung}
 \end{minipage}
 \begin{minipage}{7.5cm}
-    \textcolor{Green}{Hauptrelaisspule (A- \& GND)}\\
-    \textcolor{blue}{Micro-Switches im Ladedeckel}\\
-    \textcolor{orange}{Buck-Converter (nicht verwendet)}\\
-    \textcolor{violet}{+30 V von geschalteter Relaisseite}\\
-    \textcolor{red}{Konstante +30 V}\\
+    \textcolor{Green}{Hauptrelaisspule (A- \& GND) (J6)}\\
+    \textcolor{blue}{Micro-Switches im Ladedeckel (J1)}\\
+    \textcolor{orange}{Buck-Converter (nicht verwendet) (J2)}\\
+    \textcolor{violet}{+30 V von geschalteter Relaisseite (J7)}\\
+    \textcolor{red}{Konstante +30 V (J8)}\\
 \end{minipage}\\
 
 \textbf{Anmerkung:}\\
@@ -261,7 +261,8 @@ Die Relais der Buck-Converter werden nicht mehr, wie ursprünglich gedacht, übe
 \subsubsection{Funktionsweise}
 Durch das Zusammenschalten der Akkus über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand beginnen sich sowohl die Kondensatoren beider Motorregler und aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
 Erreicht dieser eine bestimmte Schwellspannung, wird das Hauptrelais mithilfe eines MOSFETs durch den Operationsverstärker der Komperatorschaltung aktiviert.\\
-Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des Not-Aus--Schalters oder das Öffnen einer der beiden Mikroschalter unterbrochen werden kann.
+Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des Not-Aus--Schalters oder das Öffnen einer der beiden Mikroschalter unterbrochen werden kann.\\
+Der genaue Anschluss an die Leistungselektronik kann \autoref{fig:schaltLeistung} entnommen werden.
 \subsubsection{Schaltplan}
 \begin{figure}[h]
     \centering
