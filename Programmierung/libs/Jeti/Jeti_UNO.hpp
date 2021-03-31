@@ -1,3 +1,7 @@
+/*
+* Jeti-Library by Stefan Deimel, 23.10.2020
+* Jeti_UNO.hpp -- platform dependent functions for Arduino Uno
+*/
 #include <JetiModes.hpp>
 #if JETI_MODE == ARDUINO_UNO
 
@@ -9,6 +13,7 @@
 #include <stdlib.h>
 #include "JetiBase.hpp"
 
+// pointer to jeti-base object, to preventent multiple objects Jeti_UNO from causing problems
 JetiBase *jeti_pointer = nullptr;
 
 class Jeti_UNO : public JetiBase
@@ -19,12 +24,12 @@ public:
         jeti_pointer = this;
     }
 
-    // initializes Serial Communication (still need to call sei() in main setup)
+    // initialises serial communication (still need to call sei() in main setup)
     void init()
     {
-        // Serial 1 -- 9600baud, 9bit, odd parity, 2 stop bits
+        // initialise serial communication -- 9600baud, 9bit, odd parity, 2 stop bits
         UCSR0A = 0;
-        UCSR0B = 1 << RXCIE0 | 1 << RXEN0 | 1 << UCSZ02; //RXB8n
+        UCSR0B = 1 << RXCIE0 | 1 << RXEN0 | 1 << UCSZ02;
         UCSR0C = 3 << UPM00 | 1 << USBS0 | 3 << UCSZ00;
         UBRR0H = 0;
         UBRR0L = 103;
@@ -32,7 +37,7 @@ public:
         PORTD |= (1 << PD1); // set pullup
     }
 
-    // interrrupt functions
+    // overwrite interrrupt functions
     void interrupt_RX()
     {
         recieving = true;
@@ -46,14 +51,13 @@ public:
         send_count--;
         sendDone = (send_count > 0);
     }
-
     void interrupt_UDRE()
     {
         send();
     }
 
 private:
-    // send function
+    // function to initialise send
     void send_init()
     {
         UCSR0B &= ~(1 << RXEN0);  // disable recieve
@@ -73,6 +77,7 @@ private:
             UCSR0B |= 1 << UDRIE0; // enable send interrrupt
         }
     }
+
     // actual send function
     void send()
     {
