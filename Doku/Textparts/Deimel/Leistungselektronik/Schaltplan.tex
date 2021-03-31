@@ -14,6 +14,8 @@
     \platineX = 10.5;
     \platineY = -1.5;
     \relayRunter=.35;
+    \platineDsiplayLinksObenX=0;
+    \platineDsiplayLinksObenY=-15.5;
 }
 
 \resizebox{.99\textwidth}{!}{
@@ -60,12 +62,12 @@
     %\draw (.8+\offsetx1, -4.4) -- (4,-4.4);
     %\draw (4.4,-4.4) -- (6,-4.4);
     \draw (.8+\offsetx1, -4.4) -- (1,-4.4);
-    \draw[-latex] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
+    \draw[-latex reversed] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
 
     %%--------------------------------------------------------------%%
 
     % Motorregler, Motor
-    \foreach \x/\y in {\offxmotor/\offymotor, \offxmotor/\offymh}{
+    \foreach \x/\y/\ii in {\offxmotor/\offymotor/1, \offxmotor/\offymh/2}{
         \draw (\x, \y-.25) -- (\x-1.5,\y-.25);
         \draw (\x, \y) -- (\x-1.5,\y);
         \draw (\x, \y+.25) -- (\x-1.5,\y+.25);
@@ -76,8 +78,8 @@
 
         \draw[-latex reversed, thick] (\x-4, \y-.6) -- ++(-.65,0) node[left] {\scriptsize BLL};
         \draw[-latex reversed, thick] (\x-4, \y+.6) -- ++(-.65,0) node[left] {\scriptsize BHH};
-        \draw[-latex reversed] (\x-4, \y+.2) -- ++(-.4,0) node[left] {\scriptsize PWM};
-        \draw[-latex reversed] (\x-4, \y-.2) -- ++(-.4,0) node[left] {\scriptsize Serial};
+        \draw[-latex reversed] (\x-4, \y+.2) -- ++(-.4,0) node[left] {\scriptsize PWM-M\ii};
+        \draw[-latex] (\x-4, \y-.2) -- ++(-.4,0) node[left] {\scriptsize Serial-M\ii};
     }
 
     % Buck converter
@@ -98,19 +100,19 @@
         \draw[-latex reversed] (\x-1.25, \y+1-\relayRunter) -- ++(-.5,0) node[left] {\scriptsize BHH};
     }
 
-    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0);
-    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0);
-    \draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
-    \draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
+    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0) node[right]{\scriptsize CAN-VCC};
+    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0) node[right]{\scriptsize CAN-GND};
+    %\draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
+    %\draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
 
-    \foreach \x/\y in {\buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+    \foreach \x/\y/\ii in {\buckxB/\buckyB/1, \buckxC/\buckyC/2, \buckxD/\buckyD/3}{
         \draw (\x+2.5, \y+.4) node[left=-.1] {\tiny VOUT+} -- ++(2,0);
         \draw (\x+2.5, \y-.4) node[left=-.1] {\tiny VOUT-} -- ++(2,0);
         
         \node[thick, draw, fit={(\x+4.5, \y+.55) (\x+6.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize SERVO}}}};
         \draw(\x+4.5, \y+.4) node[right=-.1] {\tiny VCC};
         \draw(\x+4.5, \y-.4) node[right=-.1] {\tiny GND};
-        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.5,0) node[left] {\tiny PWM};
+        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.5,0) node[left] {\tiny PWM-S\ii};
 
         \draw[thick] (\x+6.3, \y) circle (.07);
         \draw (\x+6.3, \y+.12) arc (90:270:.12);
@@ -122,7 +124,7 @@
 
     %% Ansteuerungs-Platine Relay
     \draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
-    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung};
+    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung\\ siehe \autoref{fig:plat:relais}};
 
     \foreach \y/\text in {.5/7, 2/6, 3.5/8}{
         \draw (\platineX, \platineY-\y) -- ++(.5,0) -- ++(0,-1) -- ++(-.5,0);
@@ -134,7 +136,7 @@
     \draw[-latex reversed] (\platineX, \platineY-.75) -- ++(-.5,0) node[left] {\scriptsize BHL};
     \draw[-latex reversed] (\platineX, \platineY-1.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
 
-    \draw[-latex reversed] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
+    \draw[-latex] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
     \draw[-latex reversed] (\platineX, \platineY-2.75) -- ++(-.5,0) node[left] {\scriptsize BLL};
     
     \draw[-latex reversed] (\platineX, \platineY-3.75) -- ++(-.5,0) node[left] {\scriptsize BLH};
