@@ -10,7 +10,7 @@ JetiBase::JetiBase()
     recieve_buffer_write = 0;
     recieve_buffer_read = 0;
 
-    recieving = false;
+    receiving = false;
     sendDone = false;
 
     buttonL = false;
@@ -19,32 +19,32 @@ JetiBase::JetiBase()
     buttonU = false;
     send_count = 0;
 
-    recieving_msg = "";
+    receiving_msg = "";
     newMsgString = "";
 }
 
 void JetiBase::loop()
 {
-    // recieving data
+    // receiving data
     for (; recieve_buffer_read != recieve_buffer_write; recieve_buffer_read = (recieve_buffer_read + 1) & (RECIEVE_BUFFER_SIZE - 1))
     {
-        if (!recieve_buffer[recieve_buffer_read].bit9 && recieving_msg != "")
+        if (!recieve_buffer[recieve_buffer_read].bit9 && receiving_msg != "")
         {
             // end of message
-            newMsgString = recieving_msg;
-            recieving_msg = "";
-            recieving = false;
+            newMsgString = receiving_msg;
+            receiving_msg = "";
+            receiving = false;
         }
         else
         {
             // add values from buffer to String
-            recieving_msg += (char)recieve_buffer[recieve_buffer_read].databyte;
-            recieving = true;
+            receiving_msg += (char)recieve_buffer[recieve_buffer_read].databyte;
+            receiving = true;
         }
     }
 
     // sending data
-    if (send_count && !recieving)
+    if (send_count && !receiving)
     {
         send_init();
         _delay_ms(4); // delay for stability reasons
