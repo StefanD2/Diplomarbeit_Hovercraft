@@ -1,7 +1,7 @@
 
 
 \clearpage
-\subsection{Motorregleransteuerung}
+\subsection{Motorregleransteuerung\label{sec:Motorregleransteuerung}}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Diese Platinen wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
 Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetriedaten an den Controller des Lenkers.
@@ -48,7 +48,7 @@ Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmi
 \subsubsection{Programmcode}
 \lstinputlisting{../Programmierung/Regler_Controller/src/main.cpp}
 \newpage
-\subsection{Lenker}
+\subsection{Lenker\label{sec:Lenkerplatine}}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen, ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
 Dazu zählen neben den Informationen über die beiden Motoren vor allem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
@@ -112,7 +112,7 @@ Dazu zählen neben den Informationen über die beiden Motoren vor allem auch die
 
 \newpage
 
-\subsection{Fahnenansteuerung \&\ Akkutemperaturen}
+\subsection{Fahnenansteuerung \&\ Akkutemperaturen\label{sec:Servoplatine}}
 \subsubsection{Fahnenansteuerung}
 Die Ansteuerung der Servos erfolgt ebenfalls mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbundenen GPIOs zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.

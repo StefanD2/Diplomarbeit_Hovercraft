@@ -7,7 +7,7 @@
     \motorreglerX2=15;
 }
 
-\resizebox{0.8\textwidth}{!}{
+\resizebox{0.85\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
 
     % Analoge Eingänge der Lenkerplatine
@@ -38,7 +38,7 @@
 
     % Motorreglerplatine
     \foreach \i in {1,2}
-    {\node [thick, fit={(2.9,4*\i+2.2) (\platinenX2,4*\i-1)},inner sep=0, align=center,shift={(0.2,1.0)}] {Platine Motoransteuerung};
+    {\node [thick, fit={(2.9,4*\i+2.2) (\platinenX2,4*\i-1)},inner sep=0, align=center,shift={(0.2,0.9)}] {Platine Motoransteuerung\\ siehe \ref{sec:Motorregleransteuerung}};
 
     \draw [very thick] (\motorreglerX1,4*\i+1.4) rectangle (\motorreglerX2,4*\i-1);
     \node [thick, fit={(\motorreglerX1,4*\i+1.4) (\motorreglerX2,4*\i-1)},inner sep=0, align=center,shift={(0.4,0.0)}] {Master Spin\\ 220 Pro OPTO}; % Beschriftung Master Spin 220 Pro OPTO 
@@ -53,7 +53,7 @@
 
     
     % Servoansteuerung
-    \node [thick, fit={(2.9,2.2) (\platinenX2,-1)},inner sep=0, align=center,shift={(0.4,1.0)}] {Platine Servoansteuerung};
+    \node [thick, fit={(2.9,2.2) (\platinenX2,-1)},inner sep=0, align=center,shift={(0.4,0.8)}] {Platine Servoansteuerung\\ siehe \ref{sec:Servoplatine}};
     \draw [thick] (\platinenX2,-0.7)  -- (\platinenX2+0.5,-0.7) node [at start,left]{\scriptsize +5V};
     \draw [thick] (\platinenX2,-0.4)  -- (\platinenX2+0.8,-0.4) node [at start,left]{\scriptsize GND};
     \draw [thick] (\platinenX2,-0.1)  -- (\platinenX2+1.1,-0.1) node [at start,left]{\scriptsize SCL};
@@ -90,7 +90,7 @@
     }
 
     % Lenker Platine
-    \node [thick, fit={(\platinenX1,12+2.2) (\platinenX2,12-1)},inner sep=0, align=center,shift={(-0.6,-1.4)}] {Platine Lenkung}; % Beschriftung
+    \node [thick, fit={(\platinenX1,12+2.2) (\platinenX2,12-1)},inner sep=0, align=center,shift={(-0.3,-0.3)}] {Platine Lenkung\\ siehe \ref{sec:Lenkerplatine}}; % Beschriftung
 
     % Nextion Display
     \draw [very thick] (11,11-0.2) rectangle (15,12.7-0.2);
@@ -106,8 +106,8 @@
     }
 
     %GPS Module
-    \draw [very thick] (11,13-0.1) rectangle (14.5,15);
-    \node [thick, fit={(11,13-0.1) (14.5,15)},inner sep=0, align=center,shift={(0.2,0.4)}]{Neo-8M GPS};
+    \draw [very thick] (11,13-0.2) rectangle (15,14.4);
+    \node [thick, fit={(11,13-0.2) (14.5,14)},inner sep=0, align=center,shift={(0.5,0.0)}]{Neo-8M GPS};
 
     \newarray\Values
     \newarray\ValuesScreen
@@ -124,4 +124,6 @@
 \end{circuitikz}
 }
 
+{\small
 Auf die Versorgung der LM35-Temperatursensoren sowie der beiden Daumengase und dem Lenkpotenziometer mit +5V und GND wurde aus Platzgründen im obigen Plan verzichtet und stattdessen mit doppelten Linien aufmerksam gemacht.
+}
