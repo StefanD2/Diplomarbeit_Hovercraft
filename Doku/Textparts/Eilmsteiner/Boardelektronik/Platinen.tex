@@ -1,14 +1,19 @@
+\clearpage
 \section{Steuerungsplatinen}
 \subsection{Schaltplan -- Übersicht}
+\vspace{-0.2cm}
 \begin{figure}[H]
-    \missingfigure{SChaltplan}
-    \caption{Schaltplan -- Boardelektronik\label{fig:schaltBoard}}
+    \input{Uebersicht.tex}
+    \caption{Schaltplan Boardelektronik\label{fig:SchaltplanBoardelektronik}}
 \end{figure}
-Für die Verbindung zwischen Leistungs- und Boardelektronik siehe \autoref{fig:schaltLeistung}.
+\vspace{-0.5cm}
+{\small
+Auf die Versorgung der LM35-Temperatursensoren, sowie der beiden Daumengase und dem Lenkpotenziometer mit +5V und GND wurde aus Platzgründen im obigen Plan verzichtet und stattdessen mit doppelten Linien aufmerksam gemacht. 
+Siehe zudem \autoref{fig:schaltLeistung} für die Verbindung des Planes zur Leistungselektronik.
+}
 
-
-\clearpage
-\subsection{Motorregleransteuerung}
+\newpage
+\subsection{Motorregleransteuerung\label{sec:Motorregleransteuerung}}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Diese Platinen wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
 Gleichzeitig übermitteln sie die von den Motorreglern übertragenen Telemetriedaten an den Controller des Lenkers.
@@ -55,7 +60,7 @@ Durch die Verwendung der seriellen Schnittstelle des Arduinos muss zur Programmi
 \subsubsection{Programmcode}
 \lstinputlisting{../Programmierung/Regler_Controller/src/main.cpp}
 \newpage
-\subsection{Lenker}
+\subsection{Lenker\label{sec:Lenkerplatine}}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Neben seiner Hauptaufgabe, nämlich dem Einlesen und der Übertragung der beiden Daumengas- sowie Lenkerstellungen, ist dieser Mikrocontroller weiters für die Darstellung der von den verschiedenen Komponenten erhaltenen Telemetriedaten auf dem Bildschirm verantwortlich.
 Dazu zählen neben den Informationen über die beiden Motoren vor allem auch die Temperaturen aller verbauten Akkus sowie die per GPS-Modul ermittelte derzeitige Geschwindigkeit.
@@ -119,9 +124,9 @@ Dazu zählen neben den Informationen über die beiden Motoren vor allem auch die
 
 \newpage
 
-\subsection{Fahnenansteuerung \&\ Akkutemperaturen}
+\subsection{Fahnenansteuerung \&\ Akkutemperaturen\label{sec:Servoplatine}}
 \subsubsection{Fahnenansteuerung}
-Die Ansteuerung der Servos erfolgt ebenfalls mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbundenen GPIOs zu erzeugen 
+Die Ansteuerung der Servos erfolgt ebenfalls mit einem per CAN-Bus angeschlossenen Arduino. Um die für die Steuerung der drei Servos benötigten PWM-Signale, unabhängig von den durch den Arduino bereitgestellten Timer und den damit verbundenen GPIOs, zu erzeugen 
 (Anbindung des CAN-Bus Moduls über SPI benötigt beispielsweise diese Pins und Timer), wurde dafür auf ein externes Board zurückgegriffen.
 
 \begin{minipage}{8.5cm}
@@ -152,7 +157,7 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{../Proteus/Exports/Servos-Platine.png}    
-    \caption{Schaltplan der Servoansteuerung-Platine\label{fig:plat:servo}}
+    \caption{Schaltplan der Servoansteuerungs-Platine\label{fig:plat:servo}}
 \end{figure}
 
 \newpage
@@ -160,7 +165,7 @@ Konkret handelt es sich um das \textbf{16-Channel 12-bit PWM/Servo Driver Module
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{../Proteus/Exports/Servos-Platine-PCB.png}    
-    \caption{PCB-Layout der Servoansteuerung-Platine}
+    \caption{PCB-Layout der Servoansteuerungs-Platine}
 \end{figure}
 
 \newpage
@@ -259,7 +264,7 @@ Die Relais der Buck-Converter werden nicht mehr, wie ursprünglich gedacht, übe
 
 \newpage
 \subsubsection{Funktionsweise}
-Durch das Zusammenschalten der Akkus über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand beginnen sich sowohl die Kondensatoren beider Motorregler und aller vier Buck-Converter sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
+Durch das Zusammenschalten der Akkus über den bereits zuvor gezeigten $10\,\mathrm{\Omega}$ Leistungswiderstand beginnen sich sowohl die Kondensatoren beider Motorregler und aller vier Buck-Converter, sowie jener des sich auf der Platine befindlichen RC-Gliedes aufzuladen.\\
 Erreicht dieser eine bestimmte Schwellspannung, wird das Hauptrelais mithilfe eines MOSFETs durch den Operationsverstärker der Komperatorschaltung aktiviert.\\
 Dies führt zu einer Selbsthaltung des Relais, welche nur durch Betätigung des Not-Aus--Schalters oder das Öffnen einer der beiden Mikroschalter unterbrochen werden kann.\\
 Der genaue Anschluss an die Leistungselektronik kann \autoref{fig:schaltLeistung} entnommen werden.

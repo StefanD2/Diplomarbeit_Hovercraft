@@ -30,7 +30,7 @@
 \ReplacePackage{scrpage2}{scrlayer-scrpage}
 
 \documentclass[paper=a4,12pt]{scrreprt}
-\pdfminorversion=6 % because inventor exports are 1.6
+\pdfminorversion=7 % because inventor exports are 1.6
 % Encoding UTF8
 \usepackage[utf8]{inputenc}
 % 8 Bit Aufloesung der Buchstaben
@@ -75,7 +75,7 @@
 
 %% Todos 
 % --------------------------------------------------------------------------- TODONOTE PACKAGE ---------------------------------------------------------------------------%
-\usepackage[]{todonotes}
+%\usepackage[]{todonotes}
 
 %% Ganttdiagramme
 \usepackage{pgfgantt}
@@ -109,6 +109,7 @@
 \usepackage{longtable}
 
 \usepackage{nameref}
+\usepackage{arrayjob}
 % folowing  must be in this order
 \usepackage{varioref}
 \usepackage[colorlinks=true,
@@ -118,7 +119,6 @@
 			urlcolor=blue,
 			bookmarksopen=true]{hyperref}
 \usepackage{cleveref}
-
 
 \RedeclareSectionCommand[beforeskip=0pt]{chapter}
 
@@ -182,8 +182,20 @@
     {\# ifndef}{{{{{\textcolor{red!60!blue}{\#ifndef}}}}}}1,
 }
 
+%% ----------------- define für Leerseiten bei Doppelseitigem-Druck --------------- %%
+% 1 akitv, nicht 1 inaktiv
+%\def\emptyprintpages{1}
+\def\emptyprintpages{0}
+
+
+\def\blankpage{
+      \clearpage
+      \thispagestyle{empty}
+      \addtocounter{page}{-1}
+      \null
+      \clearpage}
+
 \begin{document}
-\listoftodos
 
 \frontmatter
 
@@ -193,6 +205,9 @@
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
 %%======================================================%%
 
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Eidesstattliche Erklaerung ==========%%
 \begin{Eid}%Unterschrift der Diplomanden hinzufuegen!
@@ -203,21 +218,30 @@
 %%======================================================%%
 \def\chapterpagestyle{headings} 
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
+\if\emptyprintpages1
+\blankpage
+\fi
 \chapter*{Gendererklärung}
 Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform des generischen Maskulinums angewendet. Es wird an dieser Stelle darauf hingewiesen, dass die ausschließliche Verwendung der männlichen Form geschlechtsunabhängig verstanden werden soll.
 \newpage
-
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Diplomandenvorstellung ==============%%
 \input{Textparts/diplomanden.tex}
 %%======================================================%%
 \responsible{Stefan Deimel}
-
+\if\emptyprintpages1
+\blankpage
+\fi
 
 %%================ Danksagungen ========================%%
 \input{Textparts/danksagungen.tex}
 %%======================================================%%
-
+\if\emptyprintpages1
+\blankpage
+\fi
 %% Kurzfassungen
 \includepdf[pages={1-2}, scale=1]{Kurzfassungen/De.pdf}
 \includepdf[pages={1-2}, scale=1]{Kurzfassungen/En.pdf}
@@ -230,10 +254,15 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 %%================ Inhaltsverzeichnis ==================%%
 \def\chapterpagestyle{headings} 
 \responsible{Stefan Deimel, Philipp Eilmsteiner, Julia Stöger}
+\if\emptyprintpages1
+\blankpage
+\fi
 \tableofcontents
 %%======================================================%%
 
-
+\if\emptyprintpages1
+\blankpage
+\fi
 %Ab hier Hauptteil
 \mainmatter
 \chapter{Themenvorstellung}
@@ -242,7 +271,6 @@ Aus Gründen der besseren Lesbarkeit wird in dieser Diplomarbeit die Sprachform 
 \chapter{Funktionsprinzip}
 \responsible{Julia Stöger}
 \subimport{Textparts/Stoeger/Einfuehrung/}{Funktionsprinzip.tex}
-
 
 \chapter{Erster Prototyp}
 \responsible{Stefan Deimel}

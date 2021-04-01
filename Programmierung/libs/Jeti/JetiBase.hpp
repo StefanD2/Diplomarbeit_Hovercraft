@@ -56,7 +56,7 @@ protected:
     volatile size_t recieve_buffer_write;                      // points where to write into recieve buffer
     volatile size_t recieve_buffer_read;                       // points where to read from recieve buffer
 
-    volatile bool recieving; // currently recieving message (start has been send, but message is not finished yet, important to avoid sending while recieving)
+    volatile bool receiving; // currently receiving message (start has been send, but message is not finished yet, important to avoid sending while receiving)
     volatile bool sendDone;  // wether sending has finished
 
     // buttons status to send (gets send in send function)
@@ -66,7 +66,7 @@ protected:
     volatile bool buttonU;   // up button
     volatile int send_count; // how often message has to bee send
 
-    String recieving_msg; // storage for messages which are currently recieved (second recieve buffer)
+    String receiving_msg; // storage for messages which are currently recieved (second recieve buffer)
 
     String newMsgString; // fully recieved message, gets overrwritten by next completed msg
 };
