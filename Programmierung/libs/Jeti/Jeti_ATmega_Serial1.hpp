@@ -1,3 +1,7 @@
+/*
+* Jeti-Library by Stefan Deimel, 23.10.2020
+* Jeti_ATmega_Serial1.hpp -- platform dependent functions for Arduino Mega using Serial 1
+*/
 #include <JetiModes.hpp>
 #if JETI_MODE == ARDUINO_MEGA_1
 
@@ -9,6 +13,7 @@
 #include <stdlib.h>
 #include "JetiBase.hpp"
 
+// pointer to jeti-base object, to preventent multiple objects Jeti_UNO from causing problems
 JetiBase *jeti_pointer = nullptr;
 
 class Jeti_ATmega_Serial1 : public JetiBase
@@ -19,12 +24,12 @@ public:
         jeti_pointer = this;
     }
 
-    // inits Serial Communication (still need to call sei() in main setup)
+    // initialises Serial Communication (still need to call sei() in main setup)
     void init()
     {
-        // Serial 1 -- 9600baud, 9bit, odd parity, 2 stop bits
+        // initialise serial communication -- 9600baud, 9bit, odd parity, 2 stop bits
         UCSR1A = 0;
-        UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12; //RXB8n
+        UCSR1B = 1 << RXCIE1 | 1 << RXEN1 | 1 << UCSZ12;
         UCSR1C = 3 << UPM10 | 1 << USBS1 | 3 << UCSZ10;
         UBRR1H = 0;
         UBRR1L = 103;
@@ -32,7 +37,7 @@ public:
         PORTD |= (1 << PD3); // set pullup
     }
 
-    // interrrupt funcitons
+    // overwrite interrrupt functions
     void interrupt_RX()
     {
         recieving = true;
@@ -54,7 +59,7 @@ public:
     }
 
 private:
-    // send function
+    // function to initialise send
     void send_init()
     {
         UCSR1B &= ~(1 << RXEN1);  // disable recieve
@@ -75,6 +80,7 @@ private:
             UCSR1B |= 1 << UDRIE1; // enable send interrrupt
         }
     }
+    
     // actual send function
     void send()
     {

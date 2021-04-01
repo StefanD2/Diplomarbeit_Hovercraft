@@ -1,19 +1,22 @@
 \tikzmath{
     \offsetx1=0;\offsetx2=.7;
-    \offxmotor=14.5;
-    \offymotor=-10;
-    \offymh = -12;  
-    \buckxA = 10.5;
-    \buckxB = 1;
-    \buckxC = 1;
-    \buckxD = 1;
+    \offxmotor=16;
+    \offymotor=-9.5;
+    \offymh = -11.5;  
+    \buckxA = 12.5;
+    \buckxB = 2;
+    \buckxC = 2;
+    \buckxD = 2;
     \buckyA = -14;
     \buckyB = -10;
     \buckyC = -12;
     \buckyD = -14;
-    \platineX = 10;
+    \platineX = 10.5;
     \platineY = -1.5;
-} 
+    \relayRunter=.35;
+    \platineDsiplayLinksObenX=0;
+    \platineDsiplayLinksObenY=-15.5;
+}
 
 \resizebox{.99\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
@@ -59,12 +62,12 @@
     %\draw (.8+\offsetx1, -4.4) -- (4,-4.4);
     %\draw (4.4,-4.4) -- (6,-4.4);
     \draw (.8+\offsetx1, -4.4) -- (1,-4.4);
-    \draw[-latex] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
+    \draw[-latex reversed] (1,-4.4) -- ++(.2,0) node[right=-.1] {\scriptsize A2};
 
     %%--------------------------------------------------------------%%
 
     % Motorregler, Motor
-    \foreach \x/\y in {\offxmotor/\offymotor, \offxmotor/\offymh}{
+    \foreach \x/\y/\ii in {\offxmotor/\offymotor/1, \offxmotor/\offymh/2}{
         \draw (\x, \y-.25) -- (\x-1.5,\y-.25);
         \draw (\x, \y) -- (\x-1.5,\y);
         \draw (\x, \y+.25) -- (\x-1.5,\y+.25);
@@ -75,31 +78,41 @@
 
         \draw[-latex reversed, thick] (\x-4, \y-.6) -- ++(-.65,0) node[left] {\scriptsize BLL};
         \draw[-latex reversed, thick] (\x-4, \y+.6) -- ++(-.65,0) node[left] {\scriptsize BHH};
-        \draw[-latex reversed] (\x-4, \y+.2) -- ++(-.4,0) node[left] {\scriptsize PWM};
-        \draw[-latex reversed] (\x-4, \y-.2) -- ++(-.4,0) node[left] {\scriptsize Serial};
+        \draw[-latex reversed] (\x-4, \y+.2) -- ++(-.4,0) node[left] {\scriptsize PWM-M\ii};
+        \draw[-latex] (\x-4, \y-.2) -- ++(-.4,0) node[left] {\scriptsize Serial-M\ii};
     }
 
     % Buck converter
+    ctikzset{inductors/scale=.4, inductor=american}
     \foreach \x/\y in {\buckxA/\buckyA, \buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
         \node[thick, draw, fit={(\x, \y+.55) (\x+2.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize DC/DC}}}};
+
+        \draw (\x-1.25,\y+1-\relayRunter) to[normal open switch] ++(.5,0) --++(.25,0) -- ++(0.35,0) -- (\x-.15,\y+.4) -- (\x,\y+.4) node[right=-.1] {\tiny VIN+};
+
+        \draw (\x-1.35, \y+1.3-\relayRunter) rectangle (\x-.4, \y+.5-\relayRunter);
+
+        \draw (\x-1.25, \y+.4-\relayRunter) -- (\x-1.25, \y+.6-\relayRunter) to[L, loops=4] (\x-.5,\y+.6-\relayRunter) -- (\x-.5,\y+.4-\relayRunter) to[short, -*] (\x-.5,\y-.4);
+
+        \draw[-latex reversed] (\x-1.25, \y+.4-\relayRunter) -- (\x-1.5, \y+.4-\relayRunter) node[left] {\tiny BHL};
+
         
-        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-.5,0) node[left] {\scriptsize BLL};
-        \draw[-latex reversed] (\x, \y+.4) node[right=-.1] {\tiny VIN+} -- ++(-.5,0) node[left] {\scriptsize BHH};
+        \draw[-latex reversed] (\x, \y-.4) node[right=-.1] {\tiny VIN-} -- ++(-1.75,0) node[left] {\scriptsize BLL};
+        \draw[-latex reversed] (\x-1.25, \y+1-\relayRunter) -- ++(-.5,0) node[left] {\scriptsize BHH};
     }
 
-    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0);
-    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0);
-    \draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
-    \draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
+    \draw[-latex] (\buckxA+2.5, \buckyA+.4) node[left=-.1] {\tiny VOUT+} -- ++(.5,0) node[right]{\scriptsize CAN-VCC};
+    \draw[-latex] (\buckxA+2.5, \buckyA-.4) node[left=-.1] {\tiny VOUT-} -- ++(.5,0) node[right]{\scriptsize CAN-GND};
+    %\draw[fill] (\buckxA+3, \buckyA-.5) rectangle (\buckxA+3.1, \buckyA+.5);
+    %\draw[double, -latex] (\buckxA+3.1, \buckyA) -- ++ (.5,0) node[right] {\small CAN-Bus};
 
-    \foreach \x/\y in {\buckxB/\buckyB, \buckxC/\buckyC, \buckxD/\buckyD}{
+    \foreach \x/\y/\ii in {\buckxB/\buckyB/1, \buckxC/\buckyC/2, \buckxD/\buckyD/3}{
         \draw (\x+2.5, \y+.4) node[left=-.1] {\tiny VOUT+} -- ++(2,0);
         \draw (\x+2.5, \y-.4) node[left=-.1] {\tiny VOUT-} -- ++(2,0);
         
         \node[thick, draw, fit={(\x+4.5, \y+.55) (\x+6.5, \y-.55)},inner sep=0, align=center] {{{{\scriptsize SERVO}}}};
         \draw(\x+4.5, \y+.4) node[right=-.1] {\tiny VCC};
         \draw(\x+4.5, \y-.4) node[right=-.1] {\tiny GND};
-        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.5,0) node[left] {\tiny PWM};
+        \draw[-latex reversed] (\x+4.5, \y) node[right=-.1] {\tiny D} -- ++(-.4,0) node[left] {\tiny PWM-S\ii};
 
         \draw[thick] (\x+6.3, \y) circle (.07);
         \draw (\x+6.3, \y+.12) arc (90:270:.12);
@@ -111,7 +124,7 @@
 
     %% Ansteuerungs-Platine Relay
     \draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
-    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung};
+    \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung\\ siehe \autoref{fig:plat:relais}};
 
     \foreach \y/\text in {.5/7, 2/6, 3.5/8}{
         \draw (\platineX, \platineY-\y) -- ++(.5,0) -- ++(0,-1) -- ++(-.5,0);
@@ -123,7 +136,7 @@
     \draw[-latex reversed] (\platineX, \platineY-.75) -- ++(-.5,0) node[left] {\scriptsize BHL};
     \draw[-latex reversed] (\platineX, \platineY-1.25) -- ++(-.5,0) node[left] {\scriptsize BLL};
 
-    \draw[-latex reversed] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
+    \draw[-latex] (\platineX, \platineY-2.25) -- ++(-.5,0) node[left] {\scriptsize A2};
     \draw[-latex reversed] (\platineX, \platineY-2.75) -- ++(-.5,0) node[left] {\scriptsize BLL};
     
     \draw[-latex reversed] (\platineX, \platineY-3.75) -- ++(-.5,0) node[left] {\scriptsize BLH};

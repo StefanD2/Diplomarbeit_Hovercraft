@@ -27,6 +27,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <ctype.h>
 #include <stdlib.h>
 
+/* Original library
+#define _GPRMCterm   "GPRMC"
+#define _GPGGAterm   "GPGGA"
+#define _GNRMCterm   "GNRMC"
+#define _GNGGAterm   "GNGGA"
+*/
+// phrases for NEO-8M
 #define _GPRMCterm   "GPRMC"
 #define _GPGGAterm   "GPGGA"
 #define _GNRMCterm   "GNRMC"

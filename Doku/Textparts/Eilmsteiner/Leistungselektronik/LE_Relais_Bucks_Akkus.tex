@@ -1,4 +1,4 @@
-\section{Hauptrelais}
+\section{Hauptrelais\label{sec:hauptrelais}}
 Mit diesem Relais wird die Spannungsversorgung des gesamten Luftkissenbootes kontrolliert. Bedingt durch die Tatsache, dass das gewählte Ladegerät nur maximal 8S-Lipo Akkus laden kann und wir durch die Serienschaltung 2er 7S Akkus auf insgesamt 14S sind, 
 wurde es zwischen den beiden Parallelschaltungen von jeweils 4 Akkus platziert. 
 \begin{figure}[h]
@@ -28,9 +28,22 @@ Wichtig war bei der Auswahl dieser, auf die maximale Eingangsspannung von mindes
 Auch ein Mindeststrom von $6\,\mathrm{A}$ sekundärseitig ist aufgrund des hohen Leistungsbedarfes der Servos vonnöten. 
 \newpage
 
+\section{Schaltrelais für Buck-Converter}
+Da die negativen Pole beider Akkustränge während des Ladevorganges verbunden werden, müssen die Buck-Converter über eigene Relais abgetrennt werden. 
+Um die Schaltströme hierfür möglichst klein zu halten, wird jeder der Converter über ein eigenes Relais geschalten.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.35\textwidth]{Fotos/Relais.png}
+    \caption{Relais}
+\end{figure}
+
+Hierbei handelt es sich um spezielle DC-Relais, welche für einen Nennstrom von $10\,\mathrm{A}$ ausgelegt sind.
+Eine Ansteuerung gemeinsam mit dem Hauptrelais (\ref{sec:hauptrelais}) stellt sicher, dass die Kondensatoren der Buck-Converter vor dem Einschalten über den Leistungswiderstand vorgeladen werden. (siehe \autoref{sec:precharge})
+
+\newpage
 \section{Akkus \label{sec:Akkus}}
-Nach gründlicher Überlegung, welche Form von Energiespeicher für unser Boot die Beste wäre, fiel die Wahl auf die TopFuel LiPo 35C Power-X 7500mAh 7S.
-Ursprüngliche Pläne den Akku selbst aus 18650-Zellen zusammenzubauen wurden verworfen, da er dadurch bei gleicher speicherbarer Energiemenge, deutlich schwerer und auch größer ausgefallen wäre.
+Nach gründlicher Überlegung, welche Form von Energiespeicher für unser Boot die beste wäre, fiel die Wahl auf die TopFuel LiPo 35C Power-X 7500mAh 7S.
+Ursprüngliche Pläne, den Akku selbst aus 18650-Zellen zusammenzubauen, wurden verworfen, da er dadurch bei gleicher speicherbarer Energiemenge deutlich schwerer und auch größer ausgefallen wäre.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{Fotos/Akku.png}

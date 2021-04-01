@@ -1,9 +1,13 @@
+/*
+* Jeti-Library by Stefan Deimel, 23.10.2020
+* JetiBase.hpp -- all platform independant functions
+*/
 #ifndef __JetiBase_HPP__
 #define __JetiBase_HPP__
 
 #include <Arduino.h>
 
-#define RECIEVE_BUFFER_SIZE 16
+#define RECIEVE_BUFFER_SIZE 16 // size of serial recieve buffer
 
 // struct for data/telemtrie from jetibox
 typedef struct
@@ -15,12 +19,11 @@ typedef struct
     int temperature;
 } jetiTelemetry_t;
 
-
 // struct for 9 bit Serial
 typedef struct
 {
     char databyte; // data byte (first 8 bits)
-    bool bit9; // 9. bit of data
+    bool bit9;     // 9. bit of data
 } Serial9bit_t;
 
 class JetiBase
@@ -28,18 +31,18 @@ class JetiBase
 public:
     JetiBase();              // Constructor
     virtual void init() = 0; // inits Serial Communication (still need to call sei() in main setup)
-    void loop();             // loop function
+    void loop();             // loop function, must be called periodically
 
     void send(bool l, bool r, bool u, bool d);            // sends buttons
     void send(bool l, bool r, bool u, bool d, int count); // sends buttons multiple times
 
     bool isNewMsg(); // checks if new msg has been recieved
-    String getMsg(); // get msg
+    String getMsg(); // get message (this function deletes message afterwards)
 
-    // convert msg (String)
+    // convert message (String) to jetiTelemetry_t struct
     static jetiTelemetry_t getTelemetry(String msg);
 
-    // interrrupt functions (internal functions, must not be called in main)
+    // interrrupt functions (internal functions, must not be called in main, are overwritten in each platform-dependent file)
     virtual void interrupt_RX() = 0;
     virtual void interrupt_TX() = 0;
     virtual void interrupt_UDRE() = 0;
