@@ -1,3 +1,4 @@
+\subsection{Schaltplan -- Übersicht}
 \tikzmath{
     \test=0;
     \platinenX1=2.9;
@@ -6,8 +7,18 @@
     \motorreglerX2=15;
 }
 
-\resizebox{1.05\textwidth}{!}{
+\resizebox{0.8\textwidth}{!}{
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
+
+    % Analoge Eingänge der Lenkerplatine
+    \newarray\analoginputs
+    \readarray{analoginputs}{Daumengas 1&Daumengas 2&Lenker 1&Lenker 2}
+    \foreach \r in {0,1,2,3}{
+        \tikzmath{int \t; \t = \r+1;}
+        \draw[-latex,thick,double] (6+\r*0.3,14.2) -- (6+\r*0.3,15.7-0.3*\r) node [at start,rotate=90,left] {\scriptsize A\r} -- (8,15.7-0.3*\r)  node[right] {\scriptsize \analoginputs(\t)};
+    }
+
+
     % Platinenrahmen + Anschluss an CAN-Bus
     \foreach \i in {0,4,8,12}
         {\draw[thick] (0,\i) to [short,-] ++ (\platinenX1,0) node[right] {\scriptsize CAN+};
@@ -22,8 +33,8 @@
     \draw[thick] (0.6,0.8) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
     \draw[thick] (0.9,1.2) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
 
-    \draw[-latex,thick] (0.6,12+0.8) -- (0.6,15) node[right,rotate=+90] {\scriptsize CAN-GND};
-    \draw[-latex,thick] (0.9,12+1.2) -- (0.9,15) node[right,rotate=+90] {\scriptsize CAN-VCC};
+    \draw[-latex,thick] (0.6,12+0.8) -- (0.6,15.5) -- (1.4,15.5) node[right] {\scriptsize CAN-GND};
+    \draw[-latex,thick] (0.9,12+1.2) -- (0.9,15)  -- (1.4,15) node[right] {\scriptsize CAN-VCC};
 
     % Motorreglerplatine
     \foreach \i in {1,2}
@@ -57,13 +68,13 @@
     \newarray\names
     \readarray{names}{+5V&GND&SCL&SDA}
     \foreach \i in {0,1}{
-        \draw [very thick] (11,-2-3*\i) rectangle (13.5,0-3*\i);
-        \node [thick, fit={(11,-2-3*\i)(13.5,0-3*\i)},inner sep=0, align=center,shift={(0.0,0.6)}] {ADS1115};
         \foreach \r in {0,1,2,3}{
             \tikzmath{int \t; \t = \r+1; int \lm; \lm = \i*4+\r;}
             \draw[thick] (\platinenX2+0.5+0.3*\r,-2-3*\i+0.2+0.3*\r) -- (11,-2-3*\i+0.2+0.3*\r) node [at end, right]{\scriptsize \names(\t)};
-            \draw[-latex,thick] (13.5,-2-3*\i+0.2+0.3*\r) -- (14.5,-2-3*\i+0.2+0.3*\r) node [at start, left] {\scriptsize A\r} node[right] {\scriptsize LM35-\lm};
+            \draw[-latex,thick,double] (13.5,-2-3*\i+0.2+0.3*\r) -- (14.5,-2-3*\i+0.2+0.3*\r) node [at start, left] {\scriptsize A\r} node[right] {\scriptsize LM35-\lm};
         }
+        \draw [very thick] (11,-2-3*\i) rectangle (13.5,0-3*\i);
+        \node [thick, fit={(11,-2-3*\i)(13.5,0-3*\i)},inner sep=0, align=center,shift={(0.0,0.6)}] {ADS1115};
     }
 
     %Servo Driver Board
@@ -87,7 +98,7 @@
 
     \newarray\Values
     \newarray\ValuesScreen
-    \readarray{Values}{RX&TX&+5V&GND}
+    \readarray{Values}{RX&TX&+5V-Disp.&GND}
     \readarray{ValuesScreen}{TX&RX&VCC&GND}
     \foreach \i in {0,1,2,3}{
         \tikzmath{int \t; \t = \i+1;}
@@ -100,15 +111,17 @@
 
     \newarray\Values
     \newarray\ValuesScreen
-    \readarray{Values}{RX&TX&+5V&GND}
-    \readarray{ValuesScreen}{TX&RX&VCC&GND}
+    \readarray{Values}{D9&D8&+3.3V&GND}
+    \readarray{ValuesScreen}{RX&TX&VCC&GND}
     \foreach \i in {0,1,2,3}{
         \tikzmath{int \t; \t = \i+1;}
         \draw [thick] (\platinenX2,12+2-0.9+\i*0.3) -- (11,12+2-0.9+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
     }
 
+    % Analogue Inputs are drawn at the beginning so that double arrows look ok
+
 
 \end{circuitikz}
 }
-\newpage
-Test
+
+Auf die Versorgung der LM35-Temperatursensoren sowie der beiden Daumengase und dem Lenkpotenziometer mit +5V und GND wurde aus Platzgründen im obigen Plan verzichtet und stattdessen mit doppelten Linien aufmerksam gemacht.
