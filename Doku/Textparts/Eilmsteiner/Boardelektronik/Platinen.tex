@@ -1,6 +1,18 @@
-
-
 \clearpage
+\section{Steuerungsplatinen}
+\subsection{Schaltplan -- Übersicht}
+\vspace{-0.2cm}
+\begin{figure}[H]
+    \input{Uebersicht.tex}
+    \caption{Schaltplan Boardelektronik\label{fig:SchaltplanBoardelektronik}}
+\end{figure}
+\vspace{-0.5cm}
+{\small
+Auf die Versorgung der LM35-Temperatursensoren sowie der beiden Daumengase und dem Lenkpotenziometer mit +5V und GND wurde aus Platzgründen im obigen Plan verzichtet und stattdessen mit doppelten Linien aufmerksam gemacht. 
+Siehe zudem \autoref{fig:schaltLeistung} für die Verbindung des Planes zur Leistungselektronik.
+}
+
+\newpage
 \subsection{Motorregleransteuerung\label{sec:Motorregleransteuerung}}
 \subsubsection{Aufgaben \& verwendete Bauteile}
 Diese Platinen wandeln die entsprechenden vom CAN-Bus übertragenen Daten mithilfe ihres 16-bit Timers (Timer1 des ATMEGA328p) in ein für unseren Motorregler verständliches PWM-Muster um.
