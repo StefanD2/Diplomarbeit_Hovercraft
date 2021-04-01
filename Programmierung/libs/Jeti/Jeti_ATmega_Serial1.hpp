@@ -40,7 +40,7 @@ public:
     // overwrite interrrupt functions
     void interrupt_RX()
     {
-        recieving = true;
+        receiving = true;
         recieve_buffer[recieve_buffer_write].bit9 = UCSR1B & (1 << RXB81); // 9th bit, must be read first
         recieve_buffer[recieve_buffer_write].databyte = UDR1;
         recieve_buffer_write++;
