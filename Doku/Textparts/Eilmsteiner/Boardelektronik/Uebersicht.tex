@@ -1,0 +1,83 @@
+\tikzmath{
+    \test=0;
+    \platinenX2=9;
+    \motorreglerX1=10.5;
+    \motorreglerX2=15;
+}
+
+\resizebox{1.05\textwidth}{!}{
+\begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
+    % Platinenrahmen + Anschluss an CAN-Bus
+    \foreach \i in {0,4,8,12}
+        {\draw[thick] (0,\i) to [short,-] ++ (2.9,0) node[right] {\scriptsize CAN+};
+        \draw[thick] (0.3,\i+0.4) to [short,-] ++ (2.6,0) node[right] {\scriptsize CAN-};
+        \draw[thick] (0.6,\i+0.8) to [short,-] ++ (2.3,0) node[right] {\scriptsize GND};
+        \draw[thick] (0.9,\i+1.2) to [short,-] ++ (2,0) node[right] {\scriptsize VCC};
+        \draw[very thick] (2.9,\i+1.2+1) rectangle (\platinenX2,\i-1);}
+
+    % CAN-Bus Leitungen
+    \draw[thick] (0.0,0) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-] ++ (0,4);
+    \draw[thick] (0.3,0.4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-] ++ (0,4);
+    \draw[thick] (0.6,0.8) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
+    \draw[thick] (0.9,1.2) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
+
+    \draw[-latex,thick] (0.6,12+0.8) -- (0.6,15) node[right,rotate=+90] {\scriptsize CAN-GND};
+    \draw[-latex,thick] (0.9,12+1.2) -- (0.9,15) node[right,rotate=+90] {\scriptsize CAN-VCC};
+
+    % Motorreglerplatine
+    \foreach \i in {1,2}
+    {\node [thick, fit={(2.9,4*\i+2.2) (\platinenX2,4*\i-1)},inner sep=0, align=center,shift={(0.2,1.0)}] {Platine Motoransteuerung};
+
+    \draw [very thick] (\motorreglerX1,4*\i+1.4) rectangle (\motorreglerX2,4*\i-1);
+    \node [thick, fit={(\motorreglerX1,4*\i+1.4) (\motorreglerX2,4*\i-1)},inner sep=0, align=center,shift={(0.4,0.0)}] {Master Spin\\ 220 Pro OPTO}; % Beschriftung Master Spin 220 Pro OPTO 
+
+    \draw[-latex,thick] (\platinenX2,4*\i+0.9) -- (\motorreglerX1,4*\i+0.9) node[at start,left] {\scriptsize PWM-M\i} node[right] {\scriptsize PWM};
+    \draw[thick] (\platinenX2,4*\i+0.6) -- (\motorreglerX1,4*\i+0.6) node[at start,left] {\scriptsize +5V} node[right] {\scriptsize VCC};
+    \draw[thick] (\platinenX2,4*\i+0.3) -- (\motorreglerX1,4*\i+0.3) node[at start,left] {\scriptsize GND} node[right] {\scriptsize GND};
+
+    \draw[-latex,thick] (\motorreglerX1,4*\i-0.4) -- (\platinenX2,4*\i-0.4) node[at end,left] {\scriptsize Serial-M\i} node[at start, right] {\scriptsize Serial};
+    \draw[thick] (\platinenX2,4*\i-0.7) -- (\motorreglerX1,4*\i-0.7) node[at start,left] {\scriptsize GND} node[right] {\scriptsize GND};
+    }
+
+    
+    % Servoansteuerung
+    \node [thick, fit={(2.9,2.2) (\platinenX2,-1)},inner sep=0, align=center,shift={(0.4,1.0)}] {Platine Servoansteuerung};
+    \draw [thick] (\platinenX2,-0.7)  -- (\platinenX2+0.5,-0.7) node [at start,left]{\scriptsize +5V};
+    \draw [thick] (\platinenX2,-0.4)  -- (\platinenX2+0.8,-0.4) node [at start,left]{\scriptsize GND};
+    \draw [thick] (\platinenX2,-0.1)  -- (\platinenX2+1.1,-0.1) node [at start,left]{\scriptsize SCL};
+    \draw [thick] (\platinenX2,0.2)  -- (\platinenX2+1.4,0.2) node [at start,left]{\scriptsize SDA};
+    
+    %I2C Bus Leitungen
+    \foreach \i in {0,0.3,0.6,0.9}{
+        \draw [thick] (\platinenX2+0.5+\i,-0.7+\i) to [short,-*] ++ (0,-1.1) to [short,-*] ++ (0,-1.5) to [short,-] ++ (0,-1.5);
+    }
+    
+    %ADS1115 Boards
+    \newarray\names
+    \readarray{names}{+5V&GND&SCL&SDA}
+    \foreach \i in {0,1}{
+        \draw [very thick] (11,-2-3*\i) rectangle (13.5,0-3*\i);
+        \node [thick, fit={(11,-2-3*\i)(13.5,0-3*\i)},inner sep=0, align=center,shift={(0.0,0.6)}] {ADS1115};
+        \foreach \r in {0,1,2,3}{
+            \tikzmath{int \t; \t = \r+1; int \lm; \lm = \i*4+\r;}
+            \draw[thick] (\platinenX2+0.5+0.3*\r,-2-3*\i+0.2+0.3*\r) -- (11,-2-3*\i+0.2+0.3*\r) node [at end, right]{\scriptsize \names(\t)};
+            \draw[-latex,thick] (13.5,-2-3*\i+0.2+0.3*\r) -- (14.5,-2-3*\i+0.2+0.3*\r) node [at start, left] {\scriptsize A\r} node[right] {\scriptsize LM35-\lm};
+        }
+    }
+
+    %Servo Driver Board
+    \draw [very thick] (4,-3.5) rectangle (8.5,-1.5);
+    \node [thick, fit={(4,-3.5) (8.5,-1.5)},inner sep=0, align=center,shift={(0.0,0.5)}]{Servo Driver Board};
+    \foreach \r in {0,1,2,3}{
+            \tikzmath{int \t; \t = \r+1;}
+            \draw[thick] (8.5,-3.5+0.2+0.3*\r) -- (\platinenX2+0.5+0.3*\r,-3.5+0.2+0.3*\r) node [at start,left]{\scriptsize \names(\t)};
+    }
+    \foreach \i in {0,1,2}{
+        \tikzmath{int \t; \t = \i*4; int \se; \se = \i+1;}
+        \draw [-latex,thick] (5+0.3*\i,-3.5) -- (5+0.3*\i,-4.5) node [at start,rotate=90,right]{\scriptsize CH\t} node [at end,rotate=90,left]{\scriptsize PWM-S\se}; 
+    }
+
+\end{circuitikz}
+}
+\newpage
+Test
