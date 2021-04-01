@@ -1,5 +1,6 @@
 \tikzmath{
     \test=0;
+    \platinenX1=2.9;
     \platinenX2=9;
     \motorreglerX1=10.5;
     \motorreglerX2=15;
@@ -9,11 +10,11 @@
 \begin{circuitikz}[loops/.style={circuitikz/inductors/coils=#1}]]
     % Platinenrahmen + Anschluss an CAN-Bus
     \foreach \i in {0,4,8,12}
-        {\draw[thick] (0,\i) to [short,-] ++ (2.9,0) node[right] {\scriptsize CAN+};
-        \draw[thick] (0.3,\i+0.4) to [short,-] ++ (2.6,0) node[right] {\scriptsize CAN-};
-        \draw[thick] (0.6,\i+0.8) to [short,-] ++ (2.3,0) node[right] {\scriptsize GND};
-        \draw[thick] (0.9,\i+1.2) to [short,-] ++ (2,0) node[right] {\scriptsize VCC};
-        \draw[very thick] (2.9,\i+1.2+1) rectangle (\platinenX2,\i-1);}
+        {\draw[thick] (0,\i) to [short,-] ++ (\platinenX1,0) node[right] {\scriptsize CAN+};
+        \draw[thick] (0.3,\i+0.4) to [short,-] ++ (\platinenX1-0.3,0) node[right] {\scriptsize CAN-};
+        \draw[thick] (0.6,\i+0.8) to [short,-] ++ (\platinenX1-0.6,0) node[right] {\scriptsize GND};
+        \draw[thick] (0.9,\i+1.2) to [short,-] ++ (\platinenX1-0.9,0) node[right] {\scriptsize VCC};
+        \draw[very thick] (\platinenX1,\i+2.2) rectangle (\platinenX2,\i-1);}
 
     % CAN-Bus Leitungen
     \draw[thick] (0.0,0) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-] ++ (0,4);
@@ -76,6 +77,36 @@
         \tikzmath{int \t; \t = \i*4; int \se; \se = \i+1;}
         \draw [-latex,thick] (5+0.3*\i,-3.5) -- (5+0.3*\i,-4.5) node [at start,rotate=90,right]{\scriptsize CH\t} node [at end,rotate=90,left]{\scriptsize PWM-S\se}; 
     }
+
+    % Lenker Platine
+    \node [thick, fit={(\platinenX1,12+2.2) (\platinenX2,12-1)},inner sep=0, align=center,shift={(-0.6,-1.4)}] {Platine Lenkung}; % Beschriftung
+
+    % Nextion Display
+    \draw [very thick] (11,11-0.2) rectangle (15,12.7-0.2);
+    \node [thick, fit={(11,11-0.2) (15,12.7-0.4)},inner sep=0, align=center,shift={(0.4,-0.0)}]{Nextion Display};
+
+    \newarray\Values
+    \newarray\ValuesScreen
+    \readarray{Values}{RX&TX&+5V&GND}
+    \readarray{ValuesScreen}{TX&RX&VCC&GND}
+    \foreach \i in {0,1,2,3}{
+        \tikzmath{int \t; \t = \i+1;}
+        \draw [thick] (\platinenX2,12-0.8+\i*0.3) -- (11,12-0.8+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
+    }
+
+    %GPS Module
+    \draw [very thick] (11,13-0.1) rectangle (14.5,15);
+    \node [thick, fit={(11,13-0.1) (14.5,15)},inner sep=0, align=center,shift={(0.2,0.4)}]{Neo-8M GPS};
+
+    \newarray\Values
+    \newarray\ValuesScreen
+    \readarray{Values}{RX&TX&+5V&GND}
+    \readarray{ValuesScreen}{TX&RX&VCC&GND}
+    \foreach \i in {0,1,2,3}{
+        \tikzmath{int \t; \t = \i+1;}
+        \draw [thick] (\platinenX2,12+2-0.9+\i*0.3) -- (11,12+2-0.9+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
+    }
+
 
 \end{circuitikz}
 }
