@@ -1,0 +1,34 @@
+\documentclass[paper=a4,12pt]{scrreprt}
+\pdfminorversion=6 % because inventor exports are 1.6
+% Encoding UTF8
+\usepackage[utf8]{inputenc}
+% 8 Bit Aufloesung der Buchstaben
+\usepackage[T1]{fontenc}
+% Seitenraender
+\usepackage[scale=0.72]{geometry}
+% Spracheinstellungen
+\usepackage[english, naustrian]{babel} % your native language must be the last one!!
+% erweiterte Farbenpalette
+\usepackage[dvipsnames]{xcolor}
+% Abbildungen
+\usepackage{graphicx}
+% Tabellen (erweitert)
+\usepackage{tabularx}
+% TikZ + Circuit-TikZ (fuer Schaltungen)									
+\usepackage[europeanresistors, europeaninductors, european, siunitx]{circuitikz}
+% Nuetzliche TikZ Libraries
+\usetikzlibrary{arrows,automata,positioning}
+\usetikzlibrary{math}
+\usetikzlibrary{fit}
+% Mathematikpakete!
+\usepackage{amsmath,amssymb}							
+%\usepackage{mathtools}	
+% PDF Einbindung (zB Datenblaetter)
+\usepackage{pdfpages}
+
+\usepackage{pdflscape}
+
+
+\begin{document}
+\input{../Uebersicht.tex}
+\end{document}
