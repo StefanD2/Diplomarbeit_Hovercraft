@@ -12,7 +12,7 @@
     \buckyC = -12;
     \buckyD = -14;
     \platineX = 10.5;
-    \platineY = -1.5;
+    \platineY = -.5;
     \relayRunter=.35;
     \platineDsiplayLinksObenX=0;
     \platineDsiplayLinksObenY=-15.5;
@@ -125,6 +125,15 @@
     %% Ansteuerungs-Platine Relay
     \draw[very thick] (\platineX, \platineY) rectangle (\platineX+5, \platineY-5);
     \node[thick, fit={(\platineX+1, \platineY) (\platineX+5, \platineY-5)},inner sep=0, align=center] {\small Platine\\Relaisansteuerung\\ siehe \autoref{fig:plat:relais}};
+
+    % J1 Mikroswitsches
+    \draw (\platineX+2-1,\platineY-5) -- ++(0,.5) -- ++(1,0) -- ++(0,-.5);
+    \draw (\platineX+2.5-1,\platineY-5+.5) node[above] {\small J1};
+
+    \draw (\platineX+2.75-1,\platineY-4.75) to[short, *-] ++(0,-.75) to[nos] ++(1.5,0) to[nos] ++(1.5,0) -- ++(.25,0) -- ++(0,-.75) -- (\platineX+2.25-1,\platineY-4.75-.75-.75) to[short, -*] (\platineX+2.25-1,\platineY-4.75);
+
+    \draw (\platineX+2.75+1.5-1,\platineY-4.75-.75) node[below] {\scriptsize Ladedeckel-Endschalter};
+
 
     \foreach \y/\text in {.5/7, 2/6, 3.5/8}{
         \draw (\platineX, \platineY-\y) -- ++(.5,0) -- ++(0,-1) -- ++(-.5,0);
