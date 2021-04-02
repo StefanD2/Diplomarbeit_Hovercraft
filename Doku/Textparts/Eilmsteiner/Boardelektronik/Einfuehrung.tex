@@ -16,14 +16,21 @@ Neben seiner Robustheit trotz relativ hoher Übertragungsgeschwindigkeit war es 
 \newpage
 
 \subsection{Verwendete Adressen}
+Folgende \autoref{tab:verwendeteCanAdressen} zeigt die zur Kommunikation verwendeten Adressen (CAN-IDs), sowie eine kurze Information über deren Funktion und Inhalt.
 \begin{table}[h]
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-    Name                              & CAN-ID & Info         & Länge \\\hline
-    CONTROL\_MOTORS\_SERVOS  & 0xC0   & Gas-\& Lenkerstellung & 3     \\
-    INFOS\_LOWER\_CONTROLLER & 0xC1   & Telemetriedaten Motor unten  & 6     \\
-    INFOS\_BACK\_CONTROLLER  & 0xC3   & Telemetriedaten Motor hinten & 6     \\
-    BATTERY\_TEMPS           & 0xE0   & Akku-Temperaturen            & 8    \\\hline
-    \end{tabular}
-    \caption{Verwendete CAN-Bus Adressen}
+    \begin{threeparttable}
+        \centering
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+        Name                              & CAN-ID & Info         & Länge\tnote{1} \\\hline
+        CONTROL\_MOTORS\_SERVOS  & 0xC0   & Gas-\& Lenkerstellung & 3     \\
+        INFOS\_LOWER\_CONTROLLER & 0xC1   & Telemetriedaten Motor unten  & 6     \\
+        INFOS\_BACK\_CONTROLLER  & 0xC3   & Telemetriedaten Motor hinten & 6     \\
+        BATTERY\_TEMPS           & 0xE0   & Akku-Temperaturen            & 8    \\\hline
+        \end{tabular}
+        \begin{tablenotes}\footnotesize
+            \item[1] Länge der Nutzdaten (nicht der gesamten Nachricht) in Byte
+        \end{tablenotes}
+    \end{threeparttable}
+    \caption{Verwendete CAN-Bus Adressen\label{tab:verwendeteCanAdressen}}
 \end{table}
