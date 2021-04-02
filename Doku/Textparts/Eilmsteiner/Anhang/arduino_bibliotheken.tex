@@ -1,7 +1,8 @@
 \section{Arduino Bibliotheken}
 Im Zuge der Programmierung der Arduinos wurde auf eine Vielzahl von bereits vorhandenen Bibliotheken zurückgegriffen. Konkret wurden für die CAN-Bus Module\textsuperscript{\cite{ArduinoBibliothekCANBus}}, 
 das Servo-Driver-Modul\textsuperscript{\cite{ArduinoBibliothekServoPWM}}, 
-die ADS1115 Module\textsuperscript{\cite{ArduinoBibliothekADS1115}}, 
+die ADS1115 Module\textsuperscript{\cite{ArduinoBibliothekADS1115}},
+das GPS-Modul\textsuperscript{\cite{ArduinoBibliothekGPS}},
 sowie für die Kommunikation mit dem Nextion Display\textsuperscript{\cite{ArduinoBibliothekNextion}}, frei im Internet zugängliche Bibliotheken verwendet.
 \subsection{Jeti Decoder}
 Hierbei handelt es sich um eine selbstgeschriebene Arduino-Bibliothek, mit welcher die über eine serielle Verbindung zur Verfügung gestellten Telemetrie-Daten der Motorregler ausgelesen werden können.
@@ -18,9 +19,3 @@ Hierbei handelt es sich um eine selbstgeschriebene Arduino-Bibliothek, mit welch
 
 \subsubsection{JetiModes.hpp}
 \lstinputlisting{../Programmierung/libs/Jeti/JetiModes.hpp}
-\clearpage
-\subsection{TinyGPS++}
-Da es sich bei dem in der Diplomarbeit verbauten GPS-Modul um das \textbf{NEO-8M} 
-und nicht um das ältere \textbf{NEO-6M} handelt, musste die verwendete Arduino-Bibliothek\textsuperscript{\cite{ArduinoBibliothekGPS}} leicht verändert werden.
-\subsubsection{my\_TinyGPS++.cpp}
-\lstinputlisting[firstline=30,lastline=40]{../Programmierung/libs/myTinyGPS/src/my_TinyGPS++.cpp}
