@@ -32,8 +32,8 @@
     \draw[thick] (0.6,0.8) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
     \draw[thick] (0.9,1.2) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4) to [short,-*] ++ (0,4);
 
-    \draw[-latex,thick] (0.6,12+0.8) -- (0.6,15.5) -- (1.4,15.5) node[right] {\scriptsize CAN-GND};
-    \draw[-latex,thick] (0.9,12+1.2) -- (0.9,15)  -- (1.4,15) node[right] {\scriptsize CAN-VCC};
+    \draw[-latex reversed,thick] (0.6,12+0.8) -- (0.6,15.5) -- (1.4,15.5) node[right] {\scriptsize CAN-GND};
+    \draw[-latex reversed,thick] (0.9,12+1.2) -- (0.9,15)  -- (1.4,15) node[right] {\scriptsize CAN-VCC};
 
     % Motorreglerplatine
     \foreach \i in {1,2}
@@ -99,10 +99,14 @@
     \newarray\ValuesScreen
     \readarray{Values}{RX&TX&+5V-Disp.&GND}
     \readarray{ValuesScreen}{TX&RX&VCC&GND}
-    \foreach \i in {0,1,2,3}{
-        \tikzmath{int \t; \t = \i+1;}
-        \draw [thick] (\platinenX2,12-0.8+\i*0.3) -- (11,12-0.8+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
-    }
+    %\foreach \i in {0,1,2,3}{
+    %    \tikzmath{int \t; \t = \i+1;}
+    %    \draw [thick] (\platinenX2,12-0.8+\i*0.3) -- (11,12-0.8+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
+    %}
+    \draw [thick,latex-] (\platinenX2,11.2+0.0) -- (11,11.2+0.0) node [at start,left] {\scriptsize \Values(1)} node [right] {\scriptsize \ValuesScreen(1)};
+    \draw [thick,-latex] (\platinenX2,11.2+0.3) -- (11,11.2+0.3) node [at start,left] {\scriptsize \Values(2)} node [right] {\scriptsize \ValuesScreen(2)};
+    \draw [thick] (\platinenX2,11.2+0.6) -- (11,11.2+0.6) node [at start,left] {\scriptsize \Values(3)} node [right] {\scriptsize \ValuesScreen(3)};
+    \draw [thick] (\platinenX2,11.2+0.9) -- (11,11.2+0.9) node [at start,left] {\scriptsize \Values(4)} node [right] {\scriptsize \ValuesScreen(4)};
 
     %GPS Module
     \draw [very thick] (11,13-0.2) rectangle (15,14.4);
@@ -110,12 +114,17 @@
 
     \newarray\Values
     \newarray\ValuesScreen
+    %\newarray\DrawArguments
     \readarray{Values}{D9&D8&+3.3V&GND}
     \readarray{ValuesScreen}{RX&TX&VCC&GND}
-    \foreach \i in {0,1,2,3}{
-        \tikzmath{int \t; \t = \i+1;}
-        \draw [thick] (\platinenX2,12+2-0.9+\i*0.3) -- (11,12+2-0.9+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
-    }
+    %\foreach \i in {0,1,2,3}{
+    %    \tikzmath{int \t; \t = \i+1;}
+    %    \draw [thick] (\platinenX2,12+2-0.9+\i*0.3) -- (11,12+2-0.9+\i*0.3) node [at start,left] {\scriptsize \Values(\t)} node [right] {\scriptsize \ValuesScreen(\t)};
+    %}
+    \draw [thick,-latex] (\platinenX2,13.1+0.0) -- (11,13.1+0.0) node [at start,left] {\scriptsize \Values(1)} node [right] {\scriptsize \ValuesScreen(1)};
+    \draw [thick,latex-] (\platinenX2,13.1+0.3) -- (11,13.1+0.3) node [at start,left] {\scriptsize \Values(2)} node [right] {\scriptsize \ValuesScreen(2)};
+    \draw [thick] (\platinenX2,13.1+0.6) -- (11,13.1+0.6) node [at start,left] {\scriptsize \Values(3)} node [right] {\scriptsize \ValuesScreen(3)};
+    \draw [thick] (\platinenX2,13.1+0.9) -- (11,13.1+0.9) node [at start,left] {\scriptsize \Values(4)} node [right] {\scriptsize \ValuesScreen(4)};
 
     % Analogue Inputs are drawn at the beginning so that double arrows look ok
 
