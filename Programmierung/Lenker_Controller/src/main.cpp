@@ -16,10 +16,10 @@ uint32_t max_power_lower = 255;
 uint32_t max_power_back = 255;
 uint32_t steering_offset = 0;
 
-#define MIN_VALUE_A0 190
-#define MAX_VALUE_A0 862
-#define MIN_VALUE_A1 185
-#define MAX_VALUE_A1 865
+#define MIN_VALUE_A0 190 //Analogue value of thumb throttle connected to A0 when not pressed
+#define MAX_VALUE_A0 862 //Analogue value of thumb throttle connected to A0 when fully pressed
+#define MIN_VALUE_A1 185 //Analogue value of thumb throttle connected to A1 when not pressed
+#define MAX_VALUE_A1 865 //Analogue value of thumb throttle connected to A1 when fully pressed
 
 TinyGPSPlus gps; //TinyGPS++ object
 
@@ -41,9 +41,9 @@ static void smartDelay(unsigned long ms)
 
 #ifdef NEXTION_ENABLED
 
-int nextion_page = 0; //screen number currently displayed on screen
+int nextion_page = 0; //screen number currently displayed on nextion
 
-//Main page nextion objects
+// ---------nextion objects for main page ----- 
 NexText disp_gps_speed = NexText(0, 15, "gpsspeed");
 
 NexText disp_drz_u = NexText(0, 3, "drzunt");
@@ -58,9 +58,8 @@ NexText disp_spg_h = NexText(0, 11, "spghint");
 
 NexButton disp_but00_settings = NexButton(0, 22, "b00");
 NexButton disp_but01_infos = NexButton(0, 23, "b01");
-//NexButton disp_but01_infos = NexButton(0,1,"b0");
 
-//info page nextion objects
+// ---- nextion objects for info page --------- 
 //battery infos
 NexText disp_atemp_01 = NexText(2, 14, "temp01");
 NexText disp_atemp_02 = NexText(2, 15, "temp02");
@@ -80,13 +79,13 @@ NexText disp_gpsinf_lon = NexText(2, 36, "gpslon");
 NexText disp_gpsinf_lat = NexText(2, 37, "gpslat");
 NexText disp_gpsinf_height = NexText(2, 35, "gpsalt");
 
-//settings page nextion objects
+// --------  nextion objects for settings page  ---------
 NexSlider disp_slid_lenk_offset = NexSlider(1, 3, "h1");
 NexSlider disp_slid_maxbackpower = NexSlider(1, 2, "h0");
 NexSlider disp_slid_maxdownpower = NexSlider(1, 4, "h2");
 NexButton disp_but10_back = NexButton(1, 1, "b10");
 
-NexTouch *nex_listen_list[] =
+NexTouch *nex_listen_list[] = //list of all clickable items on the nextion display
     {
         &disp_but00_settings,
         &disp_but01_infos,
@@ -97,34 +96,34 @@ NexTouch *nex_listen_list[] =
         &disp_but10_back,
         NULL};
 
-void but00_settings_push(void *ptr)
+void but00_settings_push(void *ptr) //ISR for "Settings" Button on main screen
 {
   disp_slid_lenk_offset.setValue(steering_offset);
   disp_slid_maxbackpower.setValue(max_power_back);
   disp_slid_maxdownpower.setValue(max_power_lower);
   nextion_page = 1;
 };
-void but01_infos_push(void *ptr)
+void but01_infos_push(void *ptr) //ISR for "Infos" Button on main screen
 {
   nextion_page = 2;
 };
-void but20_back(void *ptr)
+void but20_back(void *ptr) //ISR for "Back" button on info screen 
 {
   nextion_page = 0;
 }
-void but10_back(void *ptr)
+void but10_back(void *ptr) //ISR for "Back" button on settings screen
 {
   nextion_page = 0;
 }
-void slid_lenk_offset(void *ptr)
+void slid_lenk_offset(void *ptr) //ISR for releasing steering offset slider
 {
   disp_slid_lenk_offset.getValue(&steering_offset);
 }
-void slid_maxbackpower(void *ptr)
+void slid_maxbackpower(void *ptr) //ISR for releasing maximum back power slider
 {
   disp_slid_maxbackpower.getValue(&max_power_back);
 }
-void slid_maxdownpower(void *ptr)
+void slid_maxdownpower(void *ptr) //ISR for releasing maximum lower power slider
 {
   disp_slid_maxdownpower.getValue(&max_power_lower);
 }
@@ -145,18 +144,7 @@ void setup()
 #ifdef NEXTION_ENABLED
   Serial.begin(9600);
   nexInit();
-
   delay(100);
-
-  // //change baudrate of nextion display from 9600 to 38400 baud
-  // Serial.print("baud=38400");
-  // Serial.write(0xff);
-  // Serial.write(0xff);
-  // Serial.write(0xff);
-  // Serial.end(); //end serial with 9600 baud
-  // Serial.begin(38400); //restart it with 38400 baud
-  // delay(200);
-
   //attach interrupts to ISR
   disp_but01_infos.attachPush(but01_infos_push);
   disp_but00_settings.attachPush(but00_settings_push);
@@ -165,11 +153,8 @@ void setup()
   disp_slid_lenk_offset.attachPop(slid_lenk_offset);
   disp_slid_maxbackpower.attachPop(slid_maxbackpower);
   disp_slid_maxdownpower.attachPop(slid_maxdownpower);
-
 #endif
-
   ss.begin(9600); //initialize SoftwareSerial for GPS module
-
   //Initialize CAN-Bus shield
   mcp2515.reset();
   mcp2515.setBitrate(CAN_500KBPS, MCP_8MHZ);
@@ -180,31 +165,27 @@ void setup()
 
 unsigned long last_update = 0;
 unsigned long last_gps_update = 0;
-//int last_back_power=0;
-//int last_lower_power=0;
-//int test=0;
 
 void loop()
 {
-  if (millis() - last_update > 50)
+  if (millis() - last_update > 50) //Send new data to CAN-Bus every 50ms
   {
-
-    int int_0 = map(analogRead(A0), MIN_VALUE_A0, MAX_VALUE_A0, 30, max_power_back);
-    int int_1 = map(analogRead(A1), MIN_VALUE_A1, MAX_VALUE_A1, 30, max_power_lower);
-    canMsg.data[0] = min(int_0, 255); //get value from left thumb throttle
-    canMsg.data[1] = min(int_1, 255); //get value from right thumb throttle
-    canMsg.data[2] = (int)(steering_offset) + map(analogRead(A2) >> 2, 23, 88, 255, 0); //Lenkung
-    mcp2515.sendMessage(&canMsg);
+    int int_0 = map(analogRead(A0), MIN_VALUE_A0, MAX_VALUE_A0, 30, max_power_back); //map analog value of A0 between 0 and max_power_back value
+    int int_1 = map(analogRead(A1), MIN_VALUE_A1, MAX_VALUE_A1, 30, max_power_lower); //map analog value of A1 between 0 and max_power_lower value
+    canMsg.data[0] = min(int_0, 255); //set power value for lower motor to CAN message
+    canMsg.data[1] = min(int_1, 255); //set power value of back motor to CAN message
+    canMsg.data[2] = (int)(steering_offset) + map(analogRead(A2) >> 2, 23, 88, 255, 0); //calculate and set steering value for CAN message
+    mcp2515.sendMessage(&canMsg); //send CAN message
     last_update = millis();
   }
 #ifdef NEXTION_ENABLED
   if (millis() - last_gps_update > 500)
   { //refresh gps data on display every 500ms
-    if (nextion_page == 0 && gps.speed.isValid())
+    if (nextion_page == 0 && gps.speed.isValid()) //when on main page and gps data is valid
     {
       disp_gps_speed.setText(String(gps.speed.kmph() / 1.0).c_str());
     }
-    else if (nextion_page == 2)
+    else if (nextion_page == 2) //when on Info page
     {
       disp_gpsinf_sats.setText(String(gps.satellites.value()).c_str());
       disp_gpsinf_speed.setText(String(gps.speed.kmph()).c_str());
@@ -225,14 +206,14 @@ void loop()
       int percent = canMsg_r.data[3];
 
       if (canMsg_r.can_id == CAN_ID_INFOS_LOWER_CONTROLLER)
-      { //lower controller
+      { //data from lower controller received
         disp_drz_u.setText(String(drehzahl).c_str());
         disp_temp_u.setText(String(temperatur).c_str());
         disp_gas_u.setText(String(percent).c_str());
         disp_spg_u.setText(String(spannung / 100.0).c_str());
       }
       else
-      { //message from back controller
+      { //data from back controller received
         disp_drz_h.setText(String(drehzahl).c_str());
         disp_temp_h.setText(String(temperatur).c_str());
         disp_gas_h.setText(String(percent).c_str());
